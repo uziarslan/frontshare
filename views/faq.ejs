@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html class="navbar-vertical-collapsed" lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- ===============================================-->
+    <!--                 Document Title                 -->
+    <!-- ===============================================-->
+    <title><%= appInfo.app_name %>  | FAQ</title>
+
+    <!-- ===============================================-->
+    <!--                   Favicons                     -->
+    <!-- ===============================================-->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png" />
+    <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
+    <link rel="mask-icon" href="assets/img/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+    <link rel="shortcut icon" href="assets/img/favicons/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="msapplication-config" content="assets/img/favicons/browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- ===============================================-->
+    <!--                    Stylesheets                 -->
+    <!-- ===============================================-->
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link href="../assets/lib/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet"/>
+    <link href="../assets/css/theme.css" rel="stylesheet" />
+    <link id="dark-mode-css" href="../assets/css/theme-dark.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:100,200,300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet"/>
+
+    <!-- ===============================================-->
+    <!--                    JavaScripts                 -->
+    <!-- ===============================================-->
+    <script src="../assets/js/config.navbar-vertical.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      var mode = localStorage.getItem("theme-mode");
+      if (mode === "dark") {
+        document.getElementById("dark-mode-css").removeAttribute("disabled");
+      } else {
+        document.getElementById("dark-mode-css").setAttribute("disabled", true);
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- ===============================================-->
+    <!--                  Main Content                  -->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+      <div class="container" data-layout="container">
+        <%- include('partials/sidebar.ejs') %>
+        <div class="content">
+          <%- include('partials/navbar.ejs') %>
+
+          <div class="card mb-3">
+            <div
+              class="bg-holder d-none d-lg-block bg-card"
+              style="
+                background-image: url(../assets/img/illustrations/corner-4.png);
+              "
+            ></div>
+            <!--/.bg-holder-->
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-8">
+                  <h3 class="mb-0">Frequently Asked Questions</h3>
+                  <p class="mt-2">
+                    Below you'll find answers to the questions we get
+                    <br class="d-none d-sm-block" />asked the most about to join
+                    with Falcon
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion rounded" id="accordionExample">
+
+
+            <div class="card shadow-none border-bottom">
+              <div class="card-header py-0" id="heading1">
+                <button class="btn btn-link text-decoration-none btn-block py-2 px-0 text-left" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                  <span class="fas fa-caret-right accordion-icon mr-3" data-fa-transform="shrink-2">
+
+                  </span><span class="font-weight-medium text-sans-serif text-900">How does <%= appInfo.app_name %> 's pricing work?</span>
+                </button>
+              </div>
+              <div class="collapse hide" id="collapse1" aria-labelledby="heading1" data-parent="#accordionExample">
+                <div class="card-body pt-2">
+                  <div class="pl-4">
+                    <h5>Introducing <%= appInfo.app_name %> 's Comprehensive Subscription Plans for Elevated Marketing and Social Sharing</h5> <br>
+
+                    <%= appInfo.app_name %> , the cutting-edge platform designed to streamline your marketing efforts and enhance social sharing, 
+                    is excited to present its new subscription plans tailored to meet your diverse needs. 
+                    With a focus on maximizing your brand's online presence, we offer three distinct options: Basic, Monthly, and Annual subscriptions. <br><br>
+
+                    <h6>1. Basic Subscription:</h6>
+                    Our Basic plan is ideal for those seeking to dip their toes into the world of efficient marketing and social sharing. 
+                    This plan provides you with essential tools to create and schedule posts across multiple platforms, 
+                    helping you maintain a consistent online presence. Share your content seamlessly across social media channels, 
+                    with user-friendly features that guarantee a hassle-free experience. <br><br>
+
+                    <h6>2. Monthly Subscription:</h6>
+                    For users committed to staying ahead in the dynamic landscape of digital marketing, 
+                    our Monthly subscription is the perfect choice. Enjoy all the benefits of the Basic plan, 
+                    plus advanced analytics and insights that allow you to track the performance of your campaigns. 
+                    Identify trends, monitor engagement, and make informed decisions to optimize your strategy. <br><br>
+
+                    <h6>3. Annual Subscription:</h6>
+                    Our Annual subscription is the ultimate solution for businesses and individuals serious about achieving marketing excellence. 
+                    Alongside the features of the Monthly plan, it offers exclusive benefits such as priority customer support, access to new features before anyone else, 
+                    and cost savings equivalent to two months free compared to the monthly plan. This option provides the stability and resources needed to execute long-term marketing strategies effectively. <br><br>
+
+                    <h6>Key Features Across All Plans:</h6>
+                    - <strong>Multi-Platform Sharing:</strong> Seamlessly post content across various social media platforms from a single interface, saving you time and effort. <br>
+                    - <strong>Content Scheduling:</strong> Plan your posts in advance, ensuring a consistent flow of engaging content to captivate your audience. <br>
+                    - <strong>User-Friendly Interface:</strong> An intuitive dashboard designed for ease of use, making the platform suitable for users of all skill levels. <br>
+                    - <strong>Customizable Templates:</strong> Create stunning visuals with customizable templates that align with your brand identity. <br>
+                    - <strong>Analytics and Insights:</strong> Gain valuable insights into your campaigns' performance, helping you refine your strategy and achieve better results. <br><br>
+
+                    At <%= appInfo.app_name %> , we understand the importance of a robust online presence in today's digital age. 
+                    With our diverse subscription plans, you can select the option that best aligns with your goals and resources. 
+                    Elevate your marketing and social sharing game with <%= appInfo.app_name %>  today and take a step towards digital success. <br>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="card shadow-none border-bottom">
+              <div class="card-header py-0" id="heading2">
+                <button class="btn btn-link text-decoration-none btn-block py-2 px-0 text-left" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
+                  <span class="fas fa-caret-right accordion-icon mr-3" data-fa-transform="shrink-2">
+
+                  </span><span class="font-weight-medium text-sans-serif text-900">What forms of payment do you accept?</span>
+                </button>
+              </div>
+              <div class="collapse hide" id="collapse2" aria-labelledby="heading2" data-parent="#accordionExample">
+                <div class="card-body pt-2">
+                  <div class="pl-4">
+                    <h5>Accepted Forms of Payment for <%= appInfo.app_name %> :</h5><br>
+
+                    At <%= appInfo.app_name %> , we strive to provide you with seamless and convenient payment options. Currently, we accept the following forms of payment: <br><br>
+
+                    <strong>PayPal: </strong>A trusted online payment platform that allows you to securely pay using your PayPal balance, linked bank accounts, or credit/debit cards. <br><br>
+
+                    <strong>Apple Pay: </strong>For Apple device users, Apple Pay offers a fast and secure way to make payments using your stored cards on your iOS devices or Mac. <br><br>
+
+                    <strong>Google Pay: </strong>Seamlessly make payments using Google Pay, which securely stores your credit and debit card information for swift transactions on Android devices. <br><br>
+
+                    <strong>Credit Card: </strong>We also accept major credit cards, ensuring you have the flexibility to pay with your preferred card. <br><br>
+
+                    <h6>Expanding Payment Options: </h6>
+
+                    We understand the importance of providing diverse payment options to cater to your needs. 
+                    That's why we're excited to share that we're actively working on expanding our range of payment options. 
+                    In the near future, we plan to introduce additional methods to enhance your payment experience on the <%= appInfo.app_name %>  platform. <br><br>
+
+                    Stay tuned for updates as we continue to explore new and convenient ways to make payments that suit your preferences. 
+                    Your satisfaction is our priority, and we're committed to ensuring a seamless and user-friendly payment process for all <%= appInfo.app_name %>  users. <br><br>
+
+                    Thank you for choosing <%= appInfo.app_name %>  for your needs. We're here to make your experience exceptional every step of the way. <br><br>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="card shadow-none border-bottom">
+              <div class="card-header py-0" id="heading4">
+                <button class="btn btn-link text-decoration-none btn-block py-2 px-0 text-left" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="true" aria-controls="collapse4">
+                  <span class="fas fa-caret-right accordion-icon mr-3" data-fa-transform="shrink-2">
+
+                  </span><span class="font-weight-medium text-sans-serif text-900">How secure is <%= appInfo.app_name %> ?</span>
+                </button>
+              </div>
+              <div class="collapse hide" id="collapse4" aria-labelledby="heading4" data-parent="#accordionExample">
+                <div class="card-body pt-2">
+                  <div class="pl-4">
+                    In today's digital landscape, ensuring the security of online platforms has become a paramount concern. <%= appInfo.app_name %> , 
+                    with its commitment to data protection, has implemented robust security measures to safeguard user information. However, 
+                    it's important to remember that while <%= appInfo.app_name %>  takes its responsibility seriously, users also play a crucial role in maintaining the overall security of their accounts and shared content. <br><br>
+
+                    <%= appInfo.app_name %>  employs state-of-the-art encryption protocols to protect data both in transit and at rest. 
+                    This means that when you upload, share, or access files on <%= appInfo.app_name %> , the data is encrypted to prevent unauthorized access. 
+                    Furthermore, the platform regularly undergoes security audits and assessments to identify and address potential vulnerabilities. <br><br>
+
+                    While <%= appInfo.app_name %>  ensures a secure environment, users must contribute to the platform's overall security by practicing good digital hygiene. 
+                    This includes creating strong, unique passwords, enabling two-factor authentication (2FA), and being cautious of phishing attempts. 
+                    Regularly reviewing and adjusting privacy settings and permissions on shared files can also enhance security. <br><br>
+
+                    <%= appInfo.app_name %>  encourages users to keep their devices, operating systems, and browsers updated to the latest versions, 
+                    as these updates often include crucial security patches. Additionally, 
+                    avoid sharing sensitive information openly and only grant access to trusted individuals. <br><br>
+
+                    In essence, <%= appInfo.app_name %>  strives to provide a secure platform for sharing and collaborating on content. 
+                    However, just as you would lock your front door to protect your home, users must also play an active role in safeguarding their accounts and data while using <%= appInfo.app_name %> . 
+                    By combining the platform's security measures with responsible user behavior, a strong shield against potential threats can be established.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="card-footer d-flex align-items-center bg-light" id="feedbackSection">
+              <h5 class="d-inline-block mr-3 mb-0 fs--1">
+                Was this information helpful?
+              </h5>
+              <button class="btn btn-falcon-default btn-sm" id="yesButton">Yes</button>
+              <button class="btn btn-falcon-default btn-sm ml-2" id="noButton">No</button>
+            </div>
+            <script>
+              $(document).ready(function() {
+                // Attach click event handler for "Yes" button
+                $("#yesButton").click(function() {
+                  // Update the content with a message when "Yes" button is clicked
+                  $("#feedbackSection").html("<p>Thank you for your feedback! The information was helpful.</p>");
+                });
+          
+                // Attach click event handler for "No" button
+                $("#noButton").click(function() {
+                  // Update the content with a message when "No" button is clicked
+                  $("#feedbackSection").html("<p>Thank you for your feedback! We'll work to improve the information.</p>");
+                });
+              });
+            </script>
+          </div>
+          <footer><%- include('partials/footer.ejs') %></footer>
+        </div>
+      </div>
+    </main>
+    <!-- ===============================================-->
+    <!--              End of Main Content               -->
+    <!-- ===============================================-->
+
+    <!-- ===============================================-->
+    <!--                   JavaScripts                  -->
+    <!-- ===============================================-->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/popper.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/lib/@fortawesome/all.min.js"></script>
+    <script src="../assets/lib/stickyfilljs/stickyfill.min.js"></script>
+    <script src="../assets/lib/sticky-kit/sticky-kit.min.js"></script>
+    <script src="../assets/lib/is_js/is.min.js"></script>
+    <script src="../assets/lib/lodash/lodash.min.js"></script>
+    <script src="../assets/lib/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="../assets/js/theme.js"></script>
+  </body>
+</html>

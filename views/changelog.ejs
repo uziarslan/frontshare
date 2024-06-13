@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html class="navbar-vertical-collapsed" lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- ===============================================-->
+    <!--                  Document Title                -->
+    <!-- ===============================================-->
+    <title><%= appInfo.app_name %> | Changelog</title>
+
+    <!-- ===============================================-->
+    <!--                     Favicons                   -->
+    <!-- ===============================================-->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png" />
+    <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
+    <link rel="mask-icon" href="assets/img/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+    <link rel="shortcut icon" href="assets/img/favicons/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="msapplication-config" content="assets/img/favicons/browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- ===============================================-->
+    <!--                   Stylesheets                  -->
+    <!-- ===============================================-->
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link href="../assets/lib/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet"/>
+    <link href="../assets/lib/lightbox2/css/lightbox.min.css" rel="stylesheet" />
+    <link href="../assets/lib/fancybox/jquery.fancybox.min.css" rel="stylesheet" />
+    <link href="../assets/lib/prismjs/prism-okaidia.css" rel="stylesheet" />
+    <link href="../assets/css/theme.css" rel="stylesheet" />
+    <link href="vendors/flatpickr/flatpickr.min.css" rel="stylesheet" />
+    <link id="dark-mode-css" href="../assets/css/theme-dark.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:100,200,300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet"/>
+
+    <!-- ===============================================-->
+    <!--                    JavaScripts                 -->
+    <!-- ===============================================-->
+    <script src="../assets/js/config.navbar-vertical.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/flatpickr.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script>
+      var mode = localStorage.getItem("theme-mode");
+      if (mode === "dark") {
+        document.getElementById("dark-mode-css").removeAttribute("disabled");
+      } else {
+        document.getElementById("dark-mode-css").setAttribute("disabled", true);
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- ===============================================-->
+    <!--                   Main Content                 -->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+      <div class="container" data-layout="container">
+        <input type="hidden" id="user_id" value="<%= user._id %>">
+        <%- include('partials/sidebar.ejs') %>
+        <div class="content">
+          <%- include('partials/navbar.ejs') %>
+          <div class="card mb-3">
+            <div
+              class="bg-holder d-none d-lg-block bg-card"
+              style="
+                background-image: url(assets/img/illustrations/corner-4.png);
+              "
+            ></div>
+            <!--/.bg-holder-->
+
+            <div class="py-3 mx-3">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h3 class="my-auto">Changelog</h3>
+                  <% if (user.role=='admin') { %>
+                    <div 
+                      class="btn btn-falcon-primary position-absolute t-0 r-0 mr-3"
+                      id="new_card"
+                    >
+                      New
+                    </div>
+                  <% } %>
+
+                  <!-- modal for creating card -->
+                  <div class="modal fade" id="newModal" tabindex="-1" aria-labelledby="newModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" style="max-width: 1000px;">
+                      <div class="modal-content">
+                        <div class="modal-header bg-light d-flex flex-between-center border-bottom-0">
+                          <h5 class="modal-title" id="newModalLabel">New Update</h5>
+                          <button type="button" class="btn-close btn-sm btn-falcon-default border-0" data-bs-dismiss="modal" aria-label="Close">X</button>
+                        </div>
+                        <div class="modal-body">
+                          <form>
+                            <input type="hidden" id="log_id">
+                            <div class="mb-3">
+                              <label for="log_version" class="form-label">Version</label>
+                              <input type="text" class="form-control" id="log_version" placeholder="Example: 1.0.0">
+                            </div>
+                            <div class="mb-3">
+                              <label for="log_date" class="form-label">Date</label>
+                              <input class="form-control datetimepicker" id="log_date" type="text" placeholder="d/m/y" data-options='{"disableMobile":true}' />
+                            </div>
+                            <div class="mb-3">
+                              <label for="log_data" class="form-label">Whats new</label>
+                              <textarea id="log_data" class="form-control tinymce d-none" data-tinymce="data-tinymce" rows="4" placeholder="Example: we have added a button"></textarea>
+                            </div>
+                          </form>
+                          <button type="button" id="create_card" class="btn btn-falcon-primary btn-block">Submit</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- modal for confirm removing card -->
+                  <div class="modal fade" id="remove_modal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 500px">
+                      <div class="modal-content position-relative">
+                        <div class="position-absolute top-0 end-0 mt-2 me-2 z-1">
+                          <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body p-0">
+                          <input type="hidden" id="remove_id">
+                          <div class="rounded-top-3 py-3 ps-4 pe-6 bg-light" style="padding-left: 15px !important;">
+                            <h5 class="mb-1" id="modalExampleDemoLabel">Information</h5>
+                          </div>
+                          <div class="p-4 pb-0">
+                            <h4>Do you want to remove card?</h4>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                          <button id="confirm_remove_btn" class="btn btn-primary" type="button">Confirm</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                                  
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="card_content">
+            <% for (var i = 0; i < logs.length; i++) { %>
+            <div class="card mb-3" name="<%= logs[i]._id %>">
+              <div class="card-header">
+                <div class="d-flex justify-content-between">
+                  <h5 class="mb-0 text-danger">Version <span name="log_version"><%= logs[i].version %></span></h5>
+                  <% if (user.role=='admin') { %>
+                    <div>
+                      <button 
+                        class="btn btn-falcon-default edit-card"
+                        name="<%= logs[i]._id %>"
+                      >
+                        <span class="fas fa-pen"></span>
+                      </button>
+                      <button 
+                        class="btn btn-falcon-default remove-card"
+                        name="<%= logs[i]._id %>"
+                      >
+                        <span class="fas fa-trash"></span>
+                      </button>
+                    </div>
+                  <% } %>
+                </div>
+                <h6 class="mt-2 mb-0" name="log_date"><%= logs[i].date %></h6>
+              </div>
+              <div class="card-body bg-light">
+                <div name="log_data">
+                  <%- logs[i].data %>
+                </div>
+              </div>
+            </div>
+            <% } %>
+          </div>
+          <footer><%- include('partials/footer.ejs') %></footer>
+        </div>
+      </div>
+    </main>
+    <!-- ===============================================-->
+    <!--                End of Main Content             -->
+    <!-- ===============================================-->
+
+    <!-- ===============================================-->
+    <!--                    JavaScripts                 -->
+    <!-- ===============================================-->
+    <script src="assets/lib/@fortawesome/all.min.js"></script>
+    <script src="assets/lib/stickyfilljs/stickyfill.min.js"></script>
+    <script src="assets/lib/sticky-kit/sticky-kit.min.js"></script>
+    <script src="assets/lib/is_js/is.min.js"></script>
+    <script src="assets/lib/lodash/lodash.min.js"></script>
+    <script src="assets/lib/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="vendors/tinymce/tinymce.min.js"></script>
+    <script src="assets/lib/prismjs/prism.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/checklist-plugin.min.js"></script>
+    <script src="js/changelog.js"></script>
+    <style>
+      .tox .tox-edit-area__iframe {
+        background-color: #fff !important;
+      }
+    </style>
+  </body>
+</html>

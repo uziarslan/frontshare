@@ -1,0 +1,377 @@
+<nav class="navbar navbar-light navbar-glass navbar-top sticky-kit navbar-expand pt-2">
+  <button class="btn navbar-toggler-humburger-icon navbar-toggler mr-1 mr-sm-3" type="button" data-toggle="collapse"
+    data-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false"
+    aria-label="Toggle Navigation">
+    <span class="navbar-toggle-icon"><span class="toggle-line"></span></span>
+  </button>
+  <ul class="navbar-nav align-items-center d-none d-lg-block">
+    <li class="nav-item">
+      <div class="search-box">
+        <form class="position-relative" data-toggle="search" data-display="static">
+          <input id="navbar-search" class="form-control search-input" type="search" placeholder="Search..." aria-label="Search" />
+          <span class="fas fa-search search-box-icon"> </span>
+        </form>
+
+        <button class="close" type="button" data-dismiss="search">
+          <span class="fas fa-times"> </span>
+        </button>
+        <div id="dropdown-navbar-users" class="dropdown-menu d-none">
+          <div class="scrollbar perfect-scrollbar py-1" style="max-height: 20rem !important; min-height: 10rem !important;">
+            <!-- <h6 class="dropdown-header px-card pt-0 pb-2">PAGES</h6>
+            <a class="dropdown-item fs--1 px-card py-1 hover-primary" href="/canvas">
+              <div class="d-flex align-items-center">
+                <span class="fas fa-circle mr-2 text-300 fs--2"> </span>
+                <div class="font-weight-normal">
+                  Personal
+                  <span class="fas fa-chevron-right mx-1 text-500 fs--2" data-fa-transform="shrink-2">
+                  </span>
+                  Canvas
+                </div>
+              </div>
+            </a>
+            <a class="dropdown-item fs--1 px-card py-1 hover-primary" href="/referral">
+              <div class="d-flex align-items-center">
+                <span class="fas fa-circle mr-2 text-300 fs--2"> </span>
+                <div class="font-weight-normal">
+                  Referral
+                </div>
+              </div>
+            </a> -->
+
+            <!-- <hr class="border-200" /> -->
+            <h6 class="dropdown-header px-card pt-0 pb-2">USERS</h6>
+            <div id="navbar-users">
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <ul class="navbar-nav navbar-nav-icons ml-auto flex-row align-items-center">
+    <li class="nav-item d-none">
+      <a class="nav-link px-0 notification-indicator notification-indicator-warning notification-indicator-fill icon-indicator"
+        href="chat">
+        <span class="fas fa-comment-dots fs-4" data-fa-transform="shrink-7"></span>
+        <span class="notification-indicator-number">10</span>
+      </a>
+    </li>
+    <li class="nav-item d-none">
+      <a class="nav-link px-0 notification-indicator notification-indicator-warning notification-indicator-fill icon-indicator"
+        href="inbox">
+        <span class="fas fa-inbox fs-4" data-fa-transform="shrink-7"></span>
+        <span class="notification-indicator-number">23</span>
+      </a>
+    </li>
+    <li class="nav-item dropdown dropdown-on-hover">
+      <a class="nav-link notification-indicator notification-indicator-primary px-0 icon-indicator"
+        id="navbarDropdownNotification" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        <span class="fas fa-bell fs-4" data-fa-transform="shrink-6"> </span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right dropdown-menu-card" aria-labelledby="navbarDropdownNotification">
+        <div class="card card-notification shadow-none" style="max-width: 20rem">
+          <div class="card-header">
+            <div class="row justify-content-between align-items-center">
+              <div class="col-auto">
+                <h6 class="card-header-title mb-0">Notifications</h6>
+              </div>
+              <div class="col-auto">
+                <a class="card-link font-weight-normal" href="#">Mark all as read</a>
+              </div>
+            </div>
+          </div>
+          <div class="list-group list-group-flush font-weight-normal fs--1">
+            <div class="list-group-title border-bottom">NEW</div>
+            <div class="list-group-item">
+              <a class="notification notification-flush bg-200" href="#!">
+                <div class="notification-avatar">
+                  <div class="avatar avatar-2xl mr-3">
+                    <img class="rounded-circle" src="assets/img/team/1-thumb.png" alt="" />
+                  </div>
+                </div>
+                <div class="notification-body">
+                  <p class="mb-1">
+                    <strong>Emma Watson</strong> replied to your comment :
+                    "Hello world 😍"
+                  </p>
+                  <span class="notification-time"><span class="mr-1" role="img" aria-label="Emoji">💬</span>Just
+                    now</span>
+                </div>
+              </a>
+            </div>
+            <div class="list-group-item">
+              <a class="notification notification-flush bg-200" href="#!">
+                <div class="notification-avatar">
+                  <div class="avatar avatar-2xl mr-3">
+                    <div class="avatar-name rounded-circle">
+                      <span>AB</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="notification-body">
+                  <p class="mb-1">
+                    <strong>Albert Brooks</strong> reacted to
+                    <strong>Mia Khalifa's</strong> status
+                  </p>
+                  <span class="notification-time"><span class="mr-1 fab fa-gratipay text-danger"></span>9hr</span>
+                </div>
+              </a>
+            </div>
+            <div class="list-group-title">EARLIER</div>
+            <div class="list-group-item">
+              <a class="notification notification-flush" href="#!">
+                <div class="notification-avatar">
+                  <div class="avatar avatar-2xl mr-3">
+                    <img class="rounded-circle" src="assets/img/icons/weather-sm.jpg" alt="" />
+                  </div>
+                </div>
+                <div class="notification-body">
+                  <p class="mb-1">
+                    The forecast today shows a low of 20&#8451; in California.
+                    See today's weather.
+                  </p>
+                  <span class="notification-time"><span class="mr-1" role="img" aria-label="Emoji">🌤️</span>1d</span>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="card-footer text-center border-top">
+            <a class="card-link d-block" href="notifications">View all</a>
+          </div>
+        </div>
+      </div>
+    </li>
+     <% if (user.activity_status === "away") { %>
+      <% var status = "status-offline"; %>
+      <% var text = "Status: Away" %>
+      <% } else if (user.activity_status === "busy") { %>
+        <% var text = "Status: Busy" %>
+        <% var status = "status-away"; %>
+      <% } else { %>
+        <% var status = "status-online"; %>
+        <% var text = "Status: Online" %>
+      <% } %>
+
+    <li class="nav-item dropdown dropdown-on-hover">
+      <a class="nav-link pr-0" id="navbarDropdownUser" href="#" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        <div class="avatar avatar-xl <%= status %>" id="activityStatus"><!-- Status options: status-online, status-offline, status-away, status-do-not-disturb -->
+          <img class="rounded-circle"
+            src="<%= user.image ? '../img/users/' + user.image : 'https://avatar.oxro.io/avatar.svg?name=' + encodeURIComponent(user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1) + ' ' + user.last_name.charAt(0).toUpperCase() + user.last_name.slice(1)) + '&background=random&color=fff&fontSize=170px&bold=true' %>"
+            alt="" />
+        </div>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right py-0" aria-labelledby="navbarDropdownUser">
+        <div class="bg-white rounded-soft py-2">
+
+          <% if (user.plan==='basic' ) { %>
+          <a class="dropdown-item font-weight-bold text-warning" href="plans"><span
+              class="fas fa-crown mr-1"></span>
+              <span>Go Pro</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <% } %>
+          <div class="col">
+            <div class="custom-control custom-switch">
+              <input class="custom-control-input" id="dark-mode" type="checkbox" onchange="toggleDarkMode()" />
+              <label class="custom-control-label" for="dark-mode">Dark Mode</label>
+            </div>
+          </div>
+
+          <div class="dropdown-divider mb-0"></div>
+
+          <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingTheme">
+                <button class="btn btn-link text-decoration-none btn-block px-0 text-center"" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTheme" aria-expanded="false" aria-controls="flush-collapseTheme">
+                  <span class="font-weight-medium text-sans-serif text-900 fs--1">Theme: Auto</span>
+                </button>
+              </h2>
+              <div id="flush-collapseTheme" class="accordion-collapse collapse" aria-labelledby="flush-headingTheme" data-bs-parent="#accordionFlushExample">
+                 <div class="card-body p-0 bg-200">
+                  <a class="dropdown-item text-center" id="" href="#">Dark</a>
+                  <a class="dropdown-item text-center" id="" href="#">Light</a>
+                  <a class="dropdown-item text-center" id="" href="#">Auto</a>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingStatus">
+                <button class="btn btn-link text-decoration-none btn-block px-0 text-center" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseStatus" aria-expanded="false" aria-controls="flush-collapseStatus">
+                  <span class="font-weight-medium text-sans-serif text-900 fs--1" id="statusText"><%= text %></span>
+                </button>
+              </h2>
+              <div id="flush-collapseStatus" class="accordion-collapse collapse" aria-labelledby="flush-headingStatus" data-bs-parent="#accordionFlushExample">
+               <div class="card-body p-0 bg-200">
+                  <a class="dropdown-item text-center" id="activityStatus" value= "online" onclick="activityStatus('online')" href="#">Online</a><!-- status-online -->
+                  <a class="dropdown-item text-center" id="activityStatus"  value= "busy" onclick="activityStatus('busy')" href="#">Busy</a><!-- status-away -->
+                  <a class="dropdown-item text-center" id="activityStatus" value= "away"  onclick="activityStatus('away')" href="#">Away</a><!-- status-offline -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="dropdown-divider mb-0"></div>
+
+          <a id="switch_account" class="dropdown-item text-center" href="#">Switch account</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-center" href="settings">Settings</a>
+          <button class="dropdown-item text-danger text-center" id="logoutButton">
+            Logout
+          </button>
+        </div>
+      </div>
+    </li>
+  </ul>
+</nav>
+
+<!-- ===============================================-->
+<!--                   Stylesheets                  -->
+<!-- ===============================================-->
+<style>
+  /* Hide vertical scrollbar */
+  ::-webkit-scrollbar {
+    width: 0.5em;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+
+  /* Hide horizontal scrollbar (optional) */
+  ::-webkit-scrollbar.horizontal {
+    display: none;
+  }
+</style>
+
+<!-- ===============================================-->
+<!--                    JavaScripts                 -->
+<!-- ===============================================-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+<script src="../../js/logout.js"></script>
+<script>
+  
+  async function fetchNavUsers(search) {
+    try {
+      searchQuery = `?search=${search}`
+      const response = await axios({
+        method: "POST",
+        url: `/api/v1/users/allUsers${search ? searchQuery : '&&&&&&'}`,
+      });
+      return response.data.data.data; // Assuming the API returns the user data as an array
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      return []; // Return an empty array in case of an error
+    }
+  }
+
+  function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  async function updateNavTableWithUsers(search) {
+    const users = await fetchNavUsers(search);
+    let usersHTML = '';
+    if(users.length == 0){
+      $('#dropdown-navbar-users').addClass('d-none')
+    }
+
+    if(users.length > 0){
+      $('#dropdown-navbar-users').removeClass('d-none')
+    }
+
+    users.forEach((user) => {
+      const avatarUrl = user.image ? `../img/users/${user.image}` : `https://avatar.oxro.io/avatar.svg?name=${encodeURIComponent(capitalizeFirstLetter(user.first_name) + ' ' + capitalizeFirstLetter(user.last_name))}&background=random&color=fff&fontSize=200px&bold=true`;
+      usersHTML += `
+        <a class="dropdown-item px-card py-2" href="/${user.url}">
+          <div class="d-flex align-items-center">
+            <div class="avatar avatar-l status-online mr-2">
+              <img class="rounded-circle" src="${avatarUrl}" alt="" />
+            </div>
+            <div class="flex-1">
+              <h6 class="mb-0">${user.first_name} ${user.last_name}</h6>
+              <p class="fs--2 mb-0">${user.title ? user.title : ''}</p>
+            </div>
+          </div>
+        </a>
+      `;
+    });
+    $('#navbar-users').html(usersHTML)
+  }
+
+  document.addEventListener("DOMContentLoaded", (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    const mode = localStorage.getItem("theme-mode");
+    const toggleMode = document.getElementById("dark-mode");
+    if (mode === "dark") {
+      toggleMode.checked = true;
+    } else {
+      toggleMode.checked = false;
+    }
+  });
+
+  document.getElementById('switch_account').addEventListener('click', (e) => {
+    localStorage.setItem("showLoginModal", true);
+    window.location.replace('/');
+  });
+
+  document.getElementById('navbar-search').addEventListener('input', (e) => {
+    updateNavTableWithUsers($('#navbar-search').val())
+  });
+
+  function toggleDarkMode() {
+    var darkMode = document.getElementById("dark-mode");
+
+    if (darkMode.checked) {
+      document.getElementById("dark-mode-css").removeAttribute("disabled");
+      localStorage.setItem("theme-mode", "dark");
+    } else {
+      document.getElementById("dark-mode-css").setAttribute("disabled", true);
+      localStorage.setItem("theme-mode", "light");
+    }
+  }
+
+  async function activityStatus(status){
+    try {
+      result = await axios({
+        method: "POST",
+        url: "/api/v1/users/updateProfileSettings",
+        data: {
+          activity_status: status,
+        },
+      });
+      if (result.data.status === "success") {
+        var icon = document.getElementById('activityStatus')
+        var statusText = document.getElementById('statusText')
+
+        if (status == "busy") {
+          icon.classList.remove('status-online');
+          icon.classList.remove('status-offline');
+          icon.classList.add('status-away');
+          statusText.textContent = 'Status: Busy';
+        } else if (status == "away") {
+          icon.classList.remove('status-online');
+          icon.classList.remove('status-away');
+          icon.classList.add('status-offline');
+          statusText.textContent = 'Status: Away';
+        } else {
+          icon.classList.remove('status-away');
+          icon.classList.remove('status-offline');
+          icon.classList.add('status-online');
+          statusText.textContent = 'Status: Online';
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+</script>
+

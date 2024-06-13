@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- ===============================================-->
+    <!--                  Document Title                -->
+    <!-- ===============================================-->
+    <title><%= appInfo.app_name %>  | <%= user.url %></title>
+
+    <!-- ===============================================-->
+    <!--                     Favicons                   -->
+    <!-- ===============================================-->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png" />
+    <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
+    <link rel="mask-icon" href="assets/img/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+    <link rel="shortcut icon" href="assets/img/favicons/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="msapplication-config" content="assets/img/favicons/browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- ===============================================-->
+    <!--                     Stylesheets                -->
+    <!-- ===============================================-->
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link href="../assets/lib/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="../assets/lib/lightbox2/css/lightbox.min.css" rel="stylesheet" />
+    <link href="../assets/lib/fancybox/jquery.fancybox.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <link href="../assets/css/theme.css" rel="stylesheet" />
+    <link id="dark-mode-css" href="../assets/css/theme-dark.css" rel="stylesheet" />
+    <style>
+      .no-gutter-row {
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+      }
+
+      .no-gutter-col {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+
+      .card-img-kanban-custom p img {
+        max-width: 100%;
+        height: 100%;
+      }
+
+
+      .two-list-container {
+        max-width: 83%;
+        margin: 0 auto;
+      }
+      .one-list-container {
+        max-width: 66%;
+        margin: 0 auto;
+      }
+
+      @media (max-width: 992px) {
+        .two-list-container, .one-list-container {
+          max-width: 100%;
+        }
+      }
+    </style>
+    <style>
+      iframe {
+        border-radius: 15px !important;
+      }
+      .card-iframe {
+        height: 352px !important;
+      }
+      .thumbnail-iframe {
+        height: 152px !important;
+      }
+      ::selection{
+        color: #fff;
+        background: #6665ee;
+      }
+      .poll-title {
+        font-size: 18px;
+        font-weight: 600;
+        word-break: break-all;
+      }
+      .poll-area{
+        margin: 20px 0 15px 0;
+      }
+      .poll-area label{
+        display: block;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        padding: 8px 15px;
+        border: 2px solid #e6e6e6;
+        transition: all 0.2s ease;
+      }
+      .poll-area label:hover{
+        border-color: #ddd;
+      }
+      label.selected{
+        border-color: #6665ee!important;
+      }
+      label .row{
+        display: flex;
+        pointer-events: none;
+        justify-content: space-between;
+      }
+      label .row .column{
+        display: flex;
+        align-items: center;
+      }
+      label .row .circle{
+        height: 19px;
+        width: 19px;
+        display: block;
+        border: 2px solid #ccc;
+        border-radius: 50%;
+        margin-right: 10px;
+        position: relative;
+        flex: none;
+      }
+      label.selected .row .circle{
+        border-color: #6665ee;
+      }
+      label .row .circle::after{
+        content: "";
+        height: 11px;
+        width: 11px;
+        background: #6665ee;
+        border-radius: inherit;
+        position: absolute;
+        left: 2px;
+        top: 2px;
+        display: none;
+      }
+      .poll-area label:hover .row .circle::after{
+        display: block;
+        background: #e6e6e6;
+      }
+      label.selected .row .circle::after{
+        display: block;
+        background: #6665ee!important;
+      }
+      label .row span{
+        font-size: 16px;
+        font-weight: 500;
+      }
+      label .row .percent{
+        display: none;
+        
+      }
+      label .progress{
+        height: 7px;
+        width: 100%;
+        position: relative;
+        background: #f0f0f0;
+        margin: 8px 0 3px 0;
+        border-radius: 30px;
+        display: none;
+        pointer-events: none;
+      }
+      label .progress:after{
+        position: absolute;
+        content: "";
+        height: 100%;
+        background: #ccc;
+        width: calc(1% * var(--w));
+        border-radius: inherit;
+        transition: all 0.2s ease;
+      }
+      label.selected .progress::after{
+        background: #6665ee;
+      }
+      label.selectall .progress,
+      label.selectall .row .percent{
+        display: block;
+        white-space: nowrap;
+      }
+      input[type="radio"],
+      input[type="checkbox"]{
+        display: none;
+      }
+      .preview-card-header {
+        display: flex;
+        justify-content: space-between;
+      }
+    </style>
+
+    <!-- ===============================================-->
+    <!--                    JavaScripts                 -->
+    <!-- ===============================================-->
+    <script src="../../assets/js/config.js"></script>
+    <script src="../../vendors/simplebar/simplebar.min.js"></script>
+    <script src="../assets/js/config.navbar-vertical.js"></script>
+    <script src="../../assets/js/config.js"></script>
+    <script>
+      var mode = localStorage.getItem("theme-mode");
+      if (mode === "dark") {
+        document.getElementById("dark-mode-css").removeAttribute("disabled");
+      } else {
+        document.getElementById("dark-mode-css").setAttribute("disabled", true);
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- ===============================================-->
+    <!--                    Main Content                -->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+      <div class="container" data-layout="container">
+        <div class="content pt-0">
+          <%
+              const trueConditions = [
+                  user.first_list.show && user.first_list.data.length > 0,
+                  user.second_list.show && user.second_list.data.length > 0,
+                  user.third_list.show && user.third_list.data.length > 0,
+              ];
+
+              const trueCount = trueConditions.filter(condition => condition).length;
+
+              const classOptions = {
+                  1: 'one-list-container',
+                  2: 'two-list-container',
+                  3: '',
+              };
+
+              const containerClass = classOptions[trueCount] || '';
+          %>
+
+          <% if (user.showBio) { %>
+            <div class="<%= containerClass %>">
+              <div class="card my-3 rounded-4">
+                <div class="card-header position-relative min-vh-25 mb-7 rounded-top-4">
+                  <div class="bg-holder rounded-3 rounded-bottom-0 rounded-top-4" style="background-image: url(<%=user.cover_image?'../img/users/' + user.cover_image:'../assets/img/generic/4.jpg'%>);">
+                  </div>
+    
+                  <div class="d-flex justify-content-center">
+                    <div class="avatar avatar-5xl avatar-profile d-flex justify-content-center hover-div">
+                      <img class="rounded-circle img-thumbnail shadow-sm z-1"
+                        src="<%= user.image ? '../img/users/' + user.image : 'https://avatar.oxro.io/avatar.svg?name=' + encodeURIComponent(user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1) + ' ' + user.last_name.charAt(0).toUpperCase() + user.last_name.slice(1)) + '&background=random&color=fff&fontSize=170px&bold=true' %>"
+                        width="200" height="200" style="cursor:pointer;" alt="" data-dz-thumbnail />
+    
+                    </div>
+                  </div>
+                </div>
+
+    
+                <div class="card-body pb-0 text-center">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <h4 class="mb-0">
+                        <% if(user.use_real_name) { %>
+                          <%= user.first_name +' '+ user.last_name %>
+                          
+                        <% } else { %>
+                          <%= user.canvas_bio?.display_name %>
+                        <% } %>
+                          <!-- <span class="<%= user.identity_verified ? '' : 'd-none' %> mr-3" data-bs-toggle="tooltip"
+                            data-bs-placement="right" title="ID Verified">
+                            <small class="fa fa-check-circle text-primary" data-fa-transform="shrink-4 down-2">
+                            </small>
+                          </span> -->
+                      </h4>
+                        <% if (user.canvas_bio.title) { %>
+                        <h6 class="text-500 mt-2">
+                          <span class="fas fa-toolbox text-1000 mr-1"></span>
+                          <span class="mr-3 text-center"><%= user.canvas_bio.title %></span>
+                         
+                        </h6>
+                        <% } %>
+                          <% if (user.use_real_location) { %>
+                            <% if (user.address) { %>
+                              <h6 class="text-500 mt-2">
+                                <span class="fas fa-map-marker-alt text-1000 mr-1"></span>
+                                <span class="mr-3 text-center"><%= user.address %></span>
+                              </h6>
+                            <% } %>
+                            <% } else if(user.canvas_bio.location) { %>
+                              <h6 class="text-500 mt-2">
+                                <span class="fas fa-map-marker-alt text-1000 mr-2"></span>
+                                <%= user.canvas_bio.location %>
+                              </h6>
+                            <% } %>
+
+                      <% if (user.canvas_bio.free_text) { %>                        
+                        <span class="mb-0 text-1000">
+                          <%- user.canvas_bio.free_text %>
+                        </span>
+                      <% } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% } else { %>
+              <div class="p-2"></div>
+          <% } %>
+
+          <%
+            const isOneTrue = (user.first_list.show && user.first_list.data.length > 0) +
+                            (user.second_list.show && user.second_list.data.length > 0) +
+                            (user.third_list.show && user.third_list.data.length > 0);
+
+            let columnClass;
+
+            if (isOneTrue === 1) {
+                columnClass = 'col-lg-8';
+            } else if (isOneTrue === 2) {
+                columnClass = 'col-lg-5';
+            } else if (isOneTrue === 3) {
+                columnClass = 'col-lg-4 col-md-6';
+            } else {
+                columnClass = 'col-lg-4';
+            }
+          %>
+
+          <div class="row no-gutter-row d-flex justify-content-center" id="preview-list" style="display: none">
+              <div class="<%= columnClass %> no-gutter-col d-none" id="first-list">
+                  <div class="text-justify" id="first-list-container" style="display: none"></div>
+              </div>
+              <div class="<%= columnClass %> no-gutter-col d-none" id="second-list">
+                  <div class="text-justify" id="second-list-container" style="display: none"></div>
+              </div>
+              <div class="<%= columnClass %> no-gutter-col d-none" id="third-list">
+                  <div class="text-justify" id="third-list-container" style="display: none"></div>
+              </div>
+          </div>
+
+          <div class="alert alert-success alert-dismissible fade show custom-alert" role="alert" style="
+                display: none;
+                position: fixed;
+                bottom: 50px;
+                right: 20px;
+                max-width: 400px;
+                font-size: 14px;
+                z-index: 9999;
+              ">
+        <h6>Please switch on the visibility to add a card</h6>
+        If the switch is grey that means you need to upgrade to the
+        <a class="text-danger text-decoration-none" href="plans">Pro plan</a>.
+        <button class="close" type="button" onclick="closeCustomAlert()" aria-label="Close">
+          <span class="font-weight-light" aria-hidden="true">×</span>
+        </button>
+      </div>
+          
+          <footer class="d-flex justify-content-center my-3">
+            <div>
+              <div class="col text-center">
+                <h6><em>Powered by</em></h6>
+                <a href="/">
+                  <img class="" src="<%= appInfo?.app_logo ? '../img/' + appInfo.app_logo : '' %>" alt="" width="150px" /><!-- Logo -->
+                </a>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </main>
+    <!-- ===============================================-->
+    <!--               End of Main Content              -->
+    <!-- ===============================================-->
+
+    <!-- ===============================================-->
+    <!--                   JavaScripts                  -->
+    <!-- ===============================================-->
+    <script src="../js/blocks/video-block.js"></script>
+    <script src="../js/blocks/music-block.js"></script>
+    <script src="../../vendors/popper/popper.min.js"></script>
+    <script src="../../vendors/bootstrap/bootstrap.min.js"></script>
+    <script src="../../vendors/anchorjs/anchor.min.js"></script>
+    <script src="../../vendors/is/is.min.js"></script>
+    <script src="../../vendors/glightbox/glightbox.min.js"></script>
+    <script src="../../vendors/fontawesome/all.min.js"></script>
+    <script src="../../vendors/lodash/lodash.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <script src="../../vendors/list.js/list.min.js"></script>
+    <script src="../../assets/js/theme.js"></script>
+
+  <script>
+   document.addEventListener("DOMContentLoaded", function(){
+    document.getElementById('#show-more-button').click()
+  })
+  document.addEventListener('DOMContentLoaded', function() {
+    var seeMoreLink = document.getElementById('seeMoreLink');
+    var textPreview = document.querySelector('.text-preview');
+    var textRemaining = document.querySelector('.text-remaining');
+    var isExpanded = false;
+
+    if (seeMoreLink) {
+      seeMoreLink.addEventListener('click', function() {
+        if (isExpanded) {
+          textPreview.style.display = 'inline';
+          textRemaining.style.display = 'none';
+          seeMoreLink.textContent = 'Show More';
+        } else {
+          textPreview.style.display = '';
+          textRemaining.style.display = 'inline';
+          seeMoreLink.textContent = 'Show Less';
+        }
+        isExpanded = !isExpanded;
+      });
+    }
+  });
+</script>
+
+
+
+
+    <script>
+      function initializeBars() {
+        let vote = localStorage.getItem("vote");
+
+        if (vote) {
+          vote = JSON.parse(vote)
+
+          for (let i = 0; i < vote.length; i++) {
+            const containerIdentifier = vote[i].id.split("-").slice(1).join("-");
+
+            const element = document.querySelector(`[id^="${containerIdentifier}"]`)
+
+            const ids = element.id.split(" ");
+            const elementId = ids[1]
+            const containerFinder = ids[0].split("-")
+            const containerId = containerFinder[0]
+            const userContainerIndex = containerFinder[1]
+
+            const list = user[containerId].data[userContainerIndex].poll_list;
+            const sum = list.reduce((acc, item) => acc += item.count, 0)
+            
+            let parent = element.parentNode.querySelectorAll("label")
+            
+            list.forEach((item, index) => {
+              const percentage = parseInt((item.count/sum) * 100)
+              
+              if (!isNaN(percentage)) {
+                parent[index].querySelector(".progress").setAttribute("style", `--w:${percentage}`)
+                if (user[containerId].data[userContainerIndex].count && user[containerId].data[userContainerIndex].percentage) {
+                  parent[index].querySelector(".percent").textContent = `Total: ${item.count} - ${percentage}%`
+                } else if (!user[containerId].data[userContainerIndex].count && user[containerId].data[userContainerIndex].percentage) {
+                  parent[index].querySelector(".percent").textContent = `${percentage}%`
+                } else if (user[containerId].data[userContainerIndex].count && !user[containerId].data[userContainerIndex].percentage) {
+                  parent[index].querySelector(".percent").textContent = `Total: ${item.count}`
+                }
+              } else {
+                if (user[containerId].data[userContainerIndex].count && user[containerId].data[userContainerIndex].percentage) {
+                  parent[index].querySelector(".percent").textContent = "Total: 0 - 0%"
+                } else if (!user[containerId].data[userContainerIndex].count && user[containerId].data[userContainerIndex].percentage) {
+                  parent[index].querySelector(".percent").textContent = "0%"
+                } else if (user[containerId].data[userContainerIndex].count && !user[containerId].data[userContainerIndex].percentage) {
+                  parent[index].querySelector(".percent").textContent = "Total: 0"
+                }
+              }
+            })
+
+            for (let j = 0; j < parent.length; j++) {
+              if (parent[j].classList.contains("selected")) {
+                parent[j].classList.remove("selected");
+              }
+            }
+
+            element.classList.add("selected");
+
+            for (let k = 0; k < parent.length; k++) {
+              parent[k].classList.add("selectall");
+            }
+
+            let forVal = element.getAttribute("for");
+            let selectInput = document.querySelector("#" + forVal);
+            let getAtt = selectInput.getAttribute("type");
+
+            if (getAtt == "checkbox") {
+              selectInput.setAttribute("type", "radio");
+            } else if (selectInput.checked == true) {
+              element.classList.remove("selected");
+              selectInput.setAttribute("type", "checkbox");
+            }
+
+            let array = [];
+            for (let l = 0; l < parent.length; l++) {
+              if (parent[l].classList.contains("selected")) {
+                array.push(l);
+                parent[l].classList.remove("selected");
+              }
+            }
+            if (array.length == 0) {
+              for (let m = 0; m < parent.length; m++) {
+                parent[m].removeAttribute("class");
+              }
+            }
+          }
+        }
+      }
+
+
+      var user = <%- JSON.stringify(user) %>;
+      if (user && user.canvas_bio.free_text) {
+        if (document.getElementById("bio-content-data")) {
+          document.getElementById("bio-content-data").innerHTML = `${user.canvas_bio.free_text}`;
+        }
+      }
+
+      function closeCustomAlert() {
+        var customAlert = document.querySelector(".custom-alert");
+        customAlert.style.display = "none";
+      }
+
+      const saveData = async (containerId, list) => {
+        let payload = {
+          pathname: window.location.pathname.slice(1)
+        }
+
+        if (containerId === "first_list") {
+          payload.first_list = {
+            data: list
+          }
+        } else if (containerId === "second_list") {
+          payload.second_list = {
+            data: list
+          }
+        } else if (containerId === "third_list") {
+          payload.third_list = {
+            data: list
+          }
+        }
+
+        try {
+          const result = await axios({
+            method: "POST",
+            url: "/api/v1/users/updateProfileListData",
+            data: {
+              ...payload
+            },
+          });
+
+          if (result.data.status === "success") {
+            var customAlert = document.querySelector(".custom-alert");
+            customAlert.innerHTML = `
+              <h6 class="mt-2">Vote saved successfully!</h6>
+              <button
+                class="close"
+                type="button"
+                onclick="closeCustomAlert()"
+                aria-label="Close"
+              >
+                <span class="font-weight-light" aria-hidden="true">×</span>
+              </button>
+            `;
+            customAlert.style.display = "block";
+
+            setTimeout(function () {
+              closeCustomAlert();
+            }, 3000);
+          }
+
+        } catch(error) {
+          console.log(error.response)
+        }
+      }
+
+    function makeOptionsClickable(selfElement) {
+      const selfElementId = selfElement.getAttribute("id").split(" ")[1]
+
+      let vote = localStorage.getItem("vote")
+      let copy = []
+      if (vote) {
+        copy = [...JSON.parse(vote)]
+      }
+      let proceed = false;
+      let previousVoteId = null;
+
+      const ids = selfElement.id.split(" ");
+      const elementId = ids[1]
+      const containerFinder = ids[0].split("-")
+      const containerId = containerFinder[0]
+      const userContainerIndex = containerFinder[1]
+      const voteAllowance = user[containerId].data[userContainerIndex].voteAllowance;
+
+      let list = user[containerId].data[userContainerIndex].poll_list;
+
+      if (!vote) {
+        const id = selfElement.parentNode.parentNode.querySelector("[type='checkbox']").id;
+        const payload = [{ id, voted: true, selfElementId }]
+        localStorage.setItem("vote", JSON.stringify(payload))
+        proceed = true;
+      } else {
+        const id = selfElement.parentNode.parentNode.querySelector("[type='checkbox']").id;
+        vote = JSON.parse(vote)
+        
+        const isExist = vote.filter((item) => item.id === id)
+
+        if (isExist.length) {
+          if (voteAllowance) {
+            proceed = false;
+            const isVotesAlreadyExist = vote.filter((item) => item.id === id)
+            
+            if (!isVotesAlreadyExist.length) {
+              proceed = true;
+              const payload = [...vote, {  id, voted: true, selfElementId }]
+              localStorage.setItem("vote", JSON.stringify(payload))
+            }
+          } else {
+            proceed = true;
+            const isVotesAlreadyExist = vote.filter((item) => item.id === id)
+
+            if (!isVotesAlreadyExist.length) {
+              const payload = [...vote, {  id, voted: true, selfElementId }]
+              localStorage.setItem("vote", JSON.stringify(payload))
+            } else {
+              const index = vote.findIndex((item) => item.id === id)
+              
+              if (index !== -1) {
+                previousVoteId = copy[index].selfElementId
+
+                if (previousVoteId === selfElementId) {
+                  proceed = false
+                } else {
+                  copy[index].selfElementId = selfElementId
+                  localStorage.setItem("vote", JSON.stringify(copy))
+                }
+              }
+            }
+          }
+        } else {
+          if (voteAllowance) {
+            proceed = false;
+            const isVotesAlreadyExist = vote.filter((item) => item.id === id)
+            
+            if (!isVotesAlreadyExist.length) {
+              proceed = true;
+              const payload = [...vote, {  id, voted: true, selfElementId }]
+              localStorage.setItem("vote", JSON.stringify(payload))
+            }
+          } else {
+            proceed = true;
+            const payload = [...vote, {  id, voted: true, selfElementId }]
+            localStorage.setItem("vote", JSON.stringify(payload))
+          }
+        }
+      }
+
+      if (proceed) {
+        list = list.map((item) => {
+          if (previousVoteId !== elementId && item._id === previousVoteId && item.count >= 0) {
+            item.count -= 1;
+          }
+          if (item._id === elementId) {
+            item.count += 1;
+          } else {
+            if (item.count && item.count >= 0) {
+              item.count = item.count
+            } else {
+              item.count = 0;
+            }
+          }
+          return item;
+        })
+
+        user[containerId].data[userContainerIndex].poll_list = list
+
+        saveData(containerId, user[containerId].data);
+      }
+      
+      list = user[containerId].data[userContainerIndex].poll_list;
+
+      const sum = list.reduce((acc, item) => acc += item.count, 0)
+      let parent = selfElement.parentNode.querySelectorAll("label")
+      
+      list.forEach((item, index) => {
+        const percentage = parseInt((item.count/sum) * 100)
+
+        if (!isNaN(percentage)) {
+          parent[index].querySelector(".progress").setAttribute("style", `--w:${percentage}`)
+          if (user[containerId].data[userContainerIndex].count && user[containerId].data[userContainerIndex].percentage) {
+            parent[index].querySelector(".percent").textContent = `Total: ${item.count} - ${percentage}%`
+          } else if (!user[containerId].data[userContainerIndex].count && user[containerId].data[userContainerIndex].percentage) {
+            parent[index].querySelector(".percent").textContent = `${percentage}%`
+          } else if (user[containerId].data[userContainerIndex].count && !user[containerId].data[userContainerIndex].percentage) {
+            parent[index].querySelector(".percent").textContent = `Total: ${item.count}`
+          }
+        }  else {
+          if (user[containerId].data[userContainerIndex].count && user[containerId].data[userContainerIndex].percentage) {
+            parent[index].querySelector(".percent").textContent = "Total: 0 - 0%"
+          } else if (!user[containerId].data[userContainerIndex].count && user[containerId].data[userContainerIndex].percentage) {
+            parent[index].querySelector(".percent").textContent = "0%"
+          } else if (user[containerId].data[userContainerIndex].count && !user[containerId].data[userContainerIndex].percentage) {
+            parent[index].querySelector(".percent").textContent = "Total: 0"
+          }
+        }
+      })
+
+      for (let j = 0; j < parent.length; j++) {
+        if (parent[j].classList.contains("selected")) {
+          parent[j].classList.remove("selected");
+        }
+      }
+
+      selfElement.classList.add("selected");
+
+      for (let k = 0; k < parent.length; k++) {
+        parent[k].classList.add("selectall");
+      }
+
+      let forVal = selfElement.getAttribute("for");
+      let selectInput = document.querySelector("#" + forVal);
+      let getAtt = selectInput.getAttribute("type");
+
+      if (getAtt == "checkbox") {
+        selectInput.setAttribute("type", "radio");
+      } else if (selectInput.checked == true) {
+        // selfElement.classList.remove("selected");
+        selectInput.setAttribute("type", "checkbox");
+      }
+
+      let array = [];
+      for (let l = 0; l < parent.length; l++) {
+        if (parent[l].classList.contains("selected")) {
+          array.push(l);
+        }
+      }
+      if (array.length == 0) {
+        for (let m = 0; m < parent.length; m++) {
+          parent[m].removeAttribute("class");
+        }
+      }
+    };
+
+      function makeNewCard() {
+        var newCard = document.createElement("div");
+        newCard.classList.add("mb-1");
+        newCard.innerHTML = `
+          <div class="card kanban-item-card" style="border-radius: 15px;">
+            <div class="card-body position-relative" style="height: 150px;"></div>
+          </div>
+        `;
+        return newCard;
+      }
+
+      function setPreviewContent(data, container, containerName, elementIndex) {
+        const newCard = makeNewCard();
+        var content = document.createElement("div");
+        if (data.link != "" || data.type == 'Text'|| data.type == 'Poll') {
+          if (data.type == 'Video') {
+            content.classList.add("ratio", "ratio-16x9", "mb-3", "mt-2");
+            const link = getEmbedUrl(data.link);
+            content.innerHTML = `
+              <iframe src=`+link+` allowfullscreen="allowfullscreen" title="YouTube video" style="width: 100%; border-radius: 15px;"></iframe>
+            `;
+          } else if (data.type == 'Music') {
+            var site_class = 'spotify_content';
+            const link = getEmbedUrl(data.link);
+            content.classList.add("mb-2");
+            if (isSpotifyMusicUrl(data.link)) {
+              site_class = 'spotify_content';
+            } else if (isSoundCloudMusicUrl(data.link)) {
+              site_class = 'soundcloud_content'
+            }
+            if (data.music_size === "thumbnail") {
+              content.innerHTML = `
+              <iframe class="thumbnail-iframe" style="border-radius:12px" src="`+link+`" width="100%"  frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            `;
+            } else {
+              content.innerHTML = `
+              <iframe class="card-iframe" style="border-radius:12px" src="`+link+`" width="100%" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            `;
+            }
+
+          } else if (data.type == 'Text') {
+            content.innerHTML = `
+            <div class="card kanban-item-card mb-3 mt-2" style="border-radius: 15px; background-color: `+data.text_block_color+`">
+              <div class="card-body position-relative pt-3 pe-3 ps-3 pb-0 card-img-kanban-custom">
+                ${data.text}
+              </div>
+            </div>
+
+            `;
+          } else if (data.type == 'Poll') {
+            const containerId = `${containerName}-${elementIndex}`
+            const pollItemsHTML = data.poll_list.map((poll, index) => `
+              <input type="checkbox" name="poll" id="opt-${index + 1}">
+              <label id="${containerId} ${poll._id}" for="opt-${index + 1}" class="opt-${index + 1} custom-label" onclick="makeOptionsClickable(this)">
+                <div class="row">
+                  <div class="column">
+                    <div class="poll-option-wrapper d-flex align-items-center justify-content-between w-100">
+                      <div class="d-flex align-items-center">
+                        <span class="circle"></span>
+                        <span class="text textValue mr-3" style="word-break: break-word;">${poll.value}</span>
+                      </div>
+                      <div>
+                        <span class="percent">${poll.count}%</span>
+                      </div>
+                  </div>
+
+                  </div>
+                </div>
+                <div class="progress" style=${`--w:${poll.count};`}></div>
+              </label>
+            `).join('');
+
+            let vote = localStorage.getItem("vote");
+            let check = "checked";
+            if (vote) {
+              vote = JSON.parse(vote)
+
+              vote.forEach((item) => {
+                if (item.id === `switch-${containerId}`) {
+                  check = "";
+                  return;
+                }
+              })
+            }
+
+            content.innerHTML = `
+            <div class="card kanban-item-card mb-3 mt-2" style="border-radius: 15px; background-color: `+data.text_block_color+`">
+              <div class="card-body position-relative pt-3 pe-3 ps-3 pb-0 card-img-kanban-custom">
+                <div class="preview-card-header">
+                  <h2 class="poll-title">${data.title}</h2>
+                  <div class="custom-control custom-switch d-none">
+                    <input class="custom-control-input" type="checkbox" ${check} id=${`switch-${containerId}`} />
+                    <label class="custom-control-label text-warning" for=${`switch-${containerId}`}>
+                      <span class="fs--2 ml-1 text-primary" data-toggle="tooltip" data-placement="top"
+                        title="This will toggle the authorization to cast the vote">
+                        <span class="fas fa-question-circle"> </span>
+                      </span>
+                    </label>
+                  </div>
+                </div>
+                <div class="poll-area">
+                  ${pollItemsHTML}
+                </div>
+              </div>
+            </div>
+
+            `;
+          }
+          if (data.show) container.appendChild(content);
+        } else {
+          if (data.show) container.appendChild(newCard);
+        }
+      }
+
+      
+
+
+      function updateBioContent(contentTextList) {
+        var index = 0;
+        var collapseContent;
+        contentTextList.forEach((contentText, i, array) => {
+          if (i == array.length-1 && index > 0) {
+            var collapseBtn = document.createElement('div');
+            collapseBtn.innerHTML = `
+                <button class="btn text-twitter d-block w-100 btn-intro-collapse collapsed pt-1 pb-0" type="button" data-bs-toggle="collapse" data-bs-target="#bio-collapse-content" aria-expanded="false" aria-controls="bio-collapse-content">Show <span class="less">less<span class="fas fa-chevron-up ms-2 fs--2"></span></span><span class="full">full<span class="fas fa-chevron-down ms-2 fs--2"></span></span></button>
+            `
+            document.getElementById('bio-content').appendChild(collapseBtn);
+          }
+          if (contentText == '') {
+            return;
+          }
+          if (index == 0) {
+            document.getElementById('bio-content').querySelector('p').innerHTML = contentText;
+            collapseContent = document.createElement('div');
+            collapseContent.classList.add('collapse');
+            collapseContent.id = 'bio-collapse-content';
+            document.getElementById('bio-content').appendChild(collapseContent);
+          } else {
+            var textContent = document.createElement('p');
+            textContent.classList.add('text-1000', 'mb-1');
+            textContent.innerHTML = contentText;
+            collapseContent.appendChild(textContent);
+
+          }
+          index++;
+        });
+      }
+
+      if (user.first_list.show && user.first_list.data.length > 0) document.getElementById("preview-list").style.display = "block";
+      if (user.second_list.show && user.second_list.data.length > 0) document.getElementById("preview-list").style.display = "block";
+      if (user.third_list.show && user.third_list.data.length > 0) document.getElementById("preview-list").style.display = "block";
+
+      const firstListContainer = document.getElementById("first-list-container");
+      if (user.first_list.data.length > 0) firstListContainer.style.display = "block";
+
+      const secondListContainer = document.getElementById("second-list-container");
+      if (user.second_list.data.length > 0) secondListContainer.style.display = "block";
+
+      const thirdListContainer = document.getElementById("third-list-container");
+      if (user.third_list.data.length > 0) thirdListContainer.style.display = "block";
+
+      if (user.first_list.show === false || user.first_list.data.length === 0) {
+        document.getElementById("first-list").classList.add("d-none");
+      } else {
+        document.getElementById("first-list").classList.remove("d-none");
+      }
+
+      if (user.second_list.show === false || user.second_list.data.length === 0) {
+        document.getElementById("second-list").classList.add("d-none");
+      } else {
+        document.getElementById("second-list").classList.remove("d-none");
+      }
+
+      if (user.third_list.show === false || user.third_list.data.length === 0) {
+        document.getElementById("third-list").classList.add("d-none");
+      } else {
+        document.getElementById("third-list").classList.remove("d-none");
+      }
+
+      if (
+        (user.first_list.show === false && user.second_list.show === false && user.third_list.show === false) ||
+        (user.first_list.data.length === 0 && user.second_list.data.length === 0 && user.third_list.data.length === 0)
+      ) {
+        document.getElementById("preview-list").classList.add("d-none");
+      }
+
+      var i = 0;
+      for (i = 0 ; i < user.first_list.data.length ; i ++) {
+        setPreviewContent(user.first_list.data[i], firstListContainer, "first_list", i);
+      }
+
+      for (i = 0 ; i < user.second_list.data.length ; i ++) {
+        setPreviewContent(user.second_list.data[i], secondListContainer, "second_list", i);
+      }
+
+      for (i = 0 ; i < user.third_list.data.length ; i ++) {
+        setPreviewContent(user.third_list.data[i], thirdListContainer, "third_list", i);
+      }
+      
+
+      initializeBars();
+
+      
+
+      window.onSpotifyIframeApiReady = (IFrameAPI) => {
+        document.querySelectorAll('.soundcloud_content').forEach(element => {
+          var url = getSoundCloudEmbedUrl(element.querySelector("[name='music_url']").value);
+          var height = '160';
+          if (element.querySelector("[name='music_size']").value == 'card') {
+            height = '360';
+          }
+          element.parentElement.setAttribute('style', 'height: '+height+'px;');
+          element.innerHTML = `
+            <iframe width="100%" height="${height}" scrolling="no" frameborder="no" src="${url}"></iframe>
+          `;
+        });
+        document.querySelectorAll('.spotify_content').forEach(element => {
+          const callback = (EmbedController) => {
+          };
+          var height = '160';
+          if (element.querySelector("[name='music_size']").value == 'card') {
+            height = '360';
+          }
+          element.parentElement.setAttribute('style', 'height: '+height+'px;');
+          let options;
+            options = {
+              height: height,
+              margin: 0,
+              uri: 'spotify:track:'+getSpotifyId(element.querySelector("[name='music_url']").value)
+            };
+          IFrameAPI.createController(element, options, callback);
+        });
+      };
+    </script>
+    <script src="https://open.spotify.com/embed-podcast/iframe-api/v1" async></script>
+    <script src="https://w.soundcloud.com/player/api.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+  </body>
+</html>

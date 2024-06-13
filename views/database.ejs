@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html class="navbar-vertical-collapsed" lang="en-US" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <!-- ===============================================-->
+  <!--                  Document Title                -->
+  <!-- ===============================================-->
+  <title><%= appInfo.app_name %>  | Database</title>
+
+
+  <!-- ===============================================-->
+  <!--                     Favicons                   -->
+  <!-- ===============================================-->
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png">
+  <link rel="manifest" href="assets/img/favicons/site.webmanifest">
+  <link rel="mask-icon" href="assets/img/favicons/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="assets/img/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" content="assets/img/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+
+
+  <!-- ===============================================-->
+  <!--                    Stylesheets                 -->
+  <!-- ===============================================-->
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+  <link href="../assets/lib/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" />
+  <link href="../assets/lib/lightbox2/css/lightbox.min.css" rel="stylesheet" />
+  <link href="../assets/lib/fancybox/jquery.fancybox.min.css" rel="stylesheet" />
+  <link href="assets/lib/datatables-bs4/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="assets/lib/datatables.net-responsive-bs4/responsive.bootstrap4.css" rel="stylesheet">
+  <link href="assets/lib/leaflet/leaflet.css" rel="stylesheet">
+  <link href="assets/lib/leaflet.markercluster/MarkerCluster.css" rel="stylesheet">
+  <link href="assets/lib/leaflet.markercluster/MarkerCluster.Default.css" rel="stylesheet">
+  <link href="assets/css/theme.css" rel="stylesheet">
+  <link href="../assets/css/alert-module.css" rel="stylesheet" />
+  <link id="dark-mode-css" href="../assets/css/theme-dark.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:100,200,300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet">
+
+    <!-- ===============================================-->
+    <!--                    JavaScripts                 -->
+    <!-- ===============================================-->
+  <script src="assets/js/config.navbar-vertical.js"></script>
+  <script>
+    var mode = localStorage.getItem("theme-mode");
+    if (mode === "dark") {
+      document.getElementById("dark-mode-css").removeAttribute("disabled");
+    } else {
+      document.getElementById("dark-mode-css").setAttribute("disabled", true);
+    }
+  </script>
+</head>
+
+
+<body>
+  <script>
+    var ascending = true; // Set to false for descending sorting
+    var userCount = 0;
+  </script>
+  <script>
+    // Function to fetch the list of users from the API
+    async function fetchUsers() {
+      try {
+        const response = await axios({
+          method: "POST",
+          url: "/api/v1/users/allUsers",
+        });
+        return response.data.data.data; // Assuming the API returns the user data as an array
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        return []; // Return an empty array in case of an error
+      }
+    }
+
+    async function updateTableWithUsers() {
+      const users = await fetchUsers();
+      //user accounts
+      userCount = users.length;
+      const userCountDisplay = document.getElementById("user-count-display");
+      userCountDisplay.setAttribute("data-countup", `{"count": ${userCount}, "format": "comma", "prefix": ""}`);
+      userCountDisplay.textContent = userCount;
+      //verified user accounts
+      verifiedUserCount = users.filter(user => user.identity_verified === true).length;
+      const verifiedUserCountDisplay = document.getElementById("verified-user-count-display");
+      verifiedUserCountDisplay.setAttribute("data-countup", `{"count": ${verifiedUserCount}, "format": "comma", "prefix": ""}`);
+      verifiedUserCountDisplay.textContent = verifiedUserCount;
+      //subscribed users
+      subscribedUserCount = users.filter(user => user.plan === 'pro_monthly' || user.plan === 'pro_annually').length;
+      const subscribedUserCountDisplay = document.getElementById("subscribed-user-count-display");
+      subscribedUserCountDisplay.setAttribute("data-countup", `{"count": ${subscribedUserCount}, "format": "comma", "prefix": ""}`);
+      subscribedUserCountDisplay.textContent = subscribedUserCount;
+      //daily increase percentages
+      dailyPercentages()
+    }
+
+    async function dailyPercentages() {
+      const users = await fetchUsers();
+
+      const currentDate = new Date();
+      const todayStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+
+      const todayUsers = users.filter(user => new Date(user.joined_date) >= todayStart);
+      const totalUsers = users.length;
+      const todayUsersCount = todayUsers.length;
+      const percentageIncrease = (todayUsersCount / (totalUsers - todayUsersCount)) * 100;
+      const accountIncreaseDisplay = document.getElementById("account-increase-percentage");
+      accountIncreaseDisplay.textContent = percentageIncrease === Infinity ? "0.00%" : `${percentageIncrease.toFixed(2)}%`;
+
+      const verifiedUsers = users.filter(user => user.identity_verified === true)
+      const todayVerifiedUsers = verifiedUsers.filter(user => new Date(user.id_verified_date) >= todayStart);
+      const totalVerifiedUsers = verifiedUsers.length;
+      const todayVerifiedUsersCount = todayVerifiedUsers.length;
+      const verifiedPercentageIncrease = (todayVerifiedUsersCount / (totalVerifiedUsers - todayVerifiedUsersCount)) * 100;
+      const verifiedAccountIncreaseDisplay = document.getElementById("verified-account-increase-percentage");
+      verifiedAccountIncreaseDisplay.textContent = verifiedPercentageIncrease === Infinity ? "0.00%" : `${verifiedPercentageIncrease.toFixed(2)}%`;
+
+      const subscribedUsers = users.filter(user => user.plan === 'pro_monthly' || user.plan === 'pro_annually')
+      const todaySubscribedUsers = subscribedUsers.filter(user => new Date(user.subscribe_date) >= todayStart);
+      const totalSubscribedUsers = subscribedUsers.length;
+      const todaySubscribedUsersCount = todaySubscribedUsers.length;
+      const subscribedPercentageIncrease = (todaySubscribedUsersCount / (totalSubscribedUsers - todaySubscribedUsersCount)) * 100;
+      const subscribedAccountIncreaseDisplay = document.getElementById("subscribed-account-increase-percentage");
+      subscribedAccountIncreaseDisplay.textContent = subscribedPercentageIncrease === Infinity ? "0.00%" : `${subscribedPercentageIncrease.toFixed(2)}%`;
+    }
+    // Call the function to update the table when the document is ready
+    document.addEventListener("DOMContentLoaded", () => {
+      updateTableWithUsers();
+    });
+  </script>
+
+  <!-- ===============================================-->
+  <!--                    Main Content                -->
+  <!-- ===============================================-->
+  <main class="main" id="top">
+
+    <div class="container" data-layout="container">
+
+      <%- include('partials/sidebar.ejs') %>
+        <div class="content">
+          <%- include('partials/navbar.ejs') %>
+
+            <div class="card mb-3">
+              <div class="card-body d-flex align-items-center">
+                <div class="w-100">
+                  <h6 class="mb-3 text-800">Database Storage <strong class="text-dark">1775.06 MB </strong>of 2 GB</h6>
+                  <div class="progress mb-3 rounded-soft" style="height: 10px;">
+                    <div class="progress-bar bg-card-gradient border-right border-white border-2x" role="progressbar"
+                      style="width: 5.0%" aria-valuenow="43.72" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar bg-info border-right border-white border-2x" role="progressbar"
+                      style="width: 18.76%" aria-valuenow="18.76" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar bg-success border-right border-white border-2x" role="progressbar"
+                      style="width: 9.38%" aria-valuenow="9.38" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar bg-200" role="progressbar" style="width: 28.14%" aria-valuenow="28.14"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <div class="row fs--1 font-weight-semi-bold text-500">
+                    <div class="col-auto d-flex align-items-center pr-2"><span
+                        class="dot bg-primary"></span><span>System</span><span
+                        class="d-none d-md-inline-block d-lg-none d-xxl-inline-block ml-1">(895MB)</span></div>
+                    <div class="col-auto d-flex align-items-center px-2"><span class="dot bg-info"></span><span>User
+                        Data</span><span
+                        class="d-none d-md-inline-block d-lg-none d-xxl-inline-block ml-1">(379MB)</span></div>
+                    <div class="col-auto d-flex align-items-center px-2"><span
+                        class="dot bg-success"></span><span>Market Data</span><span
+                        class="d-none d-md-inline-block d-lg-none d-xxl-inline-block ml-1">(192MB)</span></div>
+                    <div class="col-auto d-flex align-items-center pl-2"><span class="dot bg-200"></span><span>Free
+                        Space</span><span
+                        class="d-none d-md-inline-block d-lg-none d-xxl-inline-block ml-1">(576MB)</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-deck">
+              <div class="card mb-3 overflow-hidden" style="min-width: 12rem">
+                <div class="bg-holder bg-card" style="background-image:url(assets/img/illustrations/corner-1.png);">
+                </div>
+                <!--/.bg-holder-->
+
+                <div class="card-body position-relative">
+                  <h6>Accounts<span id="account-increase-percentage"
+                      class="badge badge-soft-warning rounded-capsule ml-2">0%</span></h6>
+                  <!-- <div id="user-count-display" class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif text-warning" data-countup='{"count":435600,"format":"comma","prefix":""}'>0</div> -->
+                  <div id="user-count-display"
+                    class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif text-warning">0</div>
+                </div>
+              </div>
+              <div class="card mb-3 overflow-hidden" style="min-width: 12rem">
+                <div class="bg-holder bg-card" style="background-image:url(assets/img/illustrations/corner-2.png);">
+                </div>
+                <!--/.bg-holder-->
+
+                <div class="card-body position-relative">
+                  <h6>ID Verified<span id="verified-account-increase-percentage"
+                      class="badge badge-soft-info rounded-capsule ml-2">0%</span></h6>
+                  <div id="verified-user-count-display"
+                    class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif text-info">0</div>
+                </div>
+              </div>
+              <div class="card mb-3 overflow-hidden" style="min-width: 12rem">
+                <div class="bg-holder bg-card" style="background-image:url(assets/img/illustrations/corner-3.png);">
+                </div>
+                <!--/.bg-holder-->
+
+                <div class="card-body position-relative">
+                  <h6>Subscribed<span id="subscribed-account-increase-percentage"
+                      class="badge badge-soft-success rounded-capsule ml-2">0%</span></h6>
+                  <div id="subscribed-user-count-display"
+                    class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif text-success">0</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card mb-3">
+              <div class="card-header">
+                <div class="row align-items-center justify-content-between">
+                  <div class="col-4 col-sm-auto d-flex align-items-center pr-0">
+                    <h5 class="fs-0 mb-0 text-nowrap py-2 py-xl-0">Users</h5>
+                  </div>
+                  <div class="col-8 col-sm-auto text-right pl-2">
+                    <div class="d-none" id="customers-actions">
+                      <div class="input-group input-group-sm">
+                        <select class="custom-select cus" aria-label="Bulk actions" id= "bulk-actions">
+                          <option selected="">Bulk actions</option>
+                          <option value="Delete" onclick=deleteBulk(event)>Delete</option>
+                          <option value="Archive">Archive</option>
+                        </select>
+                        <button class="btn btn-falcon-default btn-sm ml-2 disabled" onClick="deleteBulk(event)" type="button" id="apply-button">Apply</button>
+                      </div>
+                    </div>
+                    <div id="customer-table-actions">
+                      <button class="btn btn-falcon-default btn-sm" type="button" data-bs-toggle="modal"
+                        data-bs-target="#addUserModal"><span class="fas fa-plus"
+                          data-fa-transform="shrink-3 down-2"></span><span
+                          class="d-none d-sm-inline-block ml-1">New</span></button>
+                      <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-external-link-alt"
+                          data-fa-transform="shrink-3 down-2"></span><span
+                          class="d-none d-sm-inline-block ml-1" id="exportButton">Export</span></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- modal for new button-->
+              <div>
+                <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Add User</h5>
+                      <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">x</a>
+                      </div>
+                    <div class="modal-body p-4">
+                      <form class="" novalidate id="addUserForm">
+                        <div class="row gx-2">
+                          <div class="mb-4 col-sm-6">
+                            <input class="form-control" type="text" autocomplete="on" placeholder="First Name" id="firstNameRegistration">
+                          </div>
+                          <div class="mb-4 col-sm-6">
+                            <input class="form-control" type="text" autocomplete="on" placeholder="Last Name" id="lastNameRegistration">
+                          </div>
+                        </div>
+                        <div class="mb-4">
+                          <div class="input-group">
+                            <span class="input-group-text" id="inputGroupPrepend">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-at" viewBox="0 0 16 16">
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill="currentColor"
+                                class="bi bi-at"
+                                viewBox="0 0 16 16"
+                              >
+                                <path
+                                  d="M13.106 7.222c0-2.967-2.249-5.032-5.482-5.032-3.35 0-5.646 2.318-5.646 5.702 0 3.493 2.235 5.708 5.762 5.708.862 0 1.689-.123 2.304-.335v-.862c-.43.199-1.354.328-2.29.328-2.926 0-4.813-1.88-4.813-4.798 0-2.844 1.921-4.881 4.594-4.881 2.735 0 4.608 1.688 4.608 4.156 0 1.682-.554 2.769-1.416 2.769-.492 0-.772-.28-.772-.76V5.206H8.923v.834h-.11c-.266-.595-.881-.964-1.6-.964-1.4 0-2.378 1.162-2.378 2.823 0 1.737.957 2.906 2.379 2.906.8 0 1.415-.39 1.709-1.087h.11c.081.67.703 1.148 1.503 1.148 1.572 0 2.57-1.415 2.57-3.643zm-7.177.704c0-1.197.54-1.907 1.456-1.907.93 0 1.524.738 1.524 1.907S8.308 9.84 7.371 9.84c-.895 0-1.442-.725-1.442-1.914z"
+                                />
+                              </svg>
+                            </span>
+                            <input class="form-control" type="email" placeholder="Email address" id="emailRegistration">
+                          </div>
+                        </div>
+                        <div class="mb-4">
+                          <div class="row gx-2">
+                            <div class="col-sm-12">
+                              <input class="form-control" autocomplete="password" type="password" placeholder="Password" id="passwordRegistration">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <button class="btn btn-primary d-block w-100 mt-5" type="submit" name="submit">Save</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- modal for edit user-->
+                <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                    <div class="modal-content">
+                      <div class="modal-body p-4">
+                        <h5 id="modalLabel" class="mb-4">Edit User</h5>
+
+                        <!-- Success and error divs -->
+
+                        <form class="" novalidate id="editUserForm">
+                          <div class="row gx-4">
+                            <div class="col-sm-6">
+                              <label class="form-label" for="firstName">First Name</label>
+                              <input class="form-control" type="text" value="" autocomplete="off" placeholder="First Name" id="firstName" required />
+                              <div class="invalid-feedback" id="invalidFirstNameRegistration">
+                                Please input a valid first name.
+                              </div>
+                            </div>
+                            <div class="col-sm-6">
+                              <label class="form-label" for="lastName">Last Name</label>
+                              <input class="form-control" type="text" value="" autocomplete="off" placeholder="Last Name" id="lastName" required />
+                              <div class="invalid-feedback" id="invalidLastNameRegistration">
+                                Please input valid last name.
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row gx-4 mt-4">
+                            <div class="col-sm-6">
+                              <label class="form-label" for="emailEdit">Email</label>
+                              <div class="input-group has-validation">
+                                <!-- Email icon -->
+                                <input class="form-control" type="email" value="" autocomplete="off" placeholder="Email address" id="emailEdit" required />
+                                <div class="invalid-feedback" id="invalidEmailRegistration">
+                                  Please input valid email.
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                              <label class="form-label" for="password">Password</label>
+                              <div class="input-group has-validation">
+                                <input class="form-control" type="text" value="" autocomplete="off" placeholder="Password" id="passwordEdit" required />
+                                <div class="invalid-feedback" id="invalid1PasswordRegistration">
+                                  Please input valid password.
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row gx-4 mt-4">
+                            <div class="col-sm-6">
+                              <label class="form-label" for="titleRegistration">Title</label>
+                              <input class="form-control" type="text" value="" autocomplete="off" placeholder="Title" id="titleRegistration" required />
+                            </div>
+                            <div class="col-sm-6">
+                              <label class="form-label" for="phoneRegistration">Phone</label>
+                              <input class="form-control" type="text" value="" autocomplete="off" placeholder="Phone" id="phoneRegistration" required />
+                            </div>
+                          </div>
+
+                          <div class="row gx-4 mt-4">
+                            <div class="col-sm-12">
+                              <label class="form-label" for="addressRegistration">Address</label>
+                              <input class="form-control" type="text" value="" autocomplete="off" placeholder="Address" id="addressRegistration" required />
+                            </div>
+                          </div>
+
+                          <div class="row gx-4 mt-4">
+                            <div class="col-sm-6">
+                              <label class="form-label" for="roleRegistration">Select Role</label>
+                              <select class="form-control" id="roleRegistration" name="role">
+                                <option value="user">User</option>
+                                <option value="employee">Employee</option>
+                                <option value="admin">Admin</option>
+                              </select>
+                            </div>
+                            <div class="col-sm-6">
+                              <label class="form-label" for="planRegistration">Select Plan</label>
+                              <select class="form-control" id="planRegistration" name="plan">
+                                <option value="basic">Basic</option>
+                                <option value="pro_monthly">Pro (Monthly)</option>
+                                <option value="pro_annually">Pro (Annually)</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="row gx-4 mt-4">
+                            <div class="col-sm-6">
+                              <label class="form-label" for="balanceRegistration">Balance</label>
+                              <input class="form-control" type="text" value="" autocomplete="off" placeholder="Balance" id="balanceRegistration" required />
+                            </div>
+                            <div class="col-sm-6">
+                              <label class="form-label" for="urlRegistration">URL</label>
+                              <input class="form-control" type="text" value="" autocomplete="off" placeholder="URL" id="urlRegistration" required />
+                            </div>
+                          </div>
+                          <div class="row gx-4 mt-4">
+                            <div class="col-sm-6">
+                              <label class="form-label">Email Verification</label>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="email_verified" id="emailVerifiedTrue" value="true" checked>
+                                <label class="form-check-label" for="emailVerifiedTrue">
+                                  Verified
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="email_verified" id="emailVerifiedFalse" value="false">
+                                <label class="form-check-label" for="emailVerifiedFalse">
+                                  Not Verified
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-6">
+                              <label class="form-label">Identity Verification</label>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="identity_verified" id="identityVerifiedTrue" value="true" checked>
+                                <label class="form-check-label" for="identityVerifiedTrue">
+                                  Verified
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="identity_verified" id="identityVerifiedFalse" value="false">
+                                <label class="form-check-label" for="identityVerifiedFalse">
+                                  Not Verified
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+
+                          <input type="hidden" id="userId" name="user_id" value="" />
+
+                          <div class="row gx-4 mt-4">
+                            <div class="col-sm-12">
+                              <button class="btn btn-primary float-end" type="submit" name="submit">Save</button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="card-body p-0">
+                <div class="falcon-data-table">
+                  <table id="dataTable"
+                    class="table table-sm mb-0 table-striped table-dashboard fs--1 data-table border-bottom border-400"
+                    data-options='{"searching":true,"responsive":false,"pageLength":10,"info":true,"lengthChange":true,"sWrapper":"falcon-data-table-wrapper","dom":"<&#39;row mx-1&#39;<&#39;col-sm-12 col-md-6&#39;l><&#39;col-sm-12 col-md-6&#39;f>><&#39;table-responsive&#39;tr><&#39;row no-gutters px-1 pb-3 align-items-center justify-content-center&#39;<&#39;col-auto&#39;p>>","language":{"paginate":{"next":"<span class=\"fas fa-chevron-right\"></span>","previous":"<span class=\"fas fa-chevron-left\"></span>"}}}'>
+                    <thead class="bg-200 text-900">
+                      <tr>
+                        <th class="align-middle no-sort pr-3">
+                          <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input checkbox-bulk-select" onChange="onChangeSelectAll(event)" id="checkbox-bulk-customers-select"
+                              type="checkbox" data-checkbox-body="#customers" data-checkbox-actions="#customers-actions"
+                              data-checkbox-replaced-element="#customer-table-actions" />
+                            <label class="custom-control-label" for="checkbox-bulk-customers-select"></label>
+                          </div>
+                        </th>
+                        <th class="align-middle sort" style="min-width: 100px">Name</th>
+                        <th class="align-middle sort">Email</th>
+                        <th class="align-middle sort">Phone</th>
+                        <th class="align-middle sort">Plan</th>
+                        <th class="align-middle sort">Role</th>
+                        <th class="align-middle sort">Joined Date</th>
+                        <th class="align-middle sort">Identity Verified</th>
+                        <th class="align-middle sort">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="customers">
+                      <!-- New users dynamically added here -->
+
+                      <!-- New users dynamically added here -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="row no-gutters">
+              <div class="col-lg-4 pr-lg-2">
+                <div class="card h-100 bg-gradient">
+                  <div class="card-header bg-transparent">
+                    <h5 class="text-white">Active users right now</h5>
+                    <div id="active_users_right_now" class=" display-1 font-weight-normal text-white" >0
+                    </div>
+                  </div>
+                  <div class="card-body text-white fs--1">
+                    <p class="border-bottom pb-2" style="border-color: rgba(255, 255, 255, 0.15) !important">Page views
+                      per second</p>
+                    <canvas class="max-w-100" id="real-time-user-active" width="10" height="4"></canvas>
+                    <div id="top-pages-list" class="list-group-flush mt-4">
+                      <div
+                        class="list-group-item bg-transparent d-flex justify-content-between px-0 py-1 font-weight-semi-bold border-top-0"
+                        style="border-color: rgba(255, 255, 255, 0.15)">
+                        <p class="mb-0">Top Active Pages</p>
+                        <p class="mb-0">Active Users</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-8 pl-lg-2">
+                <div class="card h-100 mt-3 mt-lg-0">
+                  <div class="card-header bg-light d-flex flex-between-center">
+                    <h5 class="mb-0">Active users</h5>
+                  </div>
+                  <div class="card-body h-100 p-0">
+                    <div class="h-100 bg-white" id="map" style="min-height: 300px;"></div>
+                  </div>
+                  <div class="card-footer bg-light">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="auth-alert" role="alert" style="z-index: 9999;"></div>
+            <footer>
+              <%- include('partials/footer.ejs') %>
+            </footer>
+        </div>
+  </main>
+  <!-- ===============================================-->
+  <!--    End of Main Content-->
+  <!-- ===============================================-->
+
+
+
+
+  <!-- ===============================================-->
+  <!--    JavaScripts-->
+  <!-- ===============================================-->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/popper.min.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="../vendors/countup/countUp.umd.js"></script>
+  <script src="../vendors/echarts/echarts.min.js"></script>
+  <script src="../assets/data/world.js"></script>
+  <script src="../vendors/dayjs/dayjs.min.js"></script>
+  <script src="../assets/js/flatpickr.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+  <script src="../vendors/list.js/list.min.js"></script>
+  <script src="../vendors/anchorjs/anchor.min.js"></script>
+  <script src="assets/lib/@fortawesome/all.min.js"></script>
+  <script src="assets/lib/stickyfilljs/stickyfill.min.js"></script>
+  <script src="assets/lib/sticky-kit/sticky-kit.min.js"></script>
+  <script src="assets/lib/is_js/is.min.js"></script>
+  <script src="assets/lib/lodash/lodash.min.js"></script>
+  <script src="assets/lib/perfect-scrollbar/perfect-scrollbar.js"></script>
+  <script src="assets/lib/chart.js/Chart.min.js"></script>
+  <script src="assets/lib/datatables/js/jquery.dataTables.min.js"></script>
+  <script src="assets/lib/datatables-bs4/dataTables.bootstrap4.min.js"></script>
+  <script src="assets/lib/datatables.net-responsive/dataTables.responsive.js"></script>
+  <script src="assets/lib/datatables.net-responsive-bs4/responsive.bootstrap4.js"></script>
+  <script src="assets/lib/leaflet/leaflet.js"></script>
+  <script src="assets/lib/leaflet.markercluster/leaflet.markercluster.js"></script>
+  <script src="assets/lib/leaflet.tilelayer.colorfilter/leaflet-tilelayer-colorfilter.min.js"></script>
+  <script src="assets/js/theme.js"></script>
+  <script src="../vendors/popper/popper.min.js"></script>
+  <script src="../vendors/bootstrap/bootstrap.min.js"></script>
+  <script src="../vendors/anchorjs/anchor.min.js"></script>
+  <script src="../vendors/is/is.min.js"></script>
+  <script src="../vendors/swiper/swiper-bundle.min.js"> </script>
+  <script src="../vendors/typed.js/typed.js"></script>
+  <script src="../vendors/fontawesome/all.min.js"></script>
+  <script src="../vendors/lodash/lodash.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+  <script src="../vendors/list.js/list.min.js"></script>
+  <script src="js/signupNew.js"></script>
+  <script src="js/add-user.js"></script>
+  <script src="js/edit-user.js"></script>
+  <script src="../js/alertModule.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+  <script type="text/javascript">
+    var users = []
+    var userIds = []
+
+    $(document).ready(async function () {
+      function capitalizeFirstLetter(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+      }
+
+
+      const usersData = await fetchUsers();
+      users = usersData
+      usersData.forEach(function (item, index) {
+        const avatarUrl = item.image ? `../img/users/${item.image}` : `https://avatar.oxro.io/avatar.svg?name=${encodeURIComponent(capitalizeFirstLetter(item.first_name) + ' ' + capitalizeFirstLetter(item.last_name))}&background=random&color=fff&fontSize=200px&bold=true`;
+        let status = '';
+
+        if (item.activity_status === 'away') {
+          status = 'status-offline';
+        } else if (item.activity_status === 'busy') {
+          status = 'status-away';
+        } else {
+          const currentTime = new Date(new Date() - 5 * 60 * 1000).toUTCString()
+          if(item.recent_activity && new Date(item.recent_activity.online_at).toUTCString() > currentTime){
+            status = 'status-online';
+          }
+          else{
+            status = 'status-offline';
+          }
+        }
+        $('.data-table').DataTable().row.add([
+          `<td>
+              <div class="custom-control custom-checkbox py-3">
+                <input class="custom-control-input checkbox-bulk-select-target" onChange= onCheckBoxChange(event) type="checkbox" id="customer-checkbox-${index}" value="${item.id}" />
+                <label class="custom-control-label" for="customer-checkbox-${index}"></label>
+              </div>
+            </td>`,
+          `<td class=" white-space-nowrap customer-name-column">
+            <div class="py-2 align-middle">  
+              <a href="account-detail">
+                <div class="media d-flex align-items-center">
+
+                  <div class="avatar avatar-xl mr-2 ${status}" style="margin-top: 1%;"> <!-- Status options: status-online, status-offline, status-away, status-do-not-disturb -->
+                    <img src="${avatarUrl}" alt="User Avatar" class="rounded-circle">
+                  </div>
+                  <div class="media-body mt-1" >
+                    <h5 class="mb-0 fs--1">${item.first_name + " " + item.last_name}</h5>
+                  </div>
+                </div>
+              </a>
+            </div>
+
+          </td>`,
+          `<td class="py-2 align-middle">
+            <div class="py-3">
+              <a href="mailto:${item.email}">${item.email}</a>
+            </div>
+          </td>`,
+          `<td class="py-2 align-middle white-space-nowrap"> 
+            <div class="py-3">
+              <a href="tel:${item.phone}">${item.phone}</a>
+            </div> 
+          </td>`,
+          `<td class="py-2 align-middle">
+            <div class="py-3">
+              ${item.plan}
+            </div>
+          </td>`,
+
+          `<td class="py-2 align-middle">
+            <div class="py-3">
+              ${item.role}
+            </div>
+          </td>`,
+          `<td class="py-2 align-middle">
+            <div class="py-3">
+              ${item.joined_date}
+            </div>
+          </td>`,
+          `<td class="py-2 align-middle">
+            <div class="py-3">
+              ${item.identity_verified}
+            </div>
+          </td>`,
+          `<td class="py-2 align-middle white-space-nowrap">
+            <div class="btn-group dropstart mt-2">
+              <button class="btn btn-link text-600 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="fas fa-ellipsis-h fs--1"></span>
+              </button>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#!">Contact</a>
+                  <a class="dropdown-item" href="#!" onclick="editUser(event)" data-user-id="${item.id}">Edit</a>
+                  <a class="dropdown-item text-danger" href="#!" onclick="deleteUser(event)" data-user-id="${item.id}">Delete</a>
+                  <a class="dropdown-item text-danger" href="#!" onclick="banUser(event)" data-user-id="${item.id}">Ban</a>
+              </div>
+            </div>
+          </td>`
+        ]).draw(false);
+      })
+      var checkboxes = document.querySelectorAll('.checkbox-bulk-select');
+      checkboxes.forEach(function(checkbox) {
+          checkbox.addEventListener('change', function() {
+              var length = document.querySelectorAll('.checkbox-bulk-select:checked').length
+              if (checkbox.checked || length > 0) {
+                  userIds.push(checkbox.value)
+                  var customersActions = document.getElementById('customers-actions');
+                  customersActions.classList.remove('d-none');
+                  var customersActions = document.getElementById('customer-table-actions');
+                  customersActions.classList.add('d-none');
+              }
+              else
+              {
+                userIds.pop(checkbox.value)
+                var customersActions = document.getElementById('customers-actions');
+                customersActions.classList.add('d-none');
+                var customersActions = document.getElementById('customer-table-actions');
+                customersActions.classList.remove('d-none');
+              }
+          });
+      });
+
+      document.getElementById('bulk-actions').addEventListener('change', (e) => {
+        var value = document.getElementById('bulk-actions').value
+        if (value == 'Delete' || value == 'Archive'){
+          document.getElementById("apply-button").classList.remove("disabled")
+        }
+        else{
+          document.getElementById("apply-button").classList.add("disabled")
+        }
+      })
+    });
+
+    async function deleteBulk(event){
+      var value = document.getElementById('bulk-actions').value
+        if (value == 'Delete'){
+            try {
+          const result = await axios({
+              method: "POST",
+              url: `/api/v1/users/deleteUsers`,
+              data: {userIDs: userIds.filter(e => e !== 'on')}
+            });
+            if (result.status == '200') {
+              window.location.reload();
+            }
+          } catch (error) {
+            console.error(`An error occurred while deleting user with ID ${userId}:`, error);
+          }
+        }
+    }
+
+    async function deleteUser(event) {
+      event.preventDefault();
+      const userId = event.target.getAttribute('data-user-id');
+      try {
+        const result = await axios({
+          method: "DELETE",
+          url: `/api/v1/users/${userId}`,
+        });
+        if (result.status == '204') {
+          window.location.reload();
+        }
+      } catch (error) {
+        console.error(`An error occurred while deleting user with ID ${userId}:`, error);
+      }
+    }
+
+    async function editUser(event) {
+      const userId = event.target.getAttribute('data-user-id');
+      const user = users.find(user => user.id == userId);
+      populateEditModal(user)
+
+      $('#editUserModal').modal('show');
+    }
+
+
+    function populateEditModal(userDetails) {
+      $('#editUserForm #firstName').val(userDetails.first_name);
+      $('#editUserForm #lastName').val(userDetails.last_name);
+      $('#editUserForm #emailEdit').val(userDetails.email);
+      $('#editUserForm #addressRegistration').val(userDetails.address);
+      $('#editUserForm #titleRegistration').val(userDetails.title);
+      $('#editUserForm #planRegistration').val(userDetails.plan);
+      $('#editUserForm #phoneRegistration').val(userDetails.phone);
+      $('#editUserForm #roleRegistration').val(userDetails.role);
+      $('#editUserForm #balanceRegistration').val(userDetails.balance);
+      $('#editUserForm #urlRegistration').val(userDetails.url);
+      $('#editUserForm #userId').val(userDetails.id);
+
+    console.log("Identity Verified:", userDetails.identity_verified);
+      if (userDetails.identity_verified === true) {
+          $('#editUserForm #identityVerifiedTrue').prop('checked', true);
+      } else {
+          $('#editUserForm #identityVerifiedFalse').prop('checked', true);
+      }
+
+      console.log("Email Verified:", userDetails.email_verified);
+      if (userDetails.email_verified === true) {
+          $('#editUserForm #emailVerifiedTrue').prop('checked', true);
+      } else {
+          $('#editUserForm #emailVerifiedFalse').prop('checked', true);
+      }
+
+    }
+
+    function saveEditedUser() {
+      $('#editUserModal').modal('hide');
+    }
+    function onCheckBoxChange(event){
+      const checkedCustomCheckboxes = document.querySelectorAll('.custom-checkbox .custom-control-input:checked');
+      if(checkedCustomCheckboxes.length > 1){
+        $('#customers-actions').removeClass('d-none')
+        $('#customer-table-actions').addClass('d-none')
+        userIds = []
+        checkedCustomCheckboxes.forEach(checkbox => {
+          userIds.push(checkbox.value)
+        });
+      } else {
+        $('#customers-actions').addClass('d-none')
+        $('#customer-table-actions').removeClass('d-none')
+      }
+    }
+
+    function onChangeSelectAll(event){
+      if($(event.target).attr('checked') !== 'checked'){
+        const checkedCustomCheckboxes = document.querySelectorAll('.custom-checkbox .custom-control-input:checked');
+        checkedCustomCheckboxes.forEach(checkbox => {
+          userIds = []         
+          checkbox.checked = false;
+        });
+      } else {
+        const checkedCustomCheckboxes = document.querySelectorAll('.custom-checkbox .custom-control-input');
+        checkedCustomCheckboxes.forEach(checkbox => {
+          userIds.push(checkbox.value)
+          checkbox.checked = true;
+        });
+      }
+    }
+
+  </script>
+
+</body>
+</html>

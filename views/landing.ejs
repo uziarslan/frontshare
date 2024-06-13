@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- ===============================================-->
+    <!--                  Document Title                -->
+    <!-- ===============================================-->
+    <title><%= appInfo.app_name %>  | Welcome</title>
+
+    <!-- ===============================================-->
+    <!--                     Favicons                   -->
+    <!-- ===============================================-->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png"/>
+    <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
+    <link rel="mask-icon" href="assets/img/favicons/safari-pinned-tab.svg" color="#5bbad5"/>
+    <link rel="shortcut icon" href="assets/img/favicons/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="msapplication-config" content="assets/img/favicons/browserconfig.xml"/>
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- ===============================================-->
+    <!--                    Stylesheets                 -->
+    <!-- ===============================================-->
+    <link href="../vendors/swiper/swiper-bundle.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet"/>
+    <link href="../vendors/simplebar/simplebar.min.css" rel="stylesheet" />
+    <link href="../assets/css/theme.min.css" rel="stylesheet" id="style-rtl" />
+    <link href="../assets/css/theme.min.css" rel="stylesheet" id="style-default"/>
+    <link href="../assets/css/user.min.css" rel="stylesheet" id="user-style-default"/>
+    <link href="../assets/css/theme-dark.css" rel="stylesheet" />
+    <link href="../assets/css/alert-module.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+
+    <!-- ===============================================-->
+    <!--                   JavaScripts                  -->
+    <!-- ===============================================-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+  </head>
+
+  <body>
+    <!-- ===============================================-->
+    <!--                   Main Content                 -->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+      <nav class="navbar navbar-expand-lg fixed-top navbar-dark navbar-custom px-3">
+        <div class="container">
+          <!-- Navbar Brand -->
+          <a class="navbar-brand" href="/">
+            <img src="/img/FrontShare-Logo.png" alt="Brand Logo" height="40">
+          </a>
+    
+          <!-- Mobile Toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarStandard" aria-controls="navbarStandard" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+    
+          <!-- Collapsible content -->
+          <div class="collapse navbar-collapse" id="navbarStandard">
+            <ul class="navbar-nav ml-auto"> <!-- Changed ms-auto to ml-auto for better compatibility -->
+              <li class="nav-item">
+                <a class="nav-link text-white font-weight-bold" href="#" data-toggle="modal" data-target="#addAccountModal">Account</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+
+      <div id="auth-alert" role="alert" style="z-index: 9999;"></div>
+
+      <!-- Login Modal -->
+      <div class="modal fade" id="exampleModalLogin" tabindex="-1" role="dialog" ria-labelledby="modalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body p-4">
+              <div style="text-align: center;" class="mb-3">
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <h5 id="modalLabel">Login</h5>
+                <div class="text-end">
+                  or <a href="#" data-target="#exampleModalSignup" data-toggle="modal" id="loginButton"
+                    data-dismiss="modal">Create an account</a>
+                </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-auto">
+                  <div id="successLogin" style="display: none">
+                    <div class="alert alert-success border-2 d-flex align-items-center" role="alert">
+                      <div class="bg-success me-3 icon-item">
+                        <span class="fas fa-check-circle text-white fs-3"></span>
+                      </div>
+                      <p class="mb-0 flex-1">Successfully logged in!</p>
+                      <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                  </div>
+                  <div id="loginErrorInvalidCredentials" style="display: none">
+                    <div id="loginErrorInvalidCredentialsPopup" class="alert alert-danger border-2 d-flex align-items-center"
+                      role="alert">
+                      <div class="bg-danger me-3 icon-item">
+                        <span class="fas fa-times-circle text-white fs-3"></span>
+                      </div>
+                      <p class="mb-0 flex-1">
+                        Unable to login! Invalid Credentials!
+                      </p>
+                      <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <form class="needs-validation" novalidate id="loginForm">
+                <div class="input-group has-validation mb-3">
+                  <span class="input-group-text" id="inputGroupPrepend">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-at"
+                      viewBox="0 0 16 16">
+                      <path
+                        d="M13.106 7.222c0-2.967-2.249-5.032-5.482-5.032-3.35 0-5.646 2.318-5.646 5.702 0 3.493 2.235 5.708 5.762 5.708.862 0 1.689-.123 2.304-.335v-.862c-.43.199-1.354.328-2.29.328-2.926 0-4.813-1.88-4.813-4.798 0-2.844 1.921-4.881 4.594-4.881 2.735 0 4.608 1.688 4.608 4.156 0 1.682-.554 2.769-1.416 2.769-.492 0-.772-.28-.772-.76V5.206H8.923v.834h-.11c-.266-.595-.881-.964-1.6-.964-1.4 0-2.378 1.162-2.378 2.823 0 1.737.957 2.906 2.379 2.906.8 0 1.415-.39 1.709-1.087h.11c.081.67.703 1.148 1.503 1.148 1.572 0 2.57-1.415 2.57-3.643zm-7.177.704c0-1.197.54-1.907 1.456-1.907.93 0 1.524.738 1.524 1.907S8.308 9.84 7.371 9.84c-.895 0-1.442-.725-1.442-1.914z" />
+                    </svg>
+                  </span>
+                  <input class="form-control rounded-end" type="email" autocomplete="on" placeholder="Email address"
+                    id="emailLogin" required />
+                  <div class="invalid-feedback" id="invalidEmailLogin">
+                    Please input valid email.
+                  </div>
+                </div>
+                <div class="input-group has-validation mb-3">
+                  <input class="form-control" type="password" autocomplete="on" placeholder="Password" id="passwordLogin"
+                    required />
+                  <button class="btn btn-sm btn-primary rounded-end" type="button" id="toggleLoginPasswordVisibility">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash"
+                      viewBox="0 0 16 16">
+                      <path
+                        d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" />
+                      <path
+                        d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z" />
+                      <path
+                        d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z" />
+                    </svg>
+                  </button>
+                  <div class="invalid-feedback" id="invalidPasswordLogin">
+                    Please input valid password.
+                  </div>
+                </div>
+                <div class="row flex-between-center">
+                  <div class="col-auto">
+                    <div class="form-check mb-0">
+                      <input class="form-check-input" type="checkbox" id="modal-checkbox" />
+                      <label class="form-check-label mb-0" for="modal-checkbox">Remember me</label>
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <a class="fs--1" id="forget-password-link" data-target="#forgotPasswordModal" data-toggle="modal"
+                      href="#">Forgot Password?</a>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">
+                    Log in
+                  </button>
+                </div>
+              </form>
+              <div class="position-relative mt-4">
+                <hr />
+                <div class="divider-content-center text-center">or login with</div>
+              </div>
+      
+              <div class="d-flex justify-content-between mb-2">
+                <a id="google-login" class="btn btn-outline-google-plus btn-sm text-danger d-block w-100" href="#"><span
+                    class="fab fa-google-plus-g me-2" data-fa-transform="grow-8"></span>
+                  google</a>
+                <a id="facebook-login" class="btn btn-outline-facebook btn-sm text-primary d-block w-100" href="#"><span
+                    class="fab fa-facebook-square me-2" data-fa-transform="grow-8"></span>
+                  facebook</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Login Modal -->
+
+      <!-- Signup -->
+      <div class="modal fade" id="exampleModalSignup" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body p-4">
+              <div style="text-align: center;" class="mb-3">
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <h5 id="modalLabel">Register</h5>
+                <div class="text-end">
+                  Have an account? <a href="#" data-target="#exampleModalLogin" data-toggle="modal" id="loginButton"
+                    data-dismiss="modal">Login</a>
+                </div>
+              </div>
+              <div class="row text-start justify-content-between align-items-center mb-2">
+                <div class="col-auto">
+                  <div id="successPopupDiv" style="display: none">
+                    <div id="successPopup" class="alert alert-success border-2 d-flex align-items-center" role="alert">
+                      <div class="bg-success me-3 icon-item">
+                        <span class="fas fa-check-circle text-white fs-3"></span>
+                      </div>
+                      <p class="mb-0 flex-1">
+                        Successfully registered new account
+                      </p>
+                      <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                  </div>
+                  <div id="errorEmailExistsRegister" style="display: none">
+                    <div id="errorEmailExistsPopup" class="alert alert-danger border-2 d-flex align-items-center"
+                      role="alert">
+                      <div class="bg-danger me-3 icon-item">
+                        <span class="fas fa-times-circle text-white fs-3"></span>
+                      </div>
+                      <p class="mb-0 flex-1">This email already exists !</p>
+                      <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                  </div>
+                  <div id="errorRegistration" style="display: none">
+                    <div id="errorRegistrationPopup" class="alert alert-danger border-2 d-flex align-items-center"
+                      role="alert">
+                      <div class="bg-danger me-3 icon-item">
+                        <span class="fas fa-times-circle text-white fs-3"></span>
+                      </div>
+                      <p class="mb-0 flex-1">
+                        Unable to register account ! Please enter correct
+                        details !
+                      </p>
+                      <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <form class="needs-validation" novalidate id="signupForm">
+                <div class="row gx-2">
+                  <div class="mb-3 col-sm-6">
+                    <input class="form-control" type="text" autocomplete="on" placeholder="First Name"
+                      id="firstNameRegistration" required />
+                    <div class="invalid-feedback" id="invalidFirstNameRegistration">
+                      Please input valid first name.
+                    </div>
+                  </div>
+                  <div class="mb-3 col-sm-6">
+                    <input class="form-control" type="text" autocomplete="on" placeholder="Last Name"
+                      id="lastNameRegistration" required />
+                    <div class="invalid-feedback" id="invalidLastNameRegistration">
+                      Please input valid last name.
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-at"
+                        viewBox="0 0 16 16">
+                        <path
+                          d="M13.106 7.222c0-2.967-2.249-5.032-5.482-5.032-3.35 0-5.646 2.318-5.646 5.702 0 3.493 2.235 5.708 5.762 5.708.862 0 1.689-.123 2.304-.335v-.862c-.43.199-1.354.328-2.29.328-2.926 0-4.813-1.88-4.813-4.798 0-2.844 1.921-4.881 4.594-4.881 2.735 0 4.608 1.688 4.608 4.156 0 1.682-.554 2.769-1.416 2.769-.492 0-.772-.28-.772-.76V5.206H8.923v.834h-.11c-.266-.595-.881-.964-1.6-.964-1.4 0-2.378 1.162-2.378 2.823 0 1.737.957 2.906 2.379 2.906.8 0 1.415-.39 1.709-1.087h.11c.081.67.703 1.148 1.503 1.148 1.572 0 2.57-1.415 2.57-3.643zm-7.177.704c0-1.197.54-1.907 1.456-1.907.93 0 1.524.738 1.524 1.907S8.308 9.84 7.371 9.84c-.895 0-1.442-.725-1.442-1.914z" />
+                      </svg>
+                    </span>
+                    <input class="form-control" type="email" autocomplete="on" placeholder="Email address"
+                      id="emailRegistration" required />
+                    <div class="invalid-feedback" id="invalidEmailRegistration">
+                      Please input valid email.
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="row gx-2">
+                    <div class="mb-3 col-sm-6">
+                      <input class="form-control" type="password" autocomplete="on" placeholder="Password"
+                        id="passwordRegistration" required />
+                    </div>
+                    <div class="mb-3 col-sm-6">
+                      <div class="input-group">
+                        <input class="form-control" type="password" autocomplete="on" placeholder="Confirm Password"
+                          id="confirmPasswordRegistration" required />
+                        <button class="btn btn-sm btn-primary" type="button" id="togglePasswordVisibility">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-eye-slash" viewBox="0 0 16 16">
+                            <path
+                              d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" />
+                            <path
+                              d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z" />
+                            <path
+                              d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="invalid-feedback" id="invalidPasswordRegistration">
+                    Please input valid password.
+                  </div>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="modal-register-checkbox" required />
+                  <label class="form-label" for="modal-register-checkbox">I accept the <a href="/privacy-policy">terms</a> and
+                    <a href="/privacy-policy">privacy policy</a></label>
+                  <div class="invalid-feedback">
+                    You must accept the terms and privacy policy.
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit"
+                    id="register-button-signup">Register</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Signup -->
+
+
+      <!-- Lock Screen -->
+      <div class="modal fade" id="addAccountModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body p-4">
+              <div style="text-align: center;" class="mb-3">
+              </div>
+
+              <div class="kanban-column col-12 m-auto p-0">
+                <div class="kanban-column-header bg-light">
+                  <h5 class="modal-title m-auto text-600">Lock Screen</h5>
+                </div>
+                <div id="accountList" class="kanban-items-container scrollbar perfect-scrollbar bg-light"
+                  style="max-height: 300px;">
+                  <!-- Start Card -->
+              
+                  <!-- End Card -->
+                </div>
+                <!-- Add another card button -->
+                <div class="kanban-column-footer bg-light">
+                  <button class="btn btn-link btn-sm btn-block text-decoration-none text-600" type="button"  data-dismiss="modal" id="addAccountButton">
+                    <span class="fas fa-plus mr-2"></span>Add Account
+                  </button>
+                </div>
+              </div>
+
+              
+            </div>
+
+            <div class="position-relative mb-3">
+              <hr />
+              <div class="divider-content-center text-center fs--1">
+                Don't have an account yet? <a href="#" data-target="#exampleModalSignup" data-toggle="modal" id="loginButton"
+                  data-dismiss="modal">Sign Up</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Lock Screen -->
+
+      <!-- Forgot password Modal -->
+      <div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content text-center">
+            <div class="modal-body p-4">
+              <div class="row text-start justify-content-between align-items-center mb-2">
+                <div class="col-auto mb-2">
+                  <h5 id="modalLabel">Forgot your password?</h5>
+                </div>
+                <small class="">Enter your email and we'll send you a reset link.</small>
+              </div>
+              <form class="" id="forgotPasswordForm" onsubmit="return validatePassword()">
+                <input class="form-control" type="email" placeholder="Email address" id="reset-email-link" required='true' />
+                <!-- Add a div element for displaying the error message -->
+                <div id="invalid-email-input" class="text-danger"></div>
+                <button class="btn btn-primary mt-3 w-100" type="submit" name="submit">Send reset link</button>
+              </form>
+              <a class="fs--1 text-600 text-center" href="#!">I can't recover my account using this page<span
+                  class="d-inline-block ms-1">&rarr;</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Forgot password Modal -->
+
+      <!-- Reset password Modal -->
+        <div class="modal fade" id="resetPasswordModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content text-center">
+              <div class="modal-body p-4">
+                <div class="row text-start justify-content-between align-items-center mb-2 mt-4">
+                  <div class="col-auto">
+                    <h5 id="modalLabel mb-3" style="text-align: center;">Set new password?</h5>
+                  </div>
+                </div>
+                <form class="" id="resetPasswordForm">
+                  <input class="form-control mb-2" type="password" placeholder="New Password" id="reset-password" required />
+                  <div id="password-error" class="text-danger"></div> <!-- Error message for New Password -->
+                  <input class="form-control mb-2" type="password" placeholder="Confirm Password" id="confirm-reset-password"
+                    required />
+                  <div id="confirm-password-error" class="text-danger"></div> <!-- Error message for Confirm Password -->
+                  <button class="btn btn-primary w-25 mt-3" type="submit" name="submit">Update</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- Reset password Modal -->
+
+      <!-- confirm email Modal -->
+        <div class="modal fade" id="confirmEmailModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-body p-4">
+                <div style="text-align: center;" class="mb-3">
+                  <div class="text-center"><img class="d-block mx-auto mb-4"
+                      src="../../../assets/img/icons/spot-illustrations/16.png" alt="Email" width="100" />
+                    <h4 class="mb-2">Please check your email!</h4>
+                    <p>An email has been sent to <strong id="forwardEmail">xyz@abc.com</strong>. Please click on the included
+                      link to reset your password.
+                    </p><a class="btn btn-primary btn-sm mt-3" href="#" data-target="#exampleModalLogin" data-toggle="modal"
+                      id="returnToLogin"><span class="fas fa-chevron-left me-1"
+                        data-fa-transform="shrink-4 down-1"></span>Return to login</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- confirm email Modal -->
+
+      <!-- Logout Modal -->
+      <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body p-4">
+      
+              <div class="text-center">
+                <img class="d-block mx-auto mb-4" src="../../assets/img/illustrations/rocket.png" alt="shield" width="70" />
+                <h4>See you again!</h4>
+                <p>
+                  Thanks for using <%= appInfo.app_name %>. You are
+                    <br />
+                    now successfully signed out.
+                </p>
+                <a class="btn btn-sm btn-primary" href="#" data-target="#addAccountModal" data-toggle="modal" id="logoutModalButton" data-dismiss="modal">
+                  Return to Lock Screen
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Logout Modal -->
+
+      <!-- confirm email Signup Modal -->
+        <div class="modal fade" id="confirmEmailSignupModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-body p-4">
+                <div style="text-align: center;" class="mb-3">
+                  <div class="text-center"><img class="d-block mx-auto mb-4"
+                      src="../../../assets/img/icons/spot-illustrations/16.png" alt="Email" width="100" />
+                    <h4 class="mb-2">Please check your email!</h4>
+                    <p>An email has been sent to <strong id="forwardSignupEmail">xyz@abc.com</strong>. Please click on the
+                      included link to confirm your email.
+                    </p><a class="btn btn-primary btn-sm mt-3" href="#" data-target="#exampleModalLogin" data-toggle="modal"
+                      id="returnToLoginEmail"><span class="fas fa-chevron-left me-1"
+                        data-fa-transform="shrink-4 down-1"></span>Return to login</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- confirm email Signup Modal -->
+
+      <div class="bg"></div>
+      <style>
+      .bg {
+        position: fixed;
+        top: 0; bottom: 0; left: 0; right: 0;
+        height: 100%;  min-height: 100%;
+        max-height: 100%;
+        z-index: -30;
+        background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNy4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAzMDAwIDEwMDAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDMwMDAgMTAwMCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8ZyBpZD0iTGF5ZXJfMSI+DQoJPGxpbmVhckdyYWRpZW50IGlkPSJTVkdJRF8xXyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIxMjMuMzg0NyIgeTE9IjEwMi41NDM5IiB4Mj0iMjg5Ni4xMTIxIiB5Mj0iOTM4LjkwNzUiPg0KCQk8c3RvcCAgb2Zmc2V0PSIwIiBzdHlsZT0ic3RvcC1jb2xvcjojQ0NFMEY0Ii8+DQoJCTxzdG9wICBvZmZzZXQ9IjUuODQzMDIyZS0wMDIiIHN0eWxlPSJzdG9wLWNvbG9yOiNDM0RDRjIiLz4NCgkJPHN0b3AgIG9mZnNldD0iMC4xNTU3IiBzdHlsZT0ic3RvcC1jb2xvcjojQTlEMkVFIi8+DQoJCTxzdG9wICBvZmZzZXQ9IjAuMjc5NyIgc3R5bGU9InN0b3AtY29sb3I6IzgwQzJFNyIvPg0KCQk8c3RvcCAgb2Zmc2V0PSIwLjQyNDEiIHN0eWxlPSJzdG9wLWNvbG9yOiM0N0FDREUiLz4NCgkJPHN0b3AgIG9mZnNldD0iMC41MTc2IiBzdHlsZT0ic3RvcC1jb2xvcjojMUU5Q0Q3Ii8+DQoJCTxzdG9wICBvZmZzZXQ9IjAuNzQ0OCIgc3R5bGU9InN0b3AtY29sb3I6IzAwNzVCRSIvPg0KCQk8c3RvcCAgb2Zmc2V0PSIwLjk5NDQiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMDVCOTciLz4NCgk8L2xpbmVhckdyYWRpZW50Pg0KCQ0KCQk8cmVjdCB4PSItNTIuNSIgeT0iMC41IiBvcGFjaXR5PSIwLjUiIGZpbGw9InVybCgjU1ZHSURfMV8pIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjMxMjMiIGhlaWdodD0iMTA0MCIvPg0KPC9nPg0KPGcgaWQ9IkxheWVyXzIiPg0KCTxsaW5lYXJHcmFkaWVudCBpZD0iU1ZHSURfMl8iIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iNjMuNDI2NCIgeTE9IjExMS4wMTg3IiB4Mj0iMjg0OS43OSIgeTI9IjkxNS41NjQyIj4NCgkJPHN0b3AgIG9mZnNldD0iMCIgc3R5bGU9InN0b3AtY29sb3I6IzgzOTQwMCIvPg0KCQk8c3RvcCAgb2Zmc2V0PSIwLjQzNzQiIHN0eWxlPSJzdG9wLWNvbG9yOiNCRTg4NTE7c3RvcC1vcGFjaXR5OjAuNTYyNiIvPg0KCQk8c3RvcCAgb2Zmc2V0PSIwLjgyMDUiIHN0eWxlPSJzdG9wLWNvbG9yOiNFRDdGOTM7c3RvcC1vcGFjaXR5OjAuMTc5NSIvPg0KCQk8c3RvcCAgb2Zmc2V0PSIxIiBzdHlsZT0ic3RvcC1jb2xvcjojRkY3QkFDO3N0b3Atb3BhY2l0eTowIi8+DQoJPC9saW5lYXJHcmFkaWVudD4NCgkNCgkJPHJlY3QgeD0iLTkzLjUiIHk9Ii01OS41IiBvcGFjaXR5PSIwLjM1IiBmaWxsPSJ1cmwoI1NWR0lEXzJfKSIgc3Ryb2tlPSIjMDAwMDAwIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSIzMTY0IiBoZWlnaHQ9IjExNjQiLz4NCjwvZz4NCjxnIGlkPSJMYXllcl8zIj4NCgk8bGluZWFyR3JhZGllbnQgaWQ9IlNWR0lEXzNfIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjE0MjcuMTI2MiIgeTE9IjE1OS40ODYiIHgyPSIxNTgzLjA5NSIgeTI9Ijg1NS4zNDY4Ij4NCgkJPHN0b3AgIG9mZnNldD0iMCIgc3R5bGU9InN0b3AtY29sb3I6I0ZGMjgxNSIvPg0KCQk8c3RvcCAgb2Zmc2V0PSIwLjEwMTkiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRjMxMTYiLz4NCgkJPHN0b3AgIG9mZnNldD0iMC4yNzE1IiBzdHlsZT0ic3RvcC1jb2xvcjojRkY0QjE5Ii8+DQoJCTxzdG9wICBvZmZzZXQ9IjAuNDg3OSIgc3R5bGU9InN0b3AtY29sb3I6I0ZGNzQxRCIvPg0KCQk8c3RvcCAgb2Zmc2V0PSIwLjc0MTEiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkFFMjMiLz4NCgkJPHN0b3AgIG9mZnNldD0iMC45OTQ0IiBzdHlsZT0ic3RvcC1jb2xvcjojRkZFRTJBIi8+DQoJPC9saW5lYXJHcmFkaWVudD4NCgkNCgkJPHJlY3QgeD0iLTUyLjUiIHk9Ii0xMDIuNSIgb3BhY2l0eT0iMC4yNyIgZmlsbD0idXJsKCNTVkdJRF8zXykiIHN0cm9rZT0iIzAwMDAwMCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iMzA5OCIgaGVpZ2h0PSIxMTQzIi8+DQo8L2c+DQo8L3N2Zz4NCg==);
+        background-repeat: no-repeat;
+        background-size: cover;
+        animation: animatedBackground 1000s linear infinite;
+      &:after {
+        content: '';
+        position: fixed;
+        top: 0; bottom: 0; left: 0; right: 0;
+        z-index: -20;
+        opacity: .25;
+          height: 100%;
+          min-height: 100%;
+          max-height: 100%;
+        width: 700%;
+        background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNy4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgMzAwMCAxMDAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAzMDAwIDEwMDAiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHgxPSIyNTg1LjQiIHkxPSI4ODguNCIgeDI9IjE1NjMuNiIgeTI9Ii0xMzMuNCIvPg0KPGxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHgxPSIyNjQ0LjQiIHkxPSI5MDMuNCIgeDI9IjE2MjIuNiIgeTI9Ii0xMTguNCIvPg0KPGxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHgxPSIyNjk3LjQiIHkxPSI3MDIuNCIgeDI9IjE2NzUuNiIgeTI9Ii0zMTkuNCIvPg0KPGxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHgxPSIyNzEwLjQiIHkxPSI0NDcuNCIgeDI9IjE2ODguNiIgeTI9Ii01NzQuNCIvPg0KPGxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHgxPSIyMTc3LjQiIHkxPSIxMTc2LjQiIHgyPSIxMTU1LjYiIHkyPSIxNTQuNiIvPg0KPGxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHgxPSIyMDA1LjQiIHkxPSIxMTEzLjQiIHgyPSI5ODMuNiIgeTI9IjkxLjYiLz4NCjxsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB4MT0iOTgzLjQiIHkxPSIxMTQ5LjQiIHgyPSItMzguNCIgeTI9IjEyNy42Ii8+DQo8bGluZSBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgeDE9IjE2MjIuNCIgeTE9IjE3MjQuNCIgeDI9IjYwMC42IiB5Mj0iNzAyLjYiLz4NCjxsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB4MT0iMTgyOS40IiB5MT0iMTgyOC40IiB4Mj0iODA3LjYiIHkyPSI4MDYuNiIvPg0KPGxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHgxPSIxMzE1LjQiIHkxPSIxNzYwLjQiIHgyPSIyOTMuNiIgeTI9IjczOC42Ii8+DQo8bGluZSBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgeDE9IjEyNjAuNCIgeTE9IjE4NzIuNCIgeDI9IjIzOC42IiB5Mj0iODUwLjYiLz4NCjxsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB4MT0iMjM1OC40IiB5MT0iMTY2MC40IiB4Mj0iMTMzNi42IiB5Mj0iNjM4LjYiLz4NCjxsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB4MT0iMjEzMy40IiB5MT0iMTkxMC40IiB4Mj0iMTExMS42IiB5Mj0iODg4LjYiLz4NCjxsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB4MT0iMjIxOC40IiB5MT0iMTk2Ni40IiB4Mj0iMTE5Ni42IiB5Mj0iOTQ0LjYiLz4NCjxsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB4MT0iMjk4MS40IiB5MT0iMTc4Ny40IiB4Mj0iMTk1OS42IiB5Mj0iNzY1LjYiLz4NCjxsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB4MT0iMjkxMS40IiB5MT0iMTM2MS40IiB4Mj0iMTg4OS42IiB5Mj0iMzM5LjYiLz4NCjxsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB4MT0iMzIwOC40IiB5MT0iMTM5OS40IiB4Mj0iMjE4Ni42IiB5Mj0iMzc3LjYiLz4NCjxsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB4MT0iMzQyMi40IiB5MT0iMTQ5Ni40IiB4Mj0iMjQwMC42IiB5Mj0iNDc0LjYiLz4NCjxsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB4MT0iOTgzLjQiIHkxPSIxMTc2LjQiIHgyPSItMzguNCIgeTI9IjE1NC42Ii8+DQo8bGluZSBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgeDE9IjI5My40IiB5MT0iMTExMy40IiB4Mj0iLTcyOC40IiB5Mj0iOTEuNiIvPg0KPGxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHgxPSIxMy40IiB5MT0iMTMxNy40IiB4Mj0iLTEwMDguNCIgeTI9IjI5NS42Ii8+DQo8bGluZSBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgeDE9Ii04NDcuNCIgeTE9IjY2NS40IiB4Mj0iMTc0LjQiIHkyPSItMzU2LjQiLz4NCjxsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB4MT0iLTM4Ni40IiB5MT0iMTIxMy40IiB4Mj0iNjM1LjQiIHkyPSIxOTEuNiIvPg0KPGxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHgxPSItODQ3LjQiIHkxPSIxMTEzLjQiIHgyPSIxNzQuNCIgeTI9IjkxLjYiLz4NCjxsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB4MT0iLTg5Ny40IiB5MT0iMTYwNy40IiB4Mj0iMTI0LjQiIHkyPSI1ODUuNiIvPg0KPGxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHgxPSIxNzQuNiIgeTE9IjEyNDkuNCIgeDI9IjExOTYuNCIgeTI9IjIyNy42Ii8+DQo8bGluZSBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgeDE9IjY4NS42IiB5MT0iNTg1LjQiIHgyPSIxNzA3LjQiIHkyPSItNDM2LjQiLz4NCjxsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB4MT0iMTMuNiIgeTE9IjU1MS40IiB4Mj0iMTAzNS40IiB5Mj0iLTQ3MC40Ii8+DQo8bGluZSBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgeDE9IjEzNTIuNiIgeTE9IjgzOC40IiB4Mj0iMjM3NC40IiB5Mj0iLTE4My40Ii8+DQo8bGluZSBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgeDE9IjExOTYuNiIgeTE9IjYwMi40IiB4Mj0iMjIxOC40IiB5Mj0iLTQxOS40Ii8+DQo8bGluZSBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgeDE9IjE3NjguNiIgeTE9IjExNzYuNCIgeDI9IjI3OTAuNCIgeTI9IjE1NC42Ii8+DQo8bGluZSBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgeDE9IjIwNzQuNiIgeTE9IjYwMi40IiB4Mj0iMzA5Ni40IiB5Mj0iLTQxOS40Ii8+DQo8bGluZSBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgeDE9IjEwNTIuNiIgeTE9IjE3ODcuNCIgeDI9IjIwNzQuNCIgeTI9Ijc2NS42Ii8+DQo8bGluZSBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgeDE9Ijg2Ny42IiB5MT0iMTgyOC40IiB4Mj0iMTg4OS40IiB5Mj0iODA2LjYiLz4NCjxsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB4MT0iMjI3OS42IiB5MT0iOTIxLjQiIHgyPSIzMzAxLjQiIHkyPSItMTAwLjQiLz4NCjxsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB4MT0iMjQ3MC42IiB5MT0iODM4LjQiIHgyPSIzNDkyLjQiIHkyPSItMTgzLjQiLz4NCjxsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB4MT0iMTQzMS42IiB5MT0iNDAuNCIgeDI9IjI0NTMuNCIgeTI9Ii05ODEuNCIvPg0KPGxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHgxPSI5NjguNiIgeTE9IjI0NS40IiB4Mj0iMTk5MC40IiB5Mj0iLTc3Ni40Ii8+DQo8bGluZSBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgeDE9IjIzOC42IiB5MT0iMjcxLjQiIHgyPSIxMjYwLjQiIHkyPSItNzUwLjQiLz4NCjxsaW5lIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB4MT0iLTUxNi40IiB5MT0iNDEwLjQiIHgyPSI1MDUuNCIgeTI9Ii02MTEuNCIvPg0KPC9zdmc+DQo=);
+        background-position: center bottom;
+          animation: animatedBk 1500s  linear infinite;
+          z-index: -10;
+      }	
+        &:before {
+          content: '';
+          position: absolute;
+          top: 0; bottom: 0; left: 0; right: 0; 
+          height: 100%;
+          min-height: 100%;
+          max-height: 100%;
+          width: 700%;
+          opacity: .4;
+          background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNy4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgMzAwMCAxMDAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAzMDAwIDEwMDAiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHJlY3QgeD0iMjY3OS40IiB5PSI3NzEuNSIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSAxMzcxLjQyODYgLTE2ODUuOTcyMykiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iODMiIGhlaWdodD0iODIiLz4NCjxyZWN0IHg9IjI3NzYuMiIgeT0iODMwLjEiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgMTQyMC43MTkgLTE3MjguNjI3OCkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iNDEuNSIgaGVpZ2h0PSI0MSIvPg0KPHJlY3QgeD0iMjk2Ny42IiB5PSI4ODIuNSIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSAxNTA2LjU5MTcgLTE4NDUuNTQ3NykiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iMjciIGhlaWdodD0iMjYuNiIvPg0KPHJlY3QgeD0iMjg4OC42IiB5PSI1ODQuNSIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSAxMjcyLjczNjYgLTE4NzYuOTY2NCkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iMjciIGhlaWdodD0iMjYuNiIvPg0KPHJlY3QgeD0iMjg1MC42IiB5PSI0NzcuNSIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSAxMTg1Ljk0NjggLTE4ODEuNDM1MykiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iMjciIGhlaWdodD0iMjYuNiIvPg0KPHJlY3QgeD0iMjg1MC42IiB5PSIxMTMuNSIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSA5MjguNTYwOSAtMTk4OC4wNDYpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjI3IiBoZWlnaHQ9IjI2LjYiLz4NCjxyZWN0IHg9IjI0NDEuNiIgeT0iMTEzLjYiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgODA4Ljc3MDQgLTE2OTguODQwNikiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iMjciIGhlaWdodD0iMjYuNiIvPg0KPHJlY3QgeD0iMjQyMi42IiB5PSIzMDEuNiIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSA5MzYuMTQxMSAtMTYzMC4zNDI4KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSIyNyIgaGVpZ2h0PSIyNi42Ii8+DQo8cmVjdCB4PSIyNDYwLjYiIHk9Ijc0MC41IiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDEyNTcuNjg5NSAtMTUyOC42MzU3KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSIyNyIgaGVpZ2h0PSIyNi42Ii8+DQo8cmVjdCB4PSIyMTAwLjYiIHk9Ijg4Mi41IiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDEyNTIuNjU5MSAtMTIzMi40ODg1KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSIyNyIgaGVpZ2h0PSIyNi42Ii8+DQo8cmVjdCB4PSIyMDMyLjYiIHk9IjQzMy42IiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDkxNS4yNTMxIC0xMzE1LjkxMTMpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjI3IiBoZWlnaHQ9IjI2LjYiLz4NCjxyZWN0IHg9IjIxNzYuNiIgeT0iMzAxLjYiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgODY0LjA5MSAtMTQ1Ni4zOTUzKSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSIyNyIgaGVpZ2h0PSIyNi42Ii8+DQo8cmVjdCB4PSIxODYxLjYiIHk9IjE0My42IiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDY2MC4xMDk0IC0xMjc5LjkzMzcpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjI3IiBoZWlnaHQ9IjI2LjYiLz4NCjxyZWN0IHg9IjIyNTEuNiIgeT0iNy42IiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDY3OC4xNjg5IC0xNTk1LjUzNjcpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjI3IiBoZWlnaHQ9IjI2LjYiLz4NCjxyZWN0IHg9IjE4NDIuNiIgeT0iNzAxLjYiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgMTA0OS4xMDg1IC0xMTAzLjA2ODEpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjI3IiBoZWlnaHQ9IjI2LjYiLz4NCjxyZWN0IHg9IjIwNjIuNiIgeT0iOTAxLjUiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgMTI1NC45NjQ0IC0xMjAwLjA1MzYpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjI3IiBoZWlnaHQ9IjI2LjYiLz4NCjxyZWN0IHg9IjE3NjEuNiIgeT0iODY2LjYiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgMTE0Mi4wNTY5IC05OTcuNDY2NCkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iMjciIGhlaWdodD0iMjYuNiIvPg0KPHJlY3QgeD0iMTk3MC42IiB5PSI3NTkuNiIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSAxMTI3LjYxIC0xMTc2LjU5KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSIyNyIgaGVpZ2h0PSIyNi42Ii8+DQo8cmVjdCB4PSIyMjA2LjYiIHk9IjU4NC42IiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDEwNzIuOTg4IC0xMzk0LjcyMTYpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjI3IiBoZWlnaHQ9IjI2LjYiLz4NCjxyZWN0IHg9IjE2MzMuNiIgeT0iNzYwLjYiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgMTAyOS42MTQ0IC05MzguMDAzMSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iMjciIGhlaWdodD0iMjYuNiIvPg0KPHJlY3QgeD0iMTQ0MS42IiB5PSI1NjEuNiIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSA4MzIuNjY2NSAtODYwLjUyMzQpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjI3IiBoZWlnaHQ9IjI2LjYiLz4NCjxyZWN0IHg9IjE1MzUuNiIgeT0iMzAxLjYiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgNjc2LjM1MDggLTEwMDMuMTQxNykiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iMjciIGhlaWdodD0iMjYuNiIvPg0KPHJlY3QgeD0iODk3LjYiIHk9IjM1MC42IiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDUyNC4xMzc0IC01MzcuNjU3OSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iMjciIGhlaWdodD0iMjYuNiIvPg0KPHJlY3QgeD0iMTEyOC42IiB5PSI1MDYuNiIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSA3MDIuMTAyNCAtNjU1LjMwODcpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjI3IiBoZWlnaHQ9IjI2LjYiLz4NCjxyZWN0IHg9IjExMDAuNiIgeT0iNzQwLjYiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgODU5LjM2MzggLTU2Ni45NzQyKSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSIyNyIgaGVpZ2h0PSIyNi42Ii8+DQo8cmVjdCB4PSI4MjguNiIgeT0iNzExLjYiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgNzU5LjE5MjcgLTM4My4xMzU3KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSIyNyIgaGVpZ2h0PSIyNi42Ii8+DQo8cmVjdCB4PSI4NDcuNiIgeT0iMTA0LjYiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgMzM1LjU0NTUgLTU3NC4zNTI3KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSIyNyIgaGVpZ2h0PSIyNi42Ii8+DQo8cmVjdCB4PSI1MjguNiIgeT0iMTA0LjYiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgMjQyLjExNDcgLTM0OC43ODY2KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSIyNyIgaGVpZ2h0PSIyNi42Ii8+DQo8cmVjdCB4PSIxMzcuNiIgeT0iMTIzLjYiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgMTQxLjAzMTEgLTY2Ljc0NDEpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjI3IiBoZWlnaHQ9IjI2LjYiLz4NCjxyZWN0IHg9IjIxMS42IiB5PSI3NjYuNiIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSA2MTcuMzcyNiA2OS4yNTYyKSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSIyNyIgaGVpZ2h0PSIyNi42Ii8+DQo8cmVjdCB4PSIzMzcuNiIgeT0iOTcwLjYiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgNzk4LjUyNTUgMzkuOTA5OSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iMjciIGhlaWdodD0iMjYuNiIvPg0KPHJlY3QgeD0iMzM3LjYiIHk9IjkxMi42IiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDc1Ny41MTM0IDIyLjkyMjUpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjI3IiBoZWlnaHQ9IjI2LjYiLz4NCjxyZWN0IHg9IjMyLjYiIHk9Ijk1MS42IiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDY5NS43NjAyIDI1MC4wMTE4KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSIyNyIgaGVpZ2h0PSIyNi42Ii8+DQo8cmVjdCB4PSI2NzQuNiIgeT0iNTQyLjYiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgNTk0LjU4NzcgLTMyMy43Mzk2KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSIyNyIgaGVpZ2h0PSIyNi42Ii8+DQo8cmVjdCB4PSI1NjUuNiIgeT0iMzgwLjYiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgNDQ4LjExMjIgLTI5NC4xMTI4KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSIyNyIgaGVpZ2h0PSIyNi42Ii8+DQo8cmVjdCB4PSIyODI5LjIiIHk9IjUyOC4xIiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDEyMjIuNjk2NyAtMTg1NC41NTYyKSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSI0MS41IiBoZWlnaHQ9IjQxIi8+DQo8cmVjdCB4PSIyOTMxLjIiIHk9Ijk3LjEiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgOTQ3LjgwOTIgLTIwNTIuOTE0NikiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iNDEuNSIgaGVpZ2h0PSI0MSIvPg0KPHJlY3QgeD0iMjQ2OS4yIiB5PSI3Ny4yIiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDc5OC4zNTM2IC0xNzMyLjA5MDUpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjQxLjUiIGhlaWdodD0iNDEiLz4NCjxyZWN0IHg9IjIyMTUuMiIgeT0iMzIzLjIiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgODk3LjkwOCAtMTQ4MC40MzYpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjQxLjUiIGhlaWdodD0iNDEiLz4NCjxyZWN0IHg9IjIxOTkuMiIgeT0iMjY1LjIiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgODUyLjIwOTggLTE0ODYuMTA5NykiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iNDEuNSIgaGVpZ2h0PSI0MSIvPg0KPHJlY3QgeD0iMjQ2OS4yIiB5PSI0OTkuMiIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSAxMDk2Ljc1MTUgLTE2MDguNDkyNCkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iNDEuNSIgaGVpZ2h0PSI0MSIvPg0KPHJlY3QgeD0iMjMwMC4zIiB5PSI4ODguMSIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSAxMzIyLjMxNzEgLTEzNzUuMDU5KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSI0MS41IiBoZWlnaHQ9IjQxIi8+DQo8cmVjdCB4PSIxOTM0LjMiIHk9IjcwNC4yIiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDEwODUuMDEzNyAtMTE3MC4xNSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iNDEuNSIgaGVpZ2h0PSI0MSIvPg0KPHJlY3QgeD0iMTg1NC4zIiB5PSI0NDAuMiIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSA4NzQuOTA3MiAtMTE5MC45MDM3KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSI0MS41IiBoZWlnaHQ9IjQxIi8+DQo8cmVjdCB4PSIxODc2LjIiIHk9IjQ4LjIiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgNjA0LjE2NiAtMTMyMS4yNzE2KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSI0MS41IiBoZWlnaHQ9IjQxIi8+DQo8cmVjdCB4PSIxNTU3LjMiIHk9IjI1NS4yIiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDY1Ny4xMDU3IC0xMDM1LjA3NzgpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjQxLjUiIGhlaWdodD0iNDEiLz4NCjxyZWN0IHg9IjE1OTcuMyIgeT0iMzE0LjIiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgNzEwLjU0MDMgLTEwNDYuMDgxNykiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iNDEuNSIgaGVpZ2h0PSI0MSIvPg0KPHJlY3QgeD0iMTM0OC4zIiB5PSI0MDIuMiIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSA2OTkuODM2NyAtODQ0LjIzODcpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjQxLjUiIGhlaWdodD0iNDEiLz4NCjxyZWN0IHg9IjEzNTcuMyIgeT0iNTU0LjIiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgODA5Ljk1MjUgLTgwNi4wODQpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjQxLjUiIGhlaWdodD0iNDEiLz4NCjxyZWN0IHg9IjEyMDMuMyIgeT0iMjA3LjIiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgNTE5LjQ4MjggLTc5OC44MjE1KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSI0MS41IiBoZWlnaHQ9IjQxIi8+DQo8cmVjdCB4PSIxMjkwLjMiIHk9IjQ4LjIiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgNDMyLjUzNDUgLTkwNi45MDg2KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSI0MS41IiBoZWlnaHQ9IjQxIi8+DQo8cmVjdCB4PSIxMzYzLjMiIHk9IjkzNC4yIiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDEwODAuNDA5NCAtNjk5LjAyOTcpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjQxLjUiIGhlaWdodD0iNDEiLz4NCjxyZWN0IHg9IjE2MTUuMyIgeT0iNjMxLjIiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgOTM5Ljk2NDIgLTk2NS45NjQ2KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSI0MS41IiBoZWlnaHQ9IjQxIi8+DQo8cmVjdCB4PSIxMDM3LjMiIHk9IjY5NC4yIiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDgxNS4yMjM0IC01MzguODA2NikiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iNDEuNSIgaGVpZ2h0PSI0MSIvPg0KPHJlY3QgeD0iOTI4LjMiIHk9IjQ2MC4yIiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDYxNy44MzY0IC01MzAuMjY3NykiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iNDEuNSIgaGVpZ2h0PSI0MSIvPg0KPHJlY3QgeD0iOTI4LjMiIHk9IjM3My4yIiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDU1Ni4zMTg0IC01NTUuNzQ4OCkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iNDEuNSIgaGVpZ2h0PSI0MSIvPg0KPHJlY3QgeD0iNjg2LjMiIHk9Ijg1LjIiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgMjgxLjc5MzkgLTQ2OC45ODA5KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSI0MS41IiBoZWlnaHQ9IjQxIi8+DQo8cmVjdCB4PSI1NTguMyIgeT0iNjcuMiIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSAyMzEuNTc2NSAtMzgzLjc0MzUpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjQxLjUiIGhlaWdodD0iNDEiLz4NCjxyZWN0IHg9IjMyMC4zIiB5PSIzNTMuMiIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSAzNjQuMTAxNCAtMTMxLjY4NzMpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjQxLjUiIGhlaWdodD0iNDEiLz4NCjxyZWN0IHg9IjIzMy4zIiB5PSI3MjMuMiIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSA2MDAuMjQ4NiAzOC4xOTg4KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSI0MS41IiBoZWlnaHQ9IjQxIi8+DQo8cmVjdCB4PSIxMzAuMyIgeT0iNTczLjIiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgNDY0LjAxNTcgNjcuMDk3NSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iNDEuNSIgaGVpZ2h0PSI0MSIvPg0KPHJlY3QgeD0iNTUuMyIgeT0iMTI2LjIiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgMTI1Ljk3MzggLTEwLjc4OTkpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjQxLjUiIGhlaWdodD0iNDEiLz4NCjxyZWN0IHg9IjEzLjMiIHk9IjE5LjIiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgMzguMDEyNCAtMTIuNDMwNCkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iNDEuNSIgaGVpZ2h0PSI0MSIvPg0KPHJlY3QgeD0iNTk5LjMiIHk9IjY2NS4yIiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDY2Ni40MzMxIC0yMzcuNTg4OCkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iNDEuNSIgaGVpZ2h0PSI0MSIvPg0KPHJlY3QgeD0iNzkyLjMiIHk9Ijg0Ni4yIiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDg1MC45NDU5IC0zMjEuMDQ3NCkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iNDEuNSIgaGVpZ2h0PSI0MSIvPg0KPHJlY3QgeD0iOTI4LjMiIHk9Ijk0Ni4yIiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDk2MS40ODkgLTM4Ny45MjUpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjQxLjUiIGhlaWdodD0iNDEiLz4NCjxyZWN0IHg9IjIzNTUuNCIgeT0iODI5LjUiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgMTMxNy41NDU0IC0xNDM5Ljg4MzIpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjgzIiBoZWlnaHQ9IjgyIi8+DQo8cmVjdCB4PSIyMjA3LjQiIHk9IjYyMS41IiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDExMjcuMTIwNiAtMTM5Ni4xNTIxKSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSI4MyIgaGVpZ2h0PSI4MiIvPg0KPHJlY3QgeD0iMjA2My40IiB5PSIzNjEuNSIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSA5MDEuMDk4IC0xMzcwLjQ3OTcpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjgzIiBoZWlnaHQ9IjgyIi8+DQo8cmVjdCB4PSIxOTIxLjQiIHk9IjM4MS41IiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDg3My42NTAxIC0xMjY0LjIxMzEpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjgzIiBoZWlnaHQ9IjgyIi8+DQo8cmVjdCB4PSIxNzY0LjQiIHk9IjY4LjUiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgNjA2LjM0MzQgLTEyNDQuODcxMykiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iODMiIGhlaWdodD0iODIiLz4NCjxyZWN0IHg9IjE2MzUuNCIgeT0iNjczLjUiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgOTk2LjM1ODkgLTk3Ni40NTg1KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSI4MyIgaGVpZ2h0PSI4MiIvPg0KPHJlY3QgeD0iMTc3My40IiB5PSI5MTMuNSIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSAxMjA2LjQ4MjMgLTEwMDMuNzQ2MikiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iODMiIGhlaWdodD0iODIiLz4NCjxyZWN0IHg9IjE4NTUuNCIgeT0iNzUxLjUiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgMTExNS45NDgyIC0xMTA5LjE3NjMpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjgzIiBoZWlnaHQ9IjgyIi8+DQo8cmVjdCB4PSIxMzc0LjQiIHk9IjQ2NC41IiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDc3Mi4xMzA5IC04NTMuMTE3NykiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iODMiIGhlaWdodD0iODIiLz4NCjxyZWN0IHg9IjEyODQuNCIgeT0iODU1LjUiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgMTAyMi4yNDg4IC02NzQuOTU5OCkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iODMiIGhlaWdodD0iODIiLz4NCjxyZWN0IHg9IjU3OC40IiB5PSIxMDUuNSIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSAyODUuMTQzIC0zOTUuNDA5MSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iODMiIGhlaWdodD0iODIiLz4NCjxyZWN0IHg9IjgzMC40IiB5PSIzOTEuNSIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSA1NjEuMTgyMSAtNDg5LjgzMzkpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjgzIiBoZWlnaHQ9IjgyIi8+DQo8cmVjdCB4PSI2MTEuNCIgeT0iNTgxLjUiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgNjMxLjM4OTcgLTI3OS4zMjk2KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSI4MyIgaGVpZ2h0PSI4MiIvPg0KPHJlY3QgeD0iODQ5LjQiIHk9IjczOC41IiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDgxMi4xMTIgLTQwMS42MzczKSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSI4MyIgaGVpZ2h0PSI4MiIvPg0KPHJlY3QgeD0iOTk1LjQiIHk9Ijg5OC41IiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDk2OC4wMTAxIC00NTguMDEyNikiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iODMiIGhlaWdodD0iODIiLz4NCjxyZWN0IHg9IjM3NS40IiB5PSI5MTMuNSIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSA3OTcuMDI3MSAtMTUuMjE0OCkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iODMiIGhlaWdodD0iODIiLz4NCjxyZWN0IHg9IjI0MS40IiB5PSIzOTEuNSIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSAzODguNjcyIC03My4zNDk2KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSI4MyIgaGVpZ2h0PSI4MiIvPg0KPHJlY3QgeD0iNjMuNCIgeT0iNDc5LjUiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgMzk4Ljc2MzQgNzguMjg4OSkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iODMiIGhlaWdodD0iODIiLz4NCjxyZWN0IHg9IjYzLjQiIHk9IjM1LjUiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgODQuODA5MyAtNTEuNzUyNykiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iODMiIGhlaWdodD0iODIiLz4NCjxyZWN0IHg9IjEzMzYuNCIgeT0iNzYuNSIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSA0ODYuNjQ0OSAtOTM5Ljg4NzgpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjgzIiBoZWlnaHQ9IjgyIi8+DQo8cmVjdCB4PSIxMjMwLjQiIHk9IjExNS41IiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDQ4My4xNzYgLTg1My41MTIxKSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSI4MyIgaGVpZ2h0PSI4MiIvPg0KPHJlY3QgeD0iMjM1NS40IiB5PSIxMC41IiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDczOC40MjcyIC0xNjc5Ljc1NzIpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjgzIiBoZWlnaHQ9IjgyIi8+DQo8cmVjdCB4PSIyNTM2LjQiIHk9IjQzOS41IiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEgMC43MDcxIC0wLjcwNzEgMC43MDcxIDEwOTQuNzg3NCAtMTY4Mi4wOTQ3KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSI4MyIgaGVpZ2h0PSI4MiIvPg0KPHJlY3QgeD0iMjg2MC40IiB5PSIxNjEuNSIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSA5OTMuMTA3NyAtMTk5Mi42MTg4KSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHdpZHRoPSI4MyIgaGVpZ2h0PSI4MiIvPg0KPHJlY3QgeD0iMjg5Ni40IiB5PSI0NzguNSIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxIDAuNzA3MSAtMC43MDcxIDAuNzA3MSAxMjI3LjgwMzUgLTE5MjUuMjI5NikiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRkZGRiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiB3aWR0aD0iODMiIGhlaWdodD0iODIiLz4NCjxyZWN0IHg9IjI0NzguNCIgeT0iNTU2LjUiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MSAwLjcwNzEgLTAuNzA3MSAwLjcwNzEgMTE2MC41MzExIC0xNjA2LjgxNTEpIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgd2lkdGg9IjgzIiBoZWlnaHQ9IjgyIi8+DQo8L3N2Zz4NCg==);
+          background-position: center bottom;
+          animation: animatedBackground 1200s  linear infinite;
+          z-index: -10;
+        }
+      }
+
+      @keyframes animatedBackground 
+      {
+        0% { background-position: 0 100%; }
+        50% { background-position: 100% 100%; }
+        100% { background-position: 0% 100%; }
+      }
+      @keyframes animatedBk 
+      {
+        0% { background-position: 100% 100%; }
+        50% { background-position: 0% 100%; }
+        100% { background-position: 100% 100%; }
+      }
+      </style>
+      <footer class="container fixed-bottom">
+        <%- include('partials/footer.ejs') %>
+      </footer>
+    </main>
+    <!-- ===============================================-->
+    <!--               End of Main Content              -->
+    <!-- ===============================================-->
+
+    <!-- ===============================================-->
+    <!--                  JavaScripts                   -->
+    <!-- ===============================================-->
+    <!-- Header word cycle -->
+    <script>
+      // Define an array of options to be typed out
+      const options = ["Socials", "Products", "Services", "Content", "News"];
+      let currentOptionIndex = 0;
+      // Function to simulate typing effect
+      function typeEffect(text, delay) {
+        let index = 0;
+        const typingInterval = setInterval(() => {
+          if(document.getElementById("typing-effect")) {
+            document.getElementById("typing-effect").textContent = text.slice(
+              0,
+              ++index
+            );}
+          if (index >= text.length) {
+            clearInterval(typingInterval);
+            setTimeout(nextOption, 1000);
+          }
+        }, delay);
+      }
+      function nextOption() {
+        currentOptionIndex = (currentOptionIndex + 1) % options.length;
+        const currentOption = options[currentOptionIndex];
+        typeEffect(currentOption, 100);
+      }
+      // Call the typing effect for the first option
+      typeEffect(options[currentOptionIndex], 100);
+    </script>
+
+    <!-- Show/hide password button -->
+    <script>
+      const togglePasswordVisibility = () => {
+        const passwordInput = document.getElementById("passwordRegistration");
+        const confirmPasswordInput = document.getElementById(
+          "confirmPasswordRegistration"
+        );
+        const currentIcon = togglePasswordButton.querySelector("svg");
+        const eyeIcon =
+          '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/></svg>';
+        const eyeSlashIcon =
+          '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16"><path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/><path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/><path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"/></svg>';
+
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          confirmPasswordInput.type = "text";
+          currentIcon.innerHTML = eyeIcon;
+        } else {
+          passwordInput.type = "password";
+          confirmPasswordInput.type = "password";
+          currentIcon.innerHTML = eyeSlashIcon;
+        }
+      };
+
+      const toggleLoginPasswordVisibility = () => {
+        const passwordInput = document.getElementById("passwordLogin");
+        const toggleLoginPasswordButton = document.getElementById(
+          "toggleLoginPasswordVisibility"
+        );
+        const currentIcon = toggleLoginPasswordButton.querySelector("svg");
+        const eyeIcon =
+          '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/></svg>';
+        const eyeSlashIcon =
+          '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16"><path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/><path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/><path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"/></svg>';
+
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          currentIcon.innerHTML = eyeIcon;
+        } else {
+          passwordInput.type = "password";
+          currentIcon.innerHTML = eyeSlashIcon;
+        }
+      };
+
+      const toggleLoginPasswordButton = document.getElementById(
+        "toggleLoginPasswordVisibility"
+      );
+      toggleLoginPasswordButton.addEventListener(
+        "click",
+        toggleLoginPasswordVisibility
+      );
+
+      const togglePasswordButton = document.getElementById(
+        "togglePasswordVisibility"
+      );
+      togglePasswordButton.addEventListener("click", togglePasswordVisibility);
+    </script>
+
+    <!-- Remember me checkbox-->
+    <script>
+      // Check if the browser supports local storage
+      if (typeof Storage !== "undefined") {
+        // Retrieve the saved email and password from local storage
+        var savedEmail = localStorage.getItem("email");
+        var savedPassword = localStorage.getItem("password");
+
+        // If the saved email and password exist, populate the form fields
+        if (savedEmail && savedPassword) {
+          document.getElementById("email").value = savedEmail;
+          document.getElementById("password").value = savedPassword;
+          document.getElementById("modal-checkbox").checked = true;
+        }
+
+        // Add an event listener to the checkbox
+        document
+          .getElementById("modal-checkbox")
+          .addEventListener("change", function () {
+            // If the checkbox is checked, save the email and password to local storage
+            if (this.checked) {
+              var email = document.getElementById("email").value;
+              var password = document.getElementById("password").value;
+              localStorage.setItem("email", email);
+              localStorage.setItem("password", password);
+            } else {
+              // If the checkbox is unchecked, remove the saved email and password from local storage
+              localStorage.removeItem("email");
+              localStorage.removeItem("password");
+            }
+          });
+      }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="../vendors/anchorjs/anchor.min.js"></script>
+    <script src="../vendors/is/is.min.js"></script>
+    <script src="../vendors/swiper/swiper-bundle.min.js"></script>
+    <script src="../js/alertModule.js"></script>
+    <script src="../vendors/typed.js/typed.js"></script>
+    <script src="../vendors/fontawesome/all.min.js"></script>
+    <script src="../vendors/lodash/lodash.min.js"></script>
+    <script src="../vendors/list.js/list.min.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../js/signupNew.js"></script>
+    <script src="../js/login.js"></script>
+    <script src="js/reset-password.js"></script>
+    <script src="../js/landing.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+
+    <!-- </body> -->
+
+    <style>
+      #successPopupDiv {
+        display: none;
+      }
+      #errorEmailExistsRegister {
+        display: none;
+      }
+      #errorRegistration {
+        display: none;
+      }
+      #loginErrorInvalidCredentials {
+        display: none;
+      }
+      .kabab-div .kabab-email {
+        margin-left: 5rem !important;
+        text-decoration: none !important;
+      }
+
+      .kabab-email a {
+        text-decoration: none !important;
+      }
+
+      @media (max-width: 600px) {
+        .kabab-div .kabab-email{
+          margin-left: 2rem !important;
+          font-size: 16px !important;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .kabab-div .kabab-email{
+          margin-left: 15px !important;
+          font-size: 13px !important;
+        }
+        
+      }
+
+      @media (max-width: 385px) {
+        .kabab-div .kabab-email{
+          margin-left: 10px !important;
+          font-size: 12px !important;
+        }
+      }
+
+      @media (max-width: 350px) {
+        .kabab-div .kabab-email{
+          margin-left: 0px !important;
+          font-size: 10px !important;
+        }
+      }
+
+      @media (max-width: 320px) {
+
+        .kabab-div .kabab-email{
+          margin-left: 30px !important;
+          font-size: 14px !important;
+        }
+
+        .kanban-item .kabab-div {
+          flex-direction: column !important;
+          height: 120px !important;
+        }
+
+        .kanban-item .kabab-div .delete-card {
+          justify-content: start !important;
+        }
+
+        .kabab-div .profile img {
+          margin-left: 6rem !important;
+        }
+      }
+
+      @media (max-width: 280px) {
+        .kabab-div .kabab-email{
+          margin-left: 20px !important;
+          font-size: 13px !important;
+        }
+
+        .kabab-div .profile img {
+          margin-left: 4rem !important;
+        }
+      }
+
+      @media (max-width: 250px) {
+        .kabab-div .profile img {
+          margin-left: 3rem !important;
+        }
+        .kabab-div .kabab-email{
+          margin-left: 10px !important;
+          font-size: 12px !important;
+        }
+      }
+
+      @media (max-width: 220px) {
+        .kabab-div .profile img {
+          margin-left: 2rem !important;
+        }
+        .kabab-div .kabab-email{
+          margin-left: 0px !important;
+          font-size: 11px !important;
+        }
+      }
+
+    </style>
+
+    <script>
+
+        $(document).ready(function(){
+          var accountList = JSON.parse(
+            localStorage.getItem("remembered_credential") || "{}"
+          );
+          if(Object.keys(accountList).length > 0){
+            $('#selectModalLabel').removeClass('d-none')
+          }
+          for (const email in accountList) {
+            $('#accountList').append(userCard(accountList[email]));
+          }
+
+          function userCard(object) {
+            const avatarUrl = object.image
+              ? `../img/users/${object.image}`
+              : 'https://avatar.oxro.io/avatar.svg?name=' + encodeURIComponent(object.first_name.charAt(0).toUpperCase() + object.first_name.slice(1) + ' ' + object.last_name.charAt(0).toUpperCase() + object.last_name.slice(1)) + '&background=random&color=fff&fontSize=170px&bold=true';
+
+            return `
+              <div class="kanban-item kanban-item-card bg-white">
+                <div id="${object.id}" class='card flex-row d-flex justify-content-between border-0 kabab-div' style="height: 40px;">
+                  
+                  <div class="d-flex flex-column justify-content-center profile col-1 user-login-remember pointer" user-email='${object['email']}' user-password='${object['password']}'>
+                    <img src="${avatarUrl}" alt="User Avatar" style="height: 35px !important; width: 35px !important; margin-left: -10px;" class="rounded-circle">
+                  </div>
+
+                  <div class="col d-flex flex-column justify-content-center user-login-remember pointer kabab-email" style="font-size: 17px" user-email='${object['email']}' user-password='${object['password']}'>
+                    <a href="#" style="text-decoration: none !important; color: black;" >${object.email}</a>
+                  </div>
+
+                  <div class="col d-flex flex-column d-none" user-email='${object['email']}' user-id='${object['id']}'>
+                  </div>
+
+                  <button class="btn btn-md bg-default text-danger delete-card rounded user-login-remember-remove pointer pr-2" user-email='${object['email']}' user-id='${object['id']}'>
+                    <i class="" data-fa-i2svg="">
+                      <svg class="svg-inline--fa fa-trash-alt fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+                        <path fill="currentColor" d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"></path>
+                      </svg>
+                    </i> <!-- This is the trash bin icon -->
+                  </button>
+                </div>
+              </div>
+
+            `;
+          }
+
+
+          $('.user-login-remember-remove').on('click', function(){
+            var confirmed = confirm("Are you sure you want to remove this account?");
+            if(confirmed){
+              var email = $(this).attr('user-email')
+              var userId = $(this).attr('user-id')
+              var accountList = JSON.parse(
+                localStorage.getItem("remembered_credential") || "{}"
+              );
+              delete accountList[email];
+              if(Object.keys(accountList).length == 0){
+                $('#selectModalLabel').addClass('d-none')
+              }
+              $(`#${userId}`).remove();
+              localStorage.setItem(
+                "remembered_credential",
+                JSON.stringify(accountList)
+              );
+            }
+          })
+
+          $('.user-login-remember').on('click', function(){
+            var password = $(this).attr('user-password')
+            var email = $(this).attr('user-email')
+            passValueLogin(email, password)
+          })
+
+          if(localStorage.getItem('showLoginModal') == 'true'){
+            localStorage.setItem('showLoginModal', false);
+            $('#addAccountModal').modal('show');
+          }
+
+          if(localStorage.getItem('showLogoutModal') == 'true'){
+            localStorage.setItem('showLogoutModal', false);
+            $('#logoutModal').modal('show');
+          }
+
+          document.getElementById('google-login').addEventListener('click', function(){
+            window.open('/auth/google/callback', '_self');
+          })
+
+          document.getElementById("addAccountButton").addEventListener("click", function() {
+            $('#exampleModalLogin').modal('show');
+            $('#addAccountModal').modal('hide');
+          });
+
+          document.getElementById("loginButton").addEventListener("click", function() {
+            $('#addAccountModal').modal('hide');
+            $('#exampleModalLogin').modal('hide')
+          });
+          document.getElementById("logoutModalButton").addEventListener("click", function() {
+            $('#logoutModal').modal('hide')
+          });
+
+          
+          document.getElementById("forget-password-link").addEventListener("click", function() {
+            $('#exampleModalLogin').modal('hide');
+            $('#exampleModalLogin').removeClass('show');
+            $('.modal-backdrop').remove();
+            // $('#forgotPasswordModal').addClass('show');
+          });
+
+          document.getElementById("register-button-signup").addEventListener("click", function() {
+            $('#exampleModal').modal('hide');
+          });
+          document.getElementById("returnToLogin").addEventListener("click", function() {
+            $('#confirmEmailModal').modal('hide');
+          });
+          document.getElementById("returnToLoginEmail").addEventListener("click", function() {
+            $('#confirmEmailSignupModal').modal('hide');
+          });
+          const urlParams = new URLSearchParams(window.location.search);
+          if (urlParams.has('reset_password')){
+            const resetToken = urlParams.get('reset_password');
+            confirmToken(resetToken)
+          } else {
+            // Handle the case where the 'reset_password' parameter is not present or has an incorrect value
+          }
+          if(urlParams.has('verification_token')){
+            const verification_token = urlParams.get('verification_token');
+            confirmEmail(verification_token)
+          }
+          if(urlParams.has('code')){
+            const code = urlParams.get('code');
+            facebookLogin(code)
+          }
+
+        });
+
+        document.getElementById('resetPasswordForm').addEventListener('submit', (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          const urlParams = new URLSearchParams(window.location.search);
+          const passwordInput = document.getElementById("reset-password").value;
+          const confirmPasswordInput = document.getElementById("confirm-reset-password").value;
+          if (urlParams.has('reset_password')){
+            const resetToken = urlParams.get('reset_password');
+
+            updatePassword(resetToken, passwordInput, confirmPasswordInput)
+
+          }
+        })
+
+        
+
+
+
+
+        async function confirmToken(reset_token) {
+          try {
+            const result = await axios({
+              method: "POST",
+              url: `/api/v1/users/checkValidity/${reset_token}`,
+            });
+            if (result.hasOwnProperty('status') && result.status === 200) {
+              $('#resetPasswordModal').modal('show');
+              
+            } else {
+              // Create a container for the alert
+              var alertContainer = document.createElement("div");
+              alertContainer.style.position = "fixed";
+              alertContainer.style.top = "20px";
+              alertContainer.style.right = "20px";
+              alertContainer.style.zIndex = "9999"; // Ensure it appears above other elements
+              alertContainer.style.maxWidth = "400px";
+
+              // Create the alert element
+              var customAlert = document.createElement("div");
+              customAlert.classList.add("alert", "alert-success", "alert-dismissible", "fade", "show");
+              customAlert.style.fontSize = "14px";
+              customAlert.innerHTML = `
+                <h6 class="mt-2">The link is expired or Invalid!</h6>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              `;
+
+              alertContainer.appendChild(customAlert);
+              document.body.appendChild(alertContainer);
+
+              setTimeout(function () {
+                alertContainer.remove();
+              }, 5000);
+            }
+          } catch (error) {
+            var customAlert = document.createElement("div");
+            customAlert.classList.add(
+              "alert",
+              "alert-danger",
+              "alert-dismissible",
+              "fade",
+              "show"
+            );
+            customAlert.style.bottom = "20px";
+            customAlert.style.right = "20px";
+            customAlert.style.maxWidth = "400px";
+            customAlert.style.fontSize = "14px";
+            customAlert.innerHTML = `
+              <h6 class="mt-2">The link is either invalid or expired!</h6>
+            `;
+            document.getElementById("auth-alert").appendChild(customAlert);
+
+            setTimeout(function () {
+              customAlert.remove();
+            }, 3000);
+          }
+        }
+          async function confirmEmail(verification_token){
+            try {
+                const result = await axios({
+                  method: "POST",
+                  url: `/api/v1/users/verify`,
+                  data: {
+                    verification_token
+                  },
+                });
+                if(result.status === 200 ){
+                  var customAlert = document.createElement("div");
+                  customAlert.classList.add(
+                    "alert",
+                    "alert-success",
+                    "alert-dismissible",
+                    "fade",
+                    "show"
+                  );
+                  customAlert.style.bottom = "20px";
+                  customAlert.style.right = "20px";
+                  customAlert.style.maxWidth = "400px";
+                  customAlert.style.fontSize = "14px";
+                  customAlert.innerHTML = `
+                    <h6 class="mt-2">Account verified successfully!!!</h6>
+                  `;
+                  document.getElementById("auth-alert").appendChild(customAlert);
+
+                  setTimeout(function () {
+                    customAlert.remove();
+                  }, 3000);
+                }
+              }
+            catch (error) {
+                var customAlert = document.createElement("div");
+                customAlert.classList.add(
+                  "alert",
+                  "alert-danger",
+                  "alert-dismissible",
+                  "fade",
+                  "show"
+                );
+                customAlert.style.bottom = "20px";
+                customAlert.style.right = "20px";
+                customAlert.style.maxWidth = "400px";
+                customAlert.style.fontSize = "14px";
+                customAlert.innerHTML = `
+                  <h6 class="mt-2">The link is either invalid or expired!</h6>
+                `;
+                document.getElementById("auth-alert").appendChild(customAlert);
+
+                setTimeout(function () {
+                  customAlert.remove();
+                }, 3000);
+            }
+          }
+
+          async function facebookLogin(verification_token){
+            try {
+                const result = await axios({
+                  method: "GET",
+                  url: `facebook/login?code=${verification_token}`,
+                });
+                if(result.status === 200 ){
+                  const email = result.data.data.user.email
+                  var credentials = JSON.parse(
+                  localStorage.getItem("remembered_credential") || "[]"
+                  );
+                  if (!credentials.includes(email)) {
+                    credentials.push(email);
+                    localStorage.setItem(
+                      "remembered_credential",
+                      JSON.stringify(credentials)
+                    );
+                  }
+                  var customAlert = document.createElement("div");
+                  customAlert.classList.add(
+                    "alert",
+                    "alert-success",
+                    "alert-dismissible",
+                    "fade",
+                    "show"
+                  );
+                  customAlert.style.bottom = "20px";
+                  customAlert.style.right = "20px";
+                  customAlert.style.maxWidth = "400px";
+                  customAlert.style.fontSize = "14px";
+                  customAlert.innerHTML = `
+                    <h6 class="mt-2">Successfully logged in !</h6>
+                  `;
+                  document.getElementById("auth-alert").appendChild(customAlert);
+
+                  setTimeout(function () {
+                    customAlert.remove();
+                    window.location.href = "/feed";
+                  }, 3000);
+                }
+              }
+            catch (error) {
+              var customAlert = document.createElement("div");
+              customAlert.classList.add(
+                "alert",
+                "alert-danger",
+                "alert-dismissible",
+                "fade",
+                "show"
+              );
+              customAlert.style.bottom = "20px";
+              customAlert.style.right = "20px";
+              customAlert.style.maxWidth = "400px";
+              customAlert.style.fontSize = "14px";
+              customAlert.innerHTML = `
+                <h6 class="mt-2">${error.response.data.error}</h6>
+              `;
+              document.getElementById("auth-alert").appendChild(customAlert);
+
+              setTimeout(function () {
+                customAlert.remove();
+              }, 3000);            
+            }
+          }
+
+          async function updatePassword(reset_token,newPassword, confirmNewPassword) {
+            var newPasswordError = document.getElementById("password-error");
+            var confirmPasswordError = document.getElementById("confirm-password-error");
+            try {
+              const result = await axios({
+                method: "PATCH",
+                url: `/api/v1/users/resetPassword/${reset_token}`,
+                data: {
+                  newPassword,
+                  confirmNewPassword,
+                },
+              });
+              if (result.hasOwnProperty('status') && result.status === 200) {
+                $('#resetPasswordModal').modal('hide');
+                var alertContainer = document.createElement("div");
+                alertContainer.style.position = "fixed";
+                alertContainer.style.top = "20px";
+                alertContainer.style.right = "20px";
+                alertContainer.style.zIndex = "9999"; // Ensure it appears above other elements
+                alertContainer.style.maxWidth = "400px";
+
+                // Create the alert element
+                var customAlert = document.createElement("div");
+                customAlert.classList.add("alert", "alert-success", "alert-dismissible", "fade", "show");
+                customAlert.style.fontSize = "14px";
+                customAlert.innerHTML = `
+                  <h6 class="mt-2">Password is updated successfully!</h6>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                `;
+
+                alertContainer.appendChild(customAlert);
+                document.body.appendChild(alertContainer);
+                $('#exampleModalLogin').modal('show');
+
+
+                setTimeout(function () {
+                  alertContainer.remove();
+                }, 5000);
+                
+              } else {
+                var alertContainer = document.createElement("div");
+                alertContainer.style.position = "fixed";
+                alertContainer.style.top = "20px";
+                alertContainer.style.right = "20px";
+                alertContainer.style.zIndex = "9999"; // Ensure it appears above other elements
+                alertContainer.style.maxWidth = "400px";
+
+                // Create the alert element
+                var customAlert = document.createElement("div");
+                customAlert.classList.add("alert", "alert-success", "alert-dismissible", "fade", "show");
+                customAlert.style.fontSize = "14px";
+                customAlert.innerHTML = `
+                  <h6 class="mt-2">Please enter a valid password</h6>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                `;
+
+                alertContainer.appendChild(customAlert);
+                document.body.appendChild(alertContainer);
+
+                setTimeout(function () {
+                  alertContainer.remove();
+                }, 5000);
+              }
+            } catch (error) {
+              if (error.response.status == 400){
+                newPasswordError.textContent = '';
+                confirmPasswordError.textContent = '';
+                confirmPasswordError.textContent = "Passwords do not match"
+              }
+              else if(error.response.status == 422){
+                newPasswordError.textContent = '';
+                confirmPasswordError.textContent = '';
+                confirmPasswordError.textContent = "Password must be 8 characters long with atleast one capital, one digit and one symbol(! @ # $ %)"
+
+              }
+            }
+          }
+
+    function validatePassword() {
+      var newPassword = document.getElementById("reset-password").value;
+      var confirmPassword = document.getElementById("confirm-reset-password").value;
+      var newPasswordError = document.getElementById("password-error");
+      var confirmPasswordError = document.getElementById("confirm-password-error");
+
+      newPasswordError.textContent = ''; // Clear previous error message
+      confirmPasswordError.textContent = ''; // Clear previous error message
+
+      // Check if both fields are at least 8 characters long
+      if (newPassword.length < 8 || confirmPassword.length < 8) {
+        newPasswordError.textContent = "Passwords must be at least 8 characters long";
+        return false; // Prevent form submission
+      }
+
+      // Check if the passwords match
+      if (newPassword !== confirmPassword) {
+        confirmPasswordError.textContent = "Passwords do not match";
+        return false; // Prevent form submission
+      }
+      
+      // If validation passes, the form will be submitted
+      return true;
+    }
+    </script>
+  </body>
+</html>

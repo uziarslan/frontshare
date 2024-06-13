@@ -1,0 +1,392 @@
+.topperButtonsContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 15px 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-radius: 5px;
+}
+
+.topButton {
+    background-color: white;
+    border: none;
+    border-radius: 3px;
+    box-shadow: 0 0 0 1px rgba(43, 45, 80, 0.1), 0 2px 5px 0 rgba(43, 45, 80, 0.08), 0 1px 1.5px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.08);
+    padding: 5px 10px;
+    color: #2C7BE5;
+    font-weight: 500;
+}
+
+.topButton:active {
+    background-color: #d8e2ef;
+}
+
+.topButton:disabled {
+    color: #76A9EE;
+}
+
+.linksContainer {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    padding: 15px 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-radius: 5px;
+}
+
+.linkButton {
+    background-color: transparent;
+    border: none;
+    font-weight: 500;
+    color: #2C7BE5;
+}
+
+.linkButton svg {
+    fill: #2C7BE5;
+    padding: 0;
+    margin: 0;
+}
+
+.customButton {
+    padding: 5px 35px;
+    box-shadow: 0 0 0 1px rgba(43, 45, 80, 0.1), 0 2px 5px 0 rgba(43, 45, 80, 0.08), 0 1px 1.5px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.08);
+    border-radius: 5px;
+}
+
+.lanes {
+    display: flex;
+    align-items: flex-start;
+    justify-content: start;
+    gap: 5px;
+    height: 100%;
+    flex-wrap: wrap;
+}
+
+.cardHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.heading {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.hintButton {
+    background-color: #2c7be5 !important;
+    color: black;
+    margin: 0;
+    padding: 0px 5px;
+    border-radius: 50%;
+    font-size: 10px;
+    margin-top: 4px;
+}
+
+.swim-lane {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #F9FAFD;
+    padding: 12px;
+    border-radius: 4px;
+    width: 340px;
+    min-height: 485px;
+    height: 485px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+
+.cardScreen {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: scroll;
+    height: 400px;
+}
+
+/* Hide the scrollbar */
+.cardScreen::-webkit-scrollbar {
+    width: 0;
+    /* Width of the scrollbar track */
+}
+
+/* Hide the scrollbar thumb (the draggable part) */
+.cardScreen::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+
+/* Hide the scrollbar track (the background) */
+.cardScreen::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.task {
+    background-color: white;
+    color: black;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: move;
+    margin: 0;
+}
+
+.addCardButton {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.addCardButton {
+    background: transparent;
+    border: none;
+    padding: 10px;
+}
+
+.is-dragging {
+    scale: 1.05;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);
+    background-color: rgb(50, 50, 50);
+    color: white;
+    cursor: move;
+}
+
+.disabled {
+    background-color: #d8e2ef;
+    cursor: no-drop;
+}
+
+
+
+/* Modal Style for Poll Form */
+.mainModelStyle {
+    max-height: 90vh;
+    max-width: 792px;
+    width: 792px;
+    overflow: auto;
+}
+
+/* For WebKit-based browsers (Chrome, Safari) */
+.mainModelStyle::-webkit-scrollbar {
+    width: 0;
+}
+
+.modelHeadStyle {
+    background-color: #132238;
+    border-color: #132238;
+    color: #d8e2ef;
+}
+
+.modelHeadingStyle {
+    color: #d8e2ef;
+}
+
+.modelBodyStyle {
+    background-color: #0e1c2f;
+    padding: 0 48px;
+}
+
+.modelBodyHeading {
+    color: #d8e2ef;
+}
+
+.titleInputStyle {
+    background-color: #0e1c2f;
+    color: white;
+}
+
+.titleInputStyle:focus {
+    background-color: #0e1c2f;
+    color: white;
+}
+
+.titleInputStyle::placeholder {
+    color: #748194;
+    border-color: #748194;
+}
+
+.poolOptionContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.arrowStyle {
+    background-color: #344050;
+    border-color: #344050;
+}
+
+.inputStyle {
+    background-color: #061325;
+    border-color: #061325;
+    border: none;
+    color: white;
+}
+
+.inputStyle::placeholder {
+    color: #748194;
+}
+
+.inputStyle:focus {
+    background-color: #061325;
+    color: white;
+}
+
+.deleteBtnPoll {
+    background-color: red;
+    border-color: red;
+}
+
+.poolOptionContainer {
+    background-color: #132238;
+    height: 400px;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.pollOptionBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45px;
+    background-color: #132238;
+}
+
+.pollOptionBtn svg {
+    fill: #748194;
+}
+
+.pollOptionBtn button {
+    background-color: transparent;
+    border: none;
+    color: #748194;
+}
+
+/* For WebKit-based browsers (Chrome, Safari) */
+.poolOptionContainer::-webkit-scrollbar {
+    width: 8px;
+}
+
+.poolOptionContainer::-webkit-scrollbar-track {
+    background: #132238;
+}
+
+.poolOptionContainer::-webkit-scrollbar-thumb {
+    background-color: #303f54;
+    border-radius: 6px;
+}
+
+/* For Firefox */
+.poolOptionContainer {
+    scrollbar-width: thin;
+    scrollbar-color: #303f54;
+}
+
+.modal-footer {
+    background-color: #132238 !important;
+    border-color: #132238 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    height: 67px !important;
+    padding: 0 35px !important;
+}
+
+.prevBtnStyle {
+    background-color: transparent;
+    border: none;
+    text-decoration: none;
+}
+
+.submitBtnStyle {
+    padding: 5px 50px;
+}
+
+
+.ButtonsWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.leftSideColumn {
+    width: 50%;
+}
+
+.buttonTab {
+    width: 100%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 5px 16px;
+    height: 50px;
+    margin-bottom: 5px;
+}
+
+.iconNText {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.iconNText svg {
+    fill: black;
+    margin-right: 5px;
+}
+
+.buttonText {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.buttonSubtitle {
+    font-size: 14px;
+    margin-top: -5px;
+}
+
+.subtitleText {}
+
+.rightSideColumn {
+    width: 50%;
+}
+
+.textAreaWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.textArea {
+    height: 290px;
+    width: 640px;
+    padding: 20px;
+}
+
+.previewScreen {
+    width: 640px;
+    height: 300px;
+    background-color: black;
+}
+
+@media(max-width: 550px) {
+    .swim-lane {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        background: #F9FAFD;
+        padding: 12px;
+        border-radius: 4px;
+        width: 100%;
+        min-height: 485px;
+        height: 485px;
+        flex-shrink: 0;
+        position: relative;
+    }
+}

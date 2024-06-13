@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html class="navbar-vertical-collapsed" lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- ===============================================-->
+    <!--                   Document Title               -->
+    <!-- ===============================================-->
+    <title><%= appInfo.app_name %>  | Settings</title>
+
+    <!-- ===============================================-->
+    <!--                      Favicons                  -->
+    <!-- ===============================================-->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png"/>
+    <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
+    <link rel="mask-icon" href="assets/img/favicons/safari-pinned-tab.svg" color="#5bbad5"/>
+    <link rel="shortcut icon" href="assets/img/favicons/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="msapplication-config" content="assets/img/favicons/browserconfig.xml"/>
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- ===============================================-->
+    <!--                     Stylesheets                -->
+    <!-- ===============================================-->
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link href="../assets/lib/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet"/>
+    <link href="../assets/lib/fancybox/jquery.fancybox.min.css" rel="stylesheet"/>
+    <link href="../assets/lib/flatpickr/flatpickr.min.css" rel="stylesheet" />
+    <link href="../assets/css/theme.css" rel="stylesheet" />
+    <link id="dark-mode-css" href="../assets/css/theme-dark.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:100,200,300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet"/>
+    <style>
+      /* Floating Label */
+      .floating-label-group {
+          position: relative;
+      }
+
+      .floating-input {
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+      }
+
+      .floating-label {
+          position: absolute;
+          left: 10px;
+          top: 10px;
+          color: #777;
+          transition: 0.3s ease;
+          cursor: text;
+          margin-left: 15px;
+      }
+
+      /* When input is not empty or in focus */
+      .floating-input:valid + .floating-label,
+      .floating-input:focus + .floating-label {
+          top: -25px; /* You might want to adjust this value */
+          font-size: 12px;
+          color: #0056b3;
+      }
+
+      /* Optional: Styling for when input is in focus */
+      .floating-input:focus {
+          outline: none;
+          border-color: #0056b3;
+      }
+
+    </style>
+    <style>
+      /* Floating Label */
+      .floating-label-group {
+          position: relative;
+      }
+
+      .floating-input {
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+      }
+
+      .floating-label {
+          position: absolute;
+          left: 10px;
+          top: 10px;
+          color: #777;
+          transition: 0.3s ease;
+          cursor: text;
+          margin-left: 15px;
+      }
+
+      /* When input is not empty or in focus */
+      .floating-input:valid + .floating-label,
+      .floating-input:focus + .floating-label {
+          top: -25px; /* You might want to adjust this value */
+          font-size: 12px;
+          color: #0056b3;
+      }
+
+      /* Optional: Styling for when input is in focus */
+      .floating-input:focus {
+          outline: none;
+          border-color: #0056b3;
+      }
+
+    </style>
+
+    <!-- ===============================================-->
+    <!--                    JavaScripts                 -->
+    <!-- ===============================================-->
+    <script src="../assets/js/config.navbar-vertical.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      var mode = localStorage.getItem("theme-mode");
+      if (mode === "dark") {
+        document.getElementById("dark-mode-css").removeAttribute("disabled");
+      } else {
+        document.getElementById("dark-mode-css").setAttribute("disabled", true);
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- ===============================================-->
+    <!--                    Main Content                -->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+      <div class="container" data-layout="container">
+        <%- include('partials/sidebar.ejs', { user: user }) %>
+        <div class="content">
+          <%- include('partials/navbar.ejs') %>
+
+          <div class="row">
+            <div class="col-12">
+              <div class="card mb-3 btn-reveal-trigger">
+                <div class="card-header position-relative min-vh-25 mb-8">
+                  <div class="cover-image">
+                    <form class="needs-validation" novalidate id="coverImageForm">
+                      <div class="bg-holder rounded-soft rounded-bottom-0" style="background-image: url(<%=user.cover_image?'../img/users/' + user.cover_image:'../assets/img/generic/4.jpg'%>);">
+                      </div>
+                      <input class="d-none" id="cover" name="cover" type="file"/>
+                      <label class="cover-image-file-input" for="cover">
+                        <span class="fas fa-camera mr-2"></span>
+                        <span>Change cover photo</span>
+                      </label>
+                      <button class="d-none" type="submit" name="submit">
+                        Upload
+                      </button>
+                    </form>
+                  </div>
+                  
+
+                  <div class="avatar avatar-5xl avatar-profile shadow-sm img-thumbnail rounded-circle">
+                    <form class="needs-validation" novalidate id="avatarForm">
+                      <div class="h-100 w-100 rounded-circle overflow-hidden position-relative">
+                        <img src="<%= user.image ? '../img/users/' + user.image : 'https://avatar.oxro.io/avatar.svg?name=' + encodeURIComponent(user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1) + ' ' + user.last_name.charAt(0).toUpperCase() + user.last_name.slice(1)) + '&background=random&color=fff&fontSize=170px&bold=true' %>" width="200" height="200" alt="" data-dz-thumbnail/>
+                        <input class="d-none" id="image" name="image" type="file"/>
+                        <label class="mb-0 overlay-icon d-flex flex-center" for="image">
+                          <span class="bg-holder overlay overlay-0"></span>
+                          <span class="z-index-1 text-white text-center fs--1">
+                            <span class="fas fa-camera"></span>
+                            <span class="d-block">Update</span>
+                          </span>
+                        </label>
+                      </div>
+                      <button class="d-none" type="submit" name="submit">
+                        Upload
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row no-gutters">
+            <div class="col-lg-8 pr-lg-2">
+              <div class="card mb-3">
+                <div class="card-header">
+                  <div class="row ml-1">
+                    <h5 class="">Personal Information</h5>
+                    <span class="fs-1 text-primary ml-2" data-toggle="tooltip" data-placement="top" title="This information is private and will not be visible to anyone.">
+                      <span class="fas fa-question-circle"> </span>
+                    </span>
+                  </div>
+                </div>
+                <div class="card-body bg-light">
+                  <form class="" novalidate id="profileSettingsForm">
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label for="firstNameProfileSettings">First Name</label>
+                          <input class="form-control outline-none" type="text" autocomplete="on" id="firstNameProfileSettings" placeholder="" value="<%= user.first_name %>"/>
+                          <div class="invalid-feedback" id="invalidFirstNameProfileSettings">
+                            Please input valid first name.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label for="lastNameProfileSettings">Last Name</label>
+                          <input class="form-control outline-none" type="text" autocomplete="on" id="lastNameProfileSettings" placeholder="" value="<%= user.last_name %>"/>
+                          <div class="invalid-feedback" id="invalidLastNameProfileSettings">
+                            Please input valid last name.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label for="emailProfileSettings">Email</label>
+                          <input class="form-control outline-none" type="email" autocomplete="on" id="emailProfileSettings" placeholder="" value="<%= user.email %>"/>
+                          <div class="invalid-feedback" id="invalidEmailProfileSettings">
+                            Please input valid email.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label for="phoneProfileSettings">Phone</label>
+                          <input class="form-control outline-none" type="text" autocomplete="on" id="phoneProfileSettings" placeholder="" value="<%= user.phone %>"/>
+                          <div class="invalid-feedback" id="invalidPhoneProfileSettings">
+                            Please input valid phone.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 mb-3">
+                        <label class="form-label" for="inputAddress2">Address</label>
+                        <input class="form-control outline-none" id="addressProfileSettings" type="text" placeholder="" value="<%= user.address %>"/>
+                        <div class="invalid-feedback" id="invalidAddressProfileSettings">
+                          Please input valid address.
+                        </div>
+                      </div>
+                      <div class="col-6 mb-3">
+                        <label class="form-label" for="">City</label>
+                        <input class="form-control outline-none" id="inputCity" type="text" placeholder="" value="<%= user.city %>"/>
+                      </div>
+                      <div class="col-4 mb-3">
+                        <label class="form-label" for="">State</label>
+                        <input class="form-control outline-none" id="inputState" type="text" placeholder="" value="<%= user.state%>"/>
+                      </div>
+                      <div class="col-md-2 mb-3">
+                        <label class="form-label" for="inputZip">Zip</label>
+                        <input class="form-control outline-none" id="inputZip" type="text" placeholder="" value="<%= user.zip_code %>"/>
+                      </div>
+                      <div class="col-lg-6 mb-3">
+                        <label for="">Gender</label>
+                        <select class="form-control form-select outline-none" id="inputGender" aria-label="Default select example">
+                          <option value="male" <%= user.gender === 'male' ? 'selected' : '' %>>Male</option>
+                          <option value="female" <%= user.gender === 'female' ? 'selected' : '' %>>Female</option>
+                        </select>
+
+                      </div>
+                      <div class="col-lg-6 mb-3">
+                        <div class="form-group">
+                          <label class="form-label" for="datepicker">Date Of Birth</label>
+                          <input class="form-control datetimepicker outline-none" id="datepicker" type="text" placeholder="dd/mm/yy" value="<%= user.date_of_birth%>" data-options='{"disableMobile":true}' />
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <button class="btn btn-falcon-default btn-block" type="submit" name="submit">
+                          Update
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              
+            </div>
+            <div class="col-lg-4 pl-lg-2">
+              <div class="">
+                <div class="card mb-3 overflow-hidden">
+                  <div class="card-header">
+                    <h5 class="mb-0">Account Settings</h5>
+                  </div>
+                  <div class="card-body bg-light">
+                    <h6>Profile options:</h6>
+                    <div class="custom-control custom-switch">
+                      <input class="custom-control-input" type="checkbox" id="switch4" checked />
+                      <label class="custom-control-label" for="switch4">
+                        Allow visitors to follow you?
+                        <span class="fs--2 ml-1 text-primary" data-toggle="tooltip" data-placement="top"
+                          title="This will toggle the visibilty on the preview page">
+                          <span class="fas fa-question-circle">
+              
+                          </span>
+                        </span>
+                      </label>
+                    </div>
+                    <div class="custom-control custom-switch">
+                      <input class="custom-control-input" type="checkbox" id="switch5" checked />
+                      <label class="custom-control-label" for="switch5">Allow visitors to message you?<span
+                          class="fs--2 ml-1 text-primary" data-toggle="tooltip" data-placement="top"
+                          title="This will toggle the visibilty on the preview page">
+                          <span class="fas fa-question-circle"> </span>
+                        </span>
+                      </label>
+                    </div>
+                    <div class="custom-control custom-switch">
+                      <input class="custom-control-input" type="checkbox" id="switch6" checked />
+                      <label class="custom-control-label" for="switch6">Allow visitors to call you?<span
+                          class="fs--2 ml-1 text-primary" data-toggle="tooltip" data-placement="top"
+                          title="This will toggle the visibilty on the preview page">
+                          <span class="fas fa-question-circle"> </span>
+                        </span>
+                      </label>
+                    </div>
+                    <hr class="border-dashed border-bottom-0" />
+                    <h6>On-site Notifications:</h6>
+                    <div class="custom-control custom-switch">
+                      <input class="custom-control-input" type="checkbox" id="switch8" />
+                      <label class="custom-control-label text-warning" for="switch8">Disable all on-site notificaions?<span
+                          class="fs--2 ml-1 text-primary" data-toggle="tooltip" data-placement="top"
+                          title="This will toggle the visibilty on the preview page">
+                          <span class="fas fa-question-circle"> </span>
+                        </span>
+                      </label>
+                    </div>
+                    <div class="custom-control custom-switch">
+                      <input class="custom-control-input" type="checkbox" id="switch9" />
+                      <label class="custom-control-label" for="switch9">When someone follows me?<span class="fs--2 ml-1 text-primary"
+                          data-toggle="tooltip" data-placement="top" title="This will toggle the visibilty on the preview page">
+                          <span class="fas fa-question-circle"> </span>
+                        </span>
+                      </label>
+                    </div>
+                    <div class="custom-control custom-switch">
+                      <input class="custom-control-input" type="checkbox" id="switch10" checked />
+                      <label class="custom-control-label" for="switch10">When someone message me?<span class="fs--2 ml-1 text-primary"
+                          data-toggle="tooltip" data-placement="top" title="This will toggle the visibilty on the preview page">
+                          <span class="fas fa-question-circle"> </span>
+                        </span>
+                      </label>
+                    </div>
+                    <hr class="border-dashed border-bottom-0" />
+                    <h6>Push Notifications:</h6>
+                    <div class="custom-control custom-switch">
+                      <input class="custom-control-input" type="checkbox" id="switch11" />
+                      <label class="custom-control-label text-warning" for="switch11">Disable all Push notificaions?<span
+                          class="fs--2 ml-1 text-primary" data-toggle="tooltip" data-placement="top"
+                          title="This will toggle the visibilty on the preview page">
+                          <span class="fas fa-question-circle"> </span>
+                        </span>
+                      </label>
+                    </div>
+                    <div class="custom-control custom-switch">
+                      <input class="custom-control-input" type="checkbox" id="switch12" />
+                      <label class="custom-control-label" for="switch12">When someone follows me?<span class="fs--2 ml-1 text-primary"
+                          data-toggle="tooltip" data-placement="top" title="This will toggle the visibilty on the preview page">
+                          <span class="fas fa-question-circle"> </span>
+                        </span>
+                      </label>
+                    </div>
+                    <div class="custom-control custom-switch">
+                      <input class="custom-control-input" type="checkbox" id="switch13" checked />
+                      <label class="custom-control-label" for="switch13">When someone message me?<span class="fs--2 ml-1 text-primary"
+                          data-toggle="tooltip" data-placement="top" title="This will toggle the visibilty on the preview page">
+                          <span class="fas fa-question-circle"> </span>
+                        </span>
+                      </label>
+                    </div>
+                    <hr class="border-dashed border-bottom-0" />
+                    <h6>Sounds:</h6>
+                    <div class="custom-control custom-switch">
+                      <input class="custom-control-input" type="checkbox" id="switch14" />
+                      <label class="custom-control-label text-warning" for="switch14">Disable all sounds?<span
+                          class="fs--2 ml-1 text-primary" data-toggle="tooltip" data-placement="top"
+                          title="This will toggle the visibilty on the preview page">
+                          <span class="fas fa-question-circle"> </span>
+                        </span>
+                      </label>
+                    </div>
+                    <div class="custom-control custom-switch">
+                      <input class="custom-control-input" type="checkbox" id="switch15" />
+                      <label class="custom-control-label" for="switch15">Disable messages sound?<span class="fs--2 ml-1 text-primary"
+                          data-toggle="tooltip" data-placement="top" title="This will toggle the visibilty on the preview page">
+                          <span class="fas fa-question-circle"> </span>
+                        </span>
+                      </label>
+                    </div>
+                    <div class="custom-control custom-switch">
+                      <input class="custom-control-input" type="checkbox" id="switch16" />
+                      <label class="custom-control-label" for="switch16">Disable emails sound?<span class="fs--2 ml-1 text-primary"
+                          data-toggle="tooltip" data-placement="top" title="This will toggle the visibilty on the preview page">
+                          <span class="fas fa-question-circle"> </span>
+                        </span>
+                      </label>
+                    </div>
+                    <div class="custom-control custom-switch">
+                      <input class="custom-control-input" type="checkbox" id="switch17" />
+                      <label class="custom-control-label" for="switch17">Enable music autoplay?<span class="fs--2 ml-1 text-primary"
+                          data-toggle="tooltip" data-placement="top" title="This will toggle the visibilty on the preview page">
+                          <span class="fas fa-question-circle"> </span>
+                        </span>
+                      </label>
+                    </div>
+                    <div class="custom-control custom-switch">
+                      <input class="custom-control-input" type="checkbox" id="switch18" checked />
+                      <label class="custom-control-label" for="switch18">Enable Video autoplay?<span class="fs--2 ml-1 text-primary"
+                          data-toggle="tooltip" data-placement="top" title="This will toggle the visibilty on the preview page">
+                          <span class="fas fa-question-circle"> </span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card mb-3">
+                <div class="card-header">
+                  <h5 class="mb-0">Billing Setting</h5>
+                </div>
+                <div class="card-body bg-light">
+                  <h5>Plan</h5>
+                  <p class="fs-0">
+                    <strong>Free</strong>- plan is currently activated
+                  </p>
+                  <a class="btn btn-falcon-default btn-block" href="plans"
+                    >Update Plan</a
+                  >
+                </div>
+                <div class="card-body bg-light border-top">
+                  <h5>Payment Method</h5>
+                  <p class="fs-0">You have not added any payment Methods.</p>
+                  <a class="btn btn-falcon-default btn-block" href="billing"
+                    >Add Method
+                  </a>
+                </div>
+              </div>
+              <div class="card mb-3">
+                <div class="card-header">
+                  <h5 class="mb-0">Change Password</h5>
+                </div>
+                <div class="card-body bg-light">
+                  <form
+                    class="needs-validation"
+                    novalidate
+                    id="changePasswordForm"
+                  >
+                    <div class="form-group">
+                      <label for="old-password">Old Password</label>
+                      <input
+                        class="form-control"
+                        id="oldPassword"
+                        type="password"
+                        required
+                      />
+                      <div class="invalid-feedback" id="invalidOldPassword">
+                        Please input valid first name.
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="new-password">New Password</label>
+                      <input
+                        class="form-control"
+                        id="newPassword"
+                        type="password"
+                        required
+                      />
+                      <div class="invalid-feedback" id="invalidNewPassword">
+                        Please input valid new password.
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="confirm-password">Confirm Password</label>
+                      <input
+                        class="form-control"
+                        id="newConfirmPassword"
+                        type="password"
+                        required
+                      />
+                      <div
+                        class="invalid-feedback"
+                        id="invalidNewConfirmPassword"
+                      >
+                        Please input valid confirm password.
+                      </div>
+                    </div>
+                    <button
+                      class="btn btn-falcon-default btn-block"
+                      type="submit"
+                    >
+                      Update Password
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="mb-0">Danger Zone</h5>
+                </div>
+                <div class="card-body bg-light">
+                  <h5 class="fs-0">Deactivate this Account</h5>
+                  <p class="fs--1">
+                    Temporarly deactivate your account. you can return anytime
+                    you want.
+                  </p>
+                  <a class="btn btn-falcon-warning d-block" href="#!"
+                    >Deactivate</a
+                  >
+                  <hr class="border border-dashed my-4" />
+                  <form
+                    class="needs-validation"
+                    novalidate
+                    id="deleteAccountForm"
+                  >
+                    <label class="d-none" id="userId"><%= user.id %></label>
+                    <h5 class="fs-0">Delete this account</h5>
+                    <p class="fs--1">
+                      Once you delete an account, it will permanently be deleted
+                      and all content will be lost. Please be certain.
+                    </p>
+                    <button
+                      class="btn btn-falcon-danger btn-block"
+                      type="button"
+                      data-bs-toggle="modal"
+                      data-bs-target="#deleteModal"
+                    >
+                      Delete
+                    </button>
+                    <div
+                      class="modal fade"
+                      id="deleteModal"
+                      tabindex="-1"
+                      role="dialog"
+                      aria-hidden="true"
+                    >
+                      <div
+                        class="modal-dialog modal-dialog-centered"
+                        role="document"
+                        style="max-width: 500px"
+                      >
+                        <div class="modal-content position-relative">
+                          <div
+                            class="position-absolute top-0 end-0 mt-2 me-2 z-1"
+                          >
+                            <button
+                              class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                          <div class="modal-body p-4">
+                            <h5 class="fs-0">Are you sure?</h5>
+                          </div>
+                          <div class="modal-footer">
+                            <button
+                              class="btn btn-falcon-secondary"
+                              type="button"
+                              data-bs-dismiss="modal"
+                            >
+                              No
+                            </button>
+                            <button
+                              class="btn btn-falcon-danger"
+                              type="submit"
+                              name="submit"
+                            >
+                              Yes
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer><%- include('partials/footer.ejs') %></footer>
+        </div>
+      </div>
+    </main>
+    <!-- ===============================================-->
+    <!--               End of Main Content              -->
+    <!-- ===============================================-->
+
+    <div id="auth-alert" role="alert" style="z-index: 9999;"></div>
+    <div class="alert alert-success alert-dismissible fade show custom-alert" role="alert" style="
+            display: none;
+            position: fixed;
+            bottom: 0px;
+            right: 10px;
+            max-width: 400px;
+            font-size: 14px;
+            z-index: 9999;
+          ">
+      <h6 class="mt-2" id="alertContext">
+        Profile setting updated successfully!
+      </h6>
+      <button class="close" type="button" onclick="closeCustomAlert()" aria-label="Close">
+        <span class="font-weight-light" aria-hidden="true">×</span>
+      </button>
+    </div>
+
+    <!-- ===============================================-->
+    <!--                    JavaScripts                 -->
+    <!-- ===============================================-->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/popper.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/lib/@fortawesome/all.min.js"></script>
+    <script src="../assets/lib/stickyfilljs/stickyfill.min.js"></script>
+    <script src="../assets/lib/sticky-kit/sticky-kit.min.js"></script>
+    <script src="../assets/lib/is_js/is.min.js"></script>
+    <script src="../assets/lib/lodash/lodash.min.js"></script>
+    <script src="../assets/lib/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="../assets/lib/fancybox/jquery.fancybox.min.js"></script>
+    <script src="../assets/lib/flatpickr/flatpickr.min.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../js/settings.js"></script>
+    <script src="../js/alertModule.js"></script>
+    <script src="assets/lib/shopify-draggable/draggable.bundle.legacy.js"></script>
+  </body>
+</html>

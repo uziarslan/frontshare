@@ -1,0 +1,292 @@
+<nav class="navbar navbar-vertical navbar-expand-xl navbar-light">
+  <div class="d-flex align-items-center">
+    <div class="toggle-icon-wrapper mt-3">
+      <button id="toggle-button-navbar" class="btn navbar-toggler-humburger-icon navbar-vertical-toggle"
+        data-toggle="tooltip" data-placement="left" title="Toggle Navigation">
+        <span class="navbar-toggle-icon">
+          <span class="toggle-line"> </span>
+        </span>
+      </button>
+    </div>
+    <a class="navbar-brand mt-3">
+      <div class="d-flex align-items-center">
+        <img class="" src="<%= appInfo?.app_logo ? '../img/' + appInfo.app_logo : '' %>" alt="Landing page" width="150px" /><!-- Logo -->
+      </div>
+    </a>
+  </div>
+  <div class="collapse navbar-collapse" id="navbarVerticalCollapse" style="height: 100%">
+    <div class="navbar-vertical-content perfect-scrollbar scrollbar pr-2">
+      <ul class="navbar-nav flex-column" id="user">
+        <!-- Visible to all roles -->
+
+        <li class="nav-item">
+          <a class="nav-link dropdown-indicator" href="#Home" data-toggle="collapse" role="button" aria-expanded="false"
+            aria-controls="Home">
+            <div class="d-flex align-items-center">
+              <span class="nav-link-icon">
+                <span class="fas fa-home"> </span>
+              </span>
+              <span class="nav-link-text">Home</span>
+            </div>
+          </a>
+          <ul class="nav collapse" id="Home" data-parent="#navbarVerticalCollapse">
+            <li class="nav-item">
+              <a class="nav-link fs--2 disabled" href="feed">Feed<span
+                class="badge badge-pill ml-2 badge-soft-success">soon</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs--2 disabled" href="news">News<span
+                  class="badge badge-pill ml-2 badge-soft-success">soon</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs--2 disabled" href="articals">Articals<span
+                  class="badge badge-pill ml-2 badge-soft-success">soon</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link dropdown-indicator" href="#Profile" data-toggle="collapse" role="button"
+            aria-expanded="false" aria-controls="Profile">
+            <div class="d-flex align-items-center">
+              <span class="nav-link-icon">
+                <span class="far fa-grin-alt"> </span>
+              </span>
+              <span class="nav-link-text">Personal</span>
+            </div>
+          </a>
+          <ul class="nav collapse" id="Profile" data-parent="#navbarVerticalCollapse">
+            <li class="nav-item">
+              <a class="nav-link fs--2" href="canvas">Canvas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs--2 disabled" href="profile">profile<span
+                class="badge badge-pill ml-2 badge-soft-success">soon</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs--2 disabled" href="costumers">Costumers<span
+                class="badge badge-pill ml-2 badge-soft-success">soon</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs--2 disabled" href="orders">Orders<span
+                class="badge badge-pill ml-2 badge-soft-success">soon</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs--2 disabled" href="store">Store<span
+                  class="badge badge-pill ml-2 badge-soft-success">soon</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs--2 disabled" href="collections">Collections<span
+                  class="badge badge-pill ml-2 badge-soft-success">soon</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs--2 disabled" href="students">Students<span
+                  class="badge badge-pill ml-2 badge-soft-success">soon</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="referral">
+            <div class="d-flex align-items-center">
+              <span class="nav-link-icon">
+                <span class="fas fa-rocket"> </span>
+              </span>
+              <span class="nav-link-text"> Referral</span>
+              <span class="badge badge-pill ml-2 badge-soft-warning">2</span>
+            </div>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link dropdown-indicator" href="#Resources" data-toggle="collapse" role="button"
+            aria-expanded="false" aria-controls="Resources">
+            <div class="d-flex align-items-center">
+              <span class="nav-link-icon">
+                <span class="fas fa-cubes"> </span>
+              </span>
+              <span class="nav-link-text">Resources</span>
+            </div>
+          </a>
+          <ul class="nav collapse" id="Resources" data-parent="#navbarVerticalCollapse">
+            <li class="nav-item">
+              <a class="nav-link fs--2 disabled" href="workshop">Workshop<span
+                  class="badge badge-pill ml-2 badge-soft-success">soon</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs--2 disabled" href="tutorials">Tutorials<span
+                  class="badge badge-pill ml-2 badge-soft-success">soon</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs--2 disabled" href="mentors">Mentors<span
+                  class="badge badge-pill ml-2 badge-soft-success">soon</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link dropdown-indicator" href="#Analytics" data-toggle="collapse" role="button"
+            aria-expanded="false" aria-controls="Analytics">
+            <div class="d-flex align-items-center">
+              <span class="nav-link-icon">
+                <span class="far fa-chart-bar"> </span>
+              </span>
+              <span class="nav-link-text">Analytics</span>
+            </div>
+          </a>
+          <ul class="nav collapse" id="Analytics" data-parent="#navbarVerticalCollapse">
+            <li class="nav-item">
+              <a class="nav-link fs--2 disabled" href="earnings">Earnings<span
+                  class="badge badge-pill ml-2 badge-soft-success">soon</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs--2 disabled" href="traffic">Traffic<span
+                  class="badge badge-pill ml-2 badge-soft-success">soon</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link dropdown-indicator" href="#schedule" data-toggle="collapse" role="button"
+            aria-expanded="false" aria-controls="schedule">
+            <div class="d-flex align-items-center">
+              <span class="nav-link-icon">
+                <span class="far fa-calendar-alt"> </span>
+              </span>
+              <span class="nav-link-text">Schedule</span>
+              <span class="badge badge-pill ml-2 badge-soft-success">19</span>
+            </div>
+          </a>
+          <ul class="nav collapse" id="schedule" data-parent="#navbarVerticalCollapse">
+            <li class="nav-item">
+              <a class="nav-link fs--2" href="calendar">Calendar<span
+                  class="badge badge-pill ml-2 badge-soft-success">soon</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs--2 disabled" href="booking">Booking<span
+                  class="badge badge-pill ml-2 badge-soft-success">soon</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link dropdown-indicator" href="#Help" data-toggle="collapse" role="button" aria-expanded="false"
+            aria-controls="Help">
+            <div class="d-flex align-items-center">
+              <span class="nav-link-icon">
+                <span class="fab fa-hire-a-helper"> </span>
+              </span>
+              <span class="nav-link-text">Help</span>
+            </div>
+          </a>
+          <ul class="nav collapse" id="Help" data-parent="#navbarVerticalCollapse">
+            <li class="nav-item">
+              <a class="nav-link fs--2" href="faq">FAQ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs--2" href="privacy-policy">
+                Privacy Policy
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs--2 disabled" href="support">Support<span
+                  class="badge badge-pill ml-2 badge-soft-success">soon</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <% if (user.role==='employee' || user.role==='admin' ) { %>
+        <ul class="navbar-nav flex-column" id="employee">
+        <!-- Visible to employee and admin roles only -->
+        <li class="nav-item">
+          <a class="nav-link dropdown-indicator" href="#Support" data-toggle="collapse" role="button"
+            aria-expanded="false" aria-controls="SupportDesk">
+            <div class="d-flex align-items-center">
+              <span class="nav-link-icon">
+                <span class="fas fa-tasks text-primary"> </span>
+              </span>
+              <span class="nav-link-text text-primary">Support Desk</span>
+            </div>
+          </a>
+          <ul class="nav collapse" id="Support" data-parent="#navbarVerticalCollapse">
+            <li class="nav-item">
+              <a class="nav-link fs--2 text-primary" href="tickets">Tickets<span
+                  class="badge badge-pill ml-2 badge-soft-success">soon</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <% } %>
+      <% if (user.role==='admin' ) { %>
+        <ul class="navbar-nav flex-column pb-3" id="admin">
+          <!-- Visible to admin role only -->
+          <li class="nav-item">
+            <a class="nav-link dropdown-indicator" href="#Dashboard" data-toggle="collapse" role="button"
+              aria-expanded="false" aria-controls="Dashboard">
+              <div class="d-flex align-items-center">
+                <span class="nav-link-icon">
+                  <span class="fas fa-wrench text-warning"> </span>
+                </span>
+                <span class="nav-link-text text-warning">Dashboard</span>
+              </div>
+            </a>
+            <ul class="nav collapse" id="Dashboard" data-parent="#navbarVerticalCollapse">
+              <li class="nav-item">
+                <a class="nav-link fs--2 text-warning" href="database">Database</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fs--2 text-warning" href="economy">Economy<span
+                    class="badge badge-pill ml-2 badge-soft-success">soon</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link fs--2 text-warning" href="webapp-settings">Settings</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      <% } %>
+      <% if (user.plan==='basic' ) { %>
+      <div class="settings">
+        <div class="card shadow-none">
+          <div class="card-body alert mb-0" role="alert">
+            <div class="btn-close-falcon-container">
+              <button class="btn btn-link btn-close-falcon p-0" aria-label="Close"
+                data-bs-dismiss="alert"></button>
+            </div>
+            <div class="text-center">
+              <img src="assets/img/icons/spot-illustrations/navbar-vertical.png" alt="" width="80" />
+                <p class="fs--2 mt-2">
+                Loving what you see? <br />Upgrade your
+                <a href="plans"><%= appInfo.app_name %> Plan</a>
+              </p>
+              <div class="d-grid">
+                <a class="btn btn-sm btn-purchase" href="plans">Upgrade</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</nav>

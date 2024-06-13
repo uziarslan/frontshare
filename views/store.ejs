@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html class="navbar-vertical-collapsed" lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- ===============================================-->
+    <!--                   Document Title               -->
+    <!-- ===============================================-->
+    <title><%= appInfo.app_name %>  | Tickets</title>
+
+    <!-- ===============================================-->
+    <!--                      Favicons                  -->
+    <!-- ===============================================-->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png" />
+    <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
+    <link rel="mask-icon" href="assets/img/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+    <link rel="shortcut icon" href="assets/img/favicons/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="msapplication-config" content="assets/img/favicons/browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
+    
+    <!-- ===============================================-->
+    <!--                     Stylesheets                -->
+    <!-- ===============================================-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:100,200,300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet"/>
+    <link href="../public/vendors/simplebar/simplebar.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link href="../assets/lib/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="../assets/lib/prismjs/prism-okaidia.css" rel="stylesheet" />
+    <link href="../assets/css/theme.css" rel="stylesheet" />
+    <link id="dark-mode-css" href="../assets/css/theme-dark.css" rel="stylesheet">
+
+    <!-- ===============================================-->
+    <!--                    JavaScripts                 -->
+    <!-- ===============================================-->
+    <script src="../assets/js/config.navbar-vertical.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script>
+      var mode = localStorage.getItem("theme-mode");
+      if (mode === "dark") {
+        document.getElementById("dark-mode-css").removeAttribute("disabled");
+      } else {
+        document.getElementById("dark-mode-css").setAttribute("disabled", true);
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- ===============================================-->
+    <!--                    Main Content                -->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+      <div class="container" data-layout="container">
+        <%- include('partials/sidebar.ejs') %>
+        <div class="content">
+          <%- include('partials/navbar.ejs') %>
+            <div class="card col-12 bg-light" style="height: 90vh;">
+              
+            </div>
+          <footer><%- include('partials/footer.ejs') %></footer>
+        </div>
+      </div>
+    </main>
+    <!-- ===============================================-->
+    <!--                End of Main Content             -->
+    <!-- ===============================================-->
+
+    <!-- ===============================================-->
+    <!--                    JavaScripts                 -->
+    <!-- ===============================================-->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <script src="../public/vendors/anchorjs/anchor.min.js"></script>
+    <script src="../public/vendors/list.js/list.min.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/lib/@fortawesome/all.min.js"></script>
+    <script src="assets/lib/stickyfilljs/stickyfill.min.js"></script>
+    <script src="assets/lib/sticky-kit/sticky-kit.min.js"></script>
+    <script src="assets/lib/is_js/is.min.js"></script>
+    <script src="assets/lib/lodash/lodash.min.js"></script>
+    <script src="assets/lib/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="assets/lib/prismjs/prism.js"></script>
+    <script src="assets/js/theme.js"></script>
+
+  </body>
+</html>

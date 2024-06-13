@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html class="navbar-vertical-collapsed" lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- ===============================================-->
+    <!--                  Document Title                -->
+    <!-- ===============================================-->
+    <title><%= appInfo.app_name %>  | Calendar</title>
+
+    <!-- ===============================================-->
+    <!--                     Favicons                   -->
+    <!-- ===============================================-->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png" />
+    <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
+    <link rel="mask-icon" href="assets/img/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+    <link rel="shortcut icon" href="assets/img/favicons/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="msapplication-config" content="assets/img/favicons/browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
+    
+    <!-- ===============================================-->
+    <!--                    Stylesheets                 -->
+    <!-- ===============================================-->
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link href="../assets/lib/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="../assets/lib/prismjs/prism-okaidia.css" rel="stylesheet" />
+    <link href="../assets/lib/fullcalendar/main.min.css" rel="stylesheet" />
+    <link href="../assets/lib/flatpickr/flatpickr.min.css" rel="stylesheet" />
+    <link href="../assets/css/theme.css" rel="stylesheet" />
+    <link id="dark-mode-css" href="../assets/css/theme-dark.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:100,200,300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet"/>
+
+    <!-- ===============================================-->
+    <!--                    JavaScripts                 -->
+    <!-- ===============================================-->
+    <script src="../assets/js/config.navbar-vertical.js"></script>
+    <script>
+      var mode = localStorage.getItem("theme-mode");
+      if (mode === "dark") {
+        document.getElementById("dark-mode-css").removeAttribute("disabled");
+      } else {
+        document.getElementById("dark-mode-css").setAttribute("disabled", true);
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- ===============================================-->
+    <!--                    Main Content                -->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+      <div class="container" data-layout="container">
+        <%- include('partials/sidebar.ejs') %>
+        <div class="content">
+          <%- include('partials/navbar.ejs') %>
+
+          <div class="card mb-3">
+            <div class="card-header">
+              <div class="row no-gutters align-items-center">
+                <div class="col-auto d-flex justify-content-end order-md-1">
+                  <button class="btn icon-item icon-item-sm icon-item-hover shadow-none p-0 mr-1 ml-md-2" type="button" data-event="prev"
+                    data-toggle="tooltip" title="Previous">
+                    <span class="fas fa-arrow-left"></span>
+                  </button>
+                  <button class="btn icon-item icon-item-sm icon-item-hover shadow-none p-0 mr-1" type="button" data-event="next"
+                    data-toggle="tooltip" title="Next">
+                    <span class="fas fa-arrow-right"></span>
+                  </button>
+                </div>
+                <div class="col-auto col-md-auto order-md-2">
+                  <h4 class="mb-0 fs-0 fs-sm-1 fs-lg-2 calendar-title"></h4>
+                </div>
+                <div class="col col-md-auto d-flex justify-content-end order-md-3">
+                  <button class="btn btn-falcon-primary btn-sm" type="button" data-event="today">
+                    Today
+                  </button>
+                  <button class="btn btn-falcon-default btn-sm ml-2" type="button" data-toggle="modal" data-target="#calendarSettings">
+                    <span class="fas fa-cog"></span>
+                  </button>
+                </div>
+                <div class="col-md-auto d-md-none">
+                  <hr />
+                </div>
+                <div class="col-auto d-flex order-md-0">
+                  <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#addEvent">
+                    <span class="fas fa-plus mr-2"></span>Add Schedule
+                  </button>
+                </div>
+                <div class="col d-flex justify-content-end order-md-2">
+                  <div class="dropdown text-sans-serif mr-md-2">
+                    <button class="btn btn-falcon-default text-600 btn-sm dropdown-toggle dropdown-caret-none" type="button"
+                      id="email-filter" data-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false">
+                      <span data-view-title="data-view-title">Month View</span><span class="fas fa-sort ml-2 fs--1"></span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="email-filter">
+                      <a class="active dropdown-item d-flex justify-content-between" href="#!" data-fc-view="dayGridMonth">Month
+                        View<span><span class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a><a
+                        class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="timeGridWeek">Week View<span><span
+                            class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a><a
+                        class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="timeGridDay">Day View<span><span
+                            class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a><a
+                        class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="listWeek">List View<span><span
+                            class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a><a
+                        class="dropdown-item d-flex justify-content-between" href="#!" data-fc-view="listYear">Year View<span><span
+                            class="fas fa-check" data-fa-transform="down-4 shrink-4"></span></span></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <div id="appCalendar"></div>
+            </div>
+          </div>
+          <footer><%- include('partials/footer.ejs') %></footer>
+        </div>
+        <div class="modal theme-modal fade" id="addEvent">
+          <div class="modal-dialog">
+            <div class="modal-content border">
+              <form class="form-validation" id="addEventForm" autocomplete="off">
+                <div class="modal-header bg-light d-flex flex-between-center border-bottom-0">
+                  <h5 class="mb-0">Create Schedule</h5>
+                  <button class="close fs-0 px-card" data-dismiss="modal" aria-label="Close">
+                    <span class="fas fa-times"></span>
+                  </button>
+                </div>
+                <div class="modal-body p-card">
+                  <div class="form-group">
+                    <label class="fs-0" for="eventTitle">Title</label>
+                    <input class="form-control" id="eventTitle" type="text" name="title" required="required" />
+                  </div>
+                  <div class="form-group">
+                    <label class="fs-0" for="eventStartDate">Start Date</label>
+                    <input class="form-control datetimepicker" id="eventStartDate" type="text" required="required" name="startDate"
+                      placeholder="y-m-d h:m" data-options='{"static":"true","enableTime":"true","dateFormat":"Y-m-d H:i"}' />
+                  </div>
+                  <div class="form-group">
+                    <label class="fs-0" for="eventEndDate">End Date</label>
+                    <input class="form-control datetimepicker" id="eventEndDate" type="text" name="endDate" placeholder="y-m-d h:m"
+                      data-options='{"static":"true","enableTime":"true","dateFormat":"Y-m-d H:i"}' />
+                  </div>
+                  <div class="custom-control custom-checkbox mb-3">
+                    <input class="custom-control-input" id="eventAllDay" type="checkbox" name="allDay" />
+                    <label class="custom-control-label" for="eventAllDay">All Day</label>
+                  </div>
+                  <div class="form-group">
+                    <label class="fs-0">Schedule Meeting</label>
+                    <div>
+                      <a class="btn bg-soft-info text-left text-info" href="#!"><span class="fas fa-video mr-2"></span>Add video
+                        conference link</a>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="fs-0" for="eventDescription">Description</label>
+                    <textarea class="form-control" rows="3" name="description" id="eventDescription"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label class="fs-0" for="eventLabel">Label</label>
+                    <select class="custom-select" id="eventLabel" name="label">
+                      <option value="" selected="selected">None</option>
+                      <option value="primary">Business</option>
+                      <option value="danger">Important</option>
+                      <option value="success">Personal</option>
+                      <option value="warning">Must Attend</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="card-footer d-flex justify-content-end align-items-center bg-light">
+                  <button class="btn btn-primary btn-lg px-4" type="submit">
+                    Save
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal theme-modal fade" id="calendarSettings">
+          <div class="modal-dialog">
+            <div class="modal-content border">
+              <form class="form-validation" id="addEventForm" autocomplete="off">
+                <div class="modal-header bg-light d-flex flex-between-center border-bottom-0">
+              
+                </div>
+                <div class="modal-body p-card">
+              
+              
+                </div>
+                <div class="card-footer d-flex justify-content-end align-items-center bg-light">
+                  <a class="mr-3 text-600" href="settings">More Settings</a>
+                  <button class="btn btn-primary btn-lg px-4" type="submit">
+                    Save
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal theme-modal fade" id="eventDetails">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- ===============================================-->
+    <!--              End of Main Content               -->
+    <!-- ===============================================-->
+
+    <!-- ===============================================-->
+    <!--                 JavaScripts                    -->
+    <!-- ===============================================-->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/lib/@fortawesome/all.min.js"></script>
+    <script src="assets/lib/stickyfilljs/stickyfill.min.js"></script>
+    <script src="assets/lib/sticky-kit/sticky-kit.min.js"></script>
+    <script src="assets/lib/is_js/is.min.js"></script>
+    <script src="assets/lib/lodash/lodash.min.js"></script>
+    <script src="assets/lib/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="assets/lib/prismjs/prism.js"></script>
+    <script src="assets/lib/fullcalendar/main.min.js"></script>
+    <script src="assets/lib/flatpickr/flatpickr.min.js"></script>
+    <script src="assets/lib/dayjs/dayjs.min.js"></script>
+    <script src="assets/lib/jquery-validation/jquery.validate.min.js"></script>
+    <script src="assets/js/theme.js"></script>
+  </body>
+</html>

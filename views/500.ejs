@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- ===============================================-->
+    <!--                 Document Title                 -->
+    <!-- ===============================================-->
+    <title><%= appInfo.app_name %>  | 500</title>
+
+    <!-- ===============================================-->
+    <!--                   Favicons                     -->
+    <!-- ===============================================-->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png" />
+    <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
+    <link rel="mask-icon" href="assets/img/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+    <link rel="shortcut icon" href="assets/img/favicons/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="msapplication-config" content="assets/img/favicons/browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
+    
+    <!-- ===============================================-->
+    <!--                  Stylesheets                   -->
+    <!-- ===============================================-->
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link href="../assets/lib/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="../assets/css/theme.css" rel="stylesheet" />
+    <link id="dark-mode-css" href="../assets/css/theme-dark.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:100,200,300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet"/>
+
+    <!-- ===============================================-->
+    <!--                   JavaScripts                  -->
+    <!-- ===============================================-->
+    <script src="../assets/js/config.navbar-vertical.js"></script>
+    <script>
+      var mode = localStorage.getItem("theme-mode");
+      if (mode === "dark") {
+        document.getElementById("dark-mode-css").removeAttribute("disabled");
+      } else {
+        document.getElementById("dark-mode-css").setAttribute("disabled", true);
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- ===============================================-->
+    <!--                  Main Content                  -->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+      <div class="container" data-layout="container">
+        <div class="row flex-center min-vh-100 py-6 text-center">
+          <div class="col-sm-10 col-md-8 col-lg-6 col-xxl-5">
+            <div class="card">
+              <div class="card-body p-4 p-sm-5">
+                <div class="display-1 text-300 fs-error">500</div>
+                <p
+                  class="lead mt-4 text-800 text-sans-serif font-weight-semi-bold"
+                >
+                  Whoops, something went wrong!
+                </p>
+                <hr />
+                <p>
+                  Try refreshing the page, or going back and attempting the
+                  action again. If this problem persists,
+                  <a href="mailto:info@exmaple.com">contact us</a>.
+                </p>
+                <button
+                  class="btn btn-primary btn-sm mt-3"
+                  onclick="history.go(-1)"
+                >
+                  <span class="fas fa-home mr-2"></span>
+                  Take me back
+                </button>
+              </div>
+            </div>
+            <div class="mt-5">
+              <div class="col text-center">
+                <h6><em>Powered by</em></h6>
+                <a href="/">
+                  <img
+                    class=""
+                    src="<%= appInfo?.app_logo ? '../img/' + appInfo.app_logo : '' %>"
+                    alt=""
+                    width="150px"
+                  /><!-- Logo -->
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- ===============================================-->
+    <!--               End of Main Content              -->
+    <!-- ===============================================-->
+
+    <!-- ===============================================-->
+    <!--                  JavaScripts                   -->
+    <!-- ===============================================-->
+    <script src="../../assets/js/jquery.min.js"></script>
+    <script src="../../assets/js/popper.min.js"></script>
+    <script src="../../assets/js/bootstrap.min.js"></script>
+    <script src="../../assets/lib/@fortawesome/all.min.js"></script>
+    <script src="../../assets/lib/stickyfilljs/stickyfill.min.js"></script>
+    <script src="../../assets/lib/sticky-kit/sticky-kit.min.js"></script>
+    <script src="../../assets/lib/is_js/is.min.js"></script>
+    <script src="../../assets/lib/lodash/lodash.min.js"></script>
+    <script src="../../assets/lib/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="../../assets/js/theme.js"></script>
+  </body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html class="navbar-vertical-collapsed" lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- ===============================================-->
+    <!--                 Document Title                 -->
+    <!-- ===============================================-->
+    <title><%= appInfo.app_name %>  | <%= user.first_name + ' ' + user.last_name %> Details</title>
+
+    <!-- ===============================================-->
+    <!--                    Favicons                    -->
+    <!-- ===============================================-->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png" />
+    <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
+    <link rel="mask-icon" href="assets/img/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+    <link rel="shortcut icon" href="assets/img/favicons/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="msapplication-config" content="assets/img/favicons/browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- ===============================================-->
+    <!--                   Stylesheets                  -->
+    <!-- ===============================================-->
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link href="../assets/lib/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="../assets/css/theme.css" rel="stylesheet" />
+    <link id="dark-mode-css" href="../assets/css/theme-dark.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:100,200,300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet" />
+
+    <!-- ===============================================-->
+    <!--                   JavaScripts                  -->
+    <!-- ===============================================-->
+    <script src="../assets/js/config.navbar-vertical.js"></script>
+    <script>
+      var mode = localStorage.getItem("theme-mode");
+      if (mode === "dark") {
+        document.getElementById("dark-mode-css").removeAttribute("disabled");
+      } else {
+        document.getElementById("dark-mode-css").setAttribute("disabled", true);
+      }
+    </script>
+    
+  </head>
+
+  <body>
+    <!-- ===============================================-->
+    <!--                   Main Content                 -->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+      <div class="container" data-layout="container">
+        <%- include('partials/sidebar.ejs') %>
+        <div class="content">
+          <%- include('partials/navbar.ejs') %>
+
+          <div class="card font-sans-serif mb-3">
+            <div class="row mx-2 mt-3">
+              <div class="col ml-3">
+                <div class="row">
+                  <h5 class="">
+                    <%= user.first_name + ' ' + user.last_name %>
+                  </h5>
+                  <button class="btn btn-falcon-default btn-sm dropdown-toggle dropdown-caret-none ml-2" type="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <span class="fas fa-ellipsis-h"></span>
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Contact</a>
+                    <a class="dropdown-item" href="#">Edit</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-danger" href="#">Delete</a>
+                    <a class="dropdown-item text-danger" href="#">Ban</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-auto d-sm-block">
+                <h6 class="text-uppercase mt-2 text-600">
+                  <%= user.role %><span class="fas fa-user text-primary ml-2"></span>
+                </h6>
+              </div>
+            </div>
+            <div class="card-body d-flex flex-column flex-sm-row align-items-center">
+              <img class="rounded-soft mb-3" src="<%= user.image ? '../img/users/' + user.image : 'https://avatar.oxro.io/avatar.svg?name=' + encodeURIComponent(user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1) + ' ' + user.last_name.charAt(0).toUpperCase() + user.last_name.slice(1)) + '&background=random&color=fff&fontSize=170px&bold=true' %>" alt="" width="112" />
+              <table class="table table-borderless fs--1 fw-medium mb-0 ml-3">
+                <tbody>
+                  <tr>
+                    <td class="p-1" style="width: 35%">Last Online:</td>
+                    <td class="p-1 text-600"><%= user.recent_activity.online_at %></td>
+                  </tr>
+                  <tr>
+                    <td class="p-1" style="width: 35%">Joined:</td>
+                    <td class="p-1 text-600"><%= user.joined_date %></td>
+                  </tr>
+                  <tr>
+                    <td class="p-1" style="width: 35%">Email:</td>
+                    <td class="p-1">
+                      <a class="text-600 text-decoration-none" href=""><%= user.email %> </a><small
+                        class="badge rounded badge-subtle-success false">Verified</small>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="p-1" style="width: 35%">Mobile No:</td>
+                    <td class="p-1">
+                      <a class="text-600 text-decoration-none" href=""><%= user.phone %> </a><small
+                        class="badge rounded badge-subtle-primary">2-step verification</small>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card mb-3">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h5 class="mb-0">Details</h5>
+                </div>
+                <div class="col-auto">
+                  <a class="btn btn-falcon-default btn-sm mr-2" href="#!">
+                    <span class="fas fa-dollar-sign fs--2 mr-1">
+                    </span>Refund</a>
+                  <a class="btn btn-falcon-default btn-sm" href="#!">
+                    <span class="fas fa-pencil-alt fs--2 mr-1"></span>Update
+                    details</a>
+                </div>
+
+              </div>
+            </div>
+            <div class="card-body bg-light border-top">
+              <div class="row">
+                <div class="col-lg col-xxl-5">
+                  <h6 class="font-weight-semi-bold ls mb-3 text-uppercase">
+                    Account Information
+                  </h6>
+                  <div class="row">
+                    <div class="col-5 col-sm-4">
+                      <p class="font-weight-semi-bold mb-1">ID</p>
+                    </div>
+                    <div class="col"><%= user.id %></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-5 col-sm-4">
+                      <p class="font-weight-semi-bold mb-1">Created</p>
+                    </div>
+                    <div class="col"><%= user.joined_date %></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-5 col-sm-4">
+                      <p class="font-weight-semi-bold mb-1">Email</p>
+                    </div>
+                    <div class="col">
+                      <a href="mailto:tony@gmail.com"><%= user.email %></a>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-5 col-sm-4">
+                      <p class="font-weight-semi-bold mb-1">Description</p>
+                    </div>
+                    <div class="col">
+                      <p class="font-italic text-400 mb-1">No Description</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-5 col-sm-4">
+                      <p class="font-weight-semi-bold mb-0">VAT number</p>
+                    </div>
+                    <div class="col">
+                      <p class="font-italic text-400 mb-0">No VAT number</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg col-xxl-5 mt-4 mt-lg-0 offset-xxl-1">
+                  <h6 class="font-weight-semi-bold ls mb-3 text-uppercase">
+                    Billing Information
+                  </h6>
+                  <div class="row">
+                    <div class="col-5 col-sm-4">
+                      <p class="font-weight-semi-bold mb-1">Send email to</p>
+                    </div>
+                    <div class="col">
+                      <a href="mailto:tony@gmail.com"><%= user.email %></a>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-5 col-sm-4">
+                      <p class="font-weight-semi-bold mb-1">Address</p>
+                    </div>
+                    <div class="col">
+                      <p class="mb-1">
+                        <%= user.address %>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-5 col-sm-4">
+                      <p class="font-weight-semi-bold mb-1">Phone number</p>
+                    </div>
+                    <div class="col">
+                      <a href="tel:+12025550110"><%= user.phone %></a>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-5 col-sm-4">
+                      <p class="font-weight-semi-bold mb-0">Invoice prefix</p>
+                    </div>
+                    <div class="col">
+                      <p class="font-weight-semi-bold mb-0">7C23435</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">Logs</h5>
+            </div>
+            <div class="card-body border-top p-0">
+              <div
+                class="row no-gutters align-items-center border-bottom py-2 px-3"
+              >
+                <div class="col-md-auto pr-3">
+                  <span class="badge badge-soft-success badge-pill">200</span>
+                </div>
+                <div class="col-md mt-1 mt-md-0">
+                  <code>POST /v1/invoiceitems</code>
+                </div>
+                <div class="col-md-auto">
+                  <p class="mb-0">2019/02/23 15:29:45</p>
+                </div>
+              </div>
+              <div
+                class="row no-gutters align-items-center border-bottom py-2 px-3"
+              >
+                <div class="col-md-auto pr-3">
+                  <span class="badge badge-soft-warning badge-pill">400</span>
+                </div>
+                <div class="col-md mt-1 mt-md-0">
+                  <code>POST /v1/invoiceitems</code>
+                </div>
+                <div class="col-md-auto">
+                  <p class="mb-0">2019/02/19 21:32:12</p>
+                </div>
+              </div>
+              <div
+                class="row no-gutters align-items-center border-bottom py-2 px-3"
+              >
+                <div class="col-md-auto pr-3">
+                  <span class="badge badge-soft-success badge-pill">200</span>
+                </div>
+                <div class="col-md mt-1 mt-md-0">
+                  <code>POST /v1/invoices/in_1Dnkhadfk</code>
+                </div>
+                <div class="col-md-auto">
+                  <p class="mb-0">2019/02/26 12:23:43</p>
+                </div>
+              </div>
+              <div
+                class="row no-gutters align-items-center border-bottom py-2 px-3"
+              >
+                <div class="col-md-auto pr-3">
+                  <span class="badge badge-soft-success badge-pill">200</span>
+                </div>
+                <div class="col-md mt-1 mt-md-0">
+                  <code>POST /v1/invoices/in_1Dnkhadfk</code>
+                </div>
+                <div class="col-md-auto">
+                  <p class="mb-0">2019/02/12 23:32:12</p>
+                </div>
+              </div>
+              <div
+                class="row no-gutters align-items-center border-bottom py-2 px-3"
+              >
+                <div class="col-md-auto pr-3">
+                  <span class="badge badge-soft-danger badge-pill">404</span>
+                </div>
+                <div class="col-md mt-1 mt-md-0">
+                  <code>POST /v1/invoices/in_1Dnkhadfk</code>
+                </div>
+                <div class="col-md-auto">
+                  <p class="mb-0">2019/02/08 02:20:23</p>
+                </div>
+              </div>
+              <div
+                class="row no-gutters align-items-center py-2 px-3"
+              >
+                <div class="col-md-auto pr-3">
+                  <span class="badge badge-soft-success badge-pill">200</span>
+                </div>
+                <div class="col-md mt-1 mt-md-0">
+                  <code>POST /v1/invoices/in_1Dnkhadfk</code>
+                </div>
+                <div class="col-md-auto">
+                  <p class="mb-0">2019/02/01 12:29:34</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer><%- include('partials/footer.ejs') %></footer>
+        </div>
+      </div>
+    </main>
+    <!-- ===============================================-->
+    <!--              End of Main Content               -->
+    <!-- ===============================================-->
+
+    <!-- ===============================================-->
+    <!--                 JavaScripts                    -->
+    <!-- ===============================================-->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/popper.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/lib/@fortawesome/all.min.js"></script>
+    <script src="../assets/lib/stickyfilljs/stickyfill.min.js"></script>
+    <script src="../assets/lib/sticky-kit/sticky-kit.min.js"></script>
+    <script src="../assets/lib/is_js/is.min.js"></script>
+    <script src="../assets/lib/lodash/lodash.min.js"></script>
+    <script src="../assets/lib/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="../assets/js/theme.js"></script>
+  </body>
+</html>

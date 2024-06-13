@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE-edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- ===============================================-->
+  <!--                     Favicons                   -->
+  <!-- ===============================================-->
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png" />
+  <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
+  <link rel="mask-icon" href="assets/img/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+  <link rel="shortcut icon" href="assets/img/favicons/favicon.ico" />
+  <meta name="msapplication-TileColor" content="#da532c" />
+  <meta name="msapplication-config" content="assets/img/favicons/browserconfig.xml" />
+  <meta name="theme-color" content="#ffffff" />
+  <!-- Favicons end here -->
+
+  <!-- ===============================================-->
+  <!--                    Stylesheets                 -->
+  <!-- ===============================================-->
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link href="../assets/lib/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" />
+  <link href="../assets/lib/lightbox2/css/lightbox.min.css" rel="stylesheet" />
+  <link href="../assets/lib/fancybox/jquery.fancybox.min.css" rel="stylesheet" />
+  <link href="../assets/css/colorPick.css" rel="stylesheet" />
+  <link id="dark-color-picker" href="../assets/css/colorPick.dark.theme.css" rel="stylesheet" />
+  <link href="../assets/css/theme.css" rel="stylesheet" />
+  <link id="dark-mode-css" href="../assets/css/theme-dark.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:100,200,300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet" />
+  <!-- Stylesheets end here -->
+
+  <!-- ===============================================-->
+  <!--                    JavaScripts                 -->
+  <!-- ===============================================-->
+  <script src="../assets/js/config.navbar-vertical.js"></script>
+  <script src="assets/js/jquery.min.js"></script>
+  <!-- Javascript end here -->
+
+  <script src="../js/blocks/poll-block.js" defer></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <link id="dark-mode-css" href="../assets/css/theme-dark.css" rel="stylesheet" />
+  <link href="../assets/css/canvas.css" rel="stylesheet" type="text/css">
+  <script>
+    var mode = localStorage.getItem("theme-mode");
+    if (mode === "dark") {
+      document.getElementById("dark-mode-css")
+        .removeAttribute("disabled");
+    } else {
+      document.getElementById("dark-mode-css")
+        .setAttribute("disabled", true);
+    }
+
+  </script>
+  <title><%= appInfo.app_name %> | Canvas</title>
+
+</head>
+
+<body>
+  <main class="main" id="top">
+    <div class="container" data-layout="container">
+      <%- include("partials/sidebar.ejs") %>
+      <div class="content">
+        <%- include('partials/navbar.ejs') %>
+        <!-- Top Bio, Socials, Bacground, Themes Section -->
+        <div class="topperButtonsContainer">
+          <button class="topButton">Bio</button>
+          <button class="topButton">Socials</button>
+          <button disabled class="topButton">Backgrounds</button>
+          <button disabled class="topButton">Themes</button>
+        </div>
+
+        <!-- Url, Qr and eye icon button container -->
+        <div class="linksContainer">
+          <span data-bs-container="body" data-bs-placement="top" class="" tabindex="1000" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Preview Site">
+            <button class="linkButton customButton"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
+                <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z" />
+              </svg></button>
+          </span>
+          <span data-bs-container="body" data-bs-placement="top" class="" tabindex="1000" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Canvas URL">
+            <button class="linkButton">URL</button>
+          </span>
+          <span data-bs-container="body" data-bs-placement="top" class="" tabindex="1000" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Generate QR">
+            <button class="linkButton">QR</button>
+          </span>
+        </div>
+
+        <!-- Card Section starts here -->
+        <div class="lanes">
+
+          <!-- First Card -->
+          <div class="<%= user.first_list.show? 'swim-lane': 'swim-lane disabled' %>" id="todo-lane">
+            <div class="cardHeader">
+              <h3 class="heading">First List</h3>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="firstCheckbox" <%= user.first_list.show? 'checked': '' %> <%= user.first_list.show !== true? 'disabled': ''  %> />
+                <span data-bs-container="body" data-bs-placement="top" class="" tabindex="1000" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="This list is for (Basic Plan) users. All Basic Plan users have this by default">
+                  <p class="hintButton">?</p>
+                </span>
+              </div>
+            </div>
+            <!-- Task Starts here -->
+            <div class="<%= user.first_list.show? 'cardScreen': 'cardScreen disabled' %>">
+              <% if (user.first_list.show) {%>
+              <% user.first_list.data.map((card) => { %>
+              <div draggable="true" class="task">
+                <p class=""><%= card.title %></p>
+                <span><%= card.self_note %></span>
+              </div>
+              <%}) %>
+              <% } %>
+            </div>
+            <!-- Task ends here -->
+            <div class="addCardButton">
+              <button <%= user.first_list.show !== true? 'disabled' : '' %> id="firstCardButton" class="addCardButton">+ Add a card</button>
+            </div>
+          </div>
+
+          <!-- Second List -->
+          <div class="<%= user.second_list.show? "swim-lane": "swim-lane disabled" %>">
+            <div class="cardHeader">
+              <h3 class="heading">Second List</h3>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="secondCheckbox" <%= user.second_list.show? 'checked' : '' %> <%= user.second_list.show !== true? 'disabled': '' %> />
+                <span data-bs-container="body" data-bs-placement="top" class="" tabindex="1000" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="This list is for (Basic Plan) users. All Basic Plan users have this by default">
+                  <p class="hintButton">?</p>
+                </span>
+              </div>
+            </div>
+            <!-- Task Starts here -->
+            <div class="<%= user.second_list.show? 'cardScreen': 'cardScreen disabled' %>">
+              <!-- Task goes in here -->
+            </div>
+            <!-- Task ends here -->
+            <div class="addCardButton">
+              <button <%= user.second_list.show !== true? 'disabled': '' %> id="secondCardButton" class="addCardButton">+ Add a card</button>
+            </div>
+          </div>
+
+          <!-- Third List -->
+          <div class="<%= user.third_list.show? 'swim-lane': 'swim-lane disabled' %>">
+            <div class="cardHeader">
+              <h3 class="heading">Third List</h3>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="thirdCheckbox" <%= user.third_list.show? 'checked' : '' %> <%= user.third_list.show !== true? 'disabled' : '' %> />
+                <span data-bs-container="body" data-bs-placement="top" class="" tabindex="1000" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="This list is for (Basic Plan) users. All Basic Plan users have this by default">
+                  <p class="hintButton">?</p>
+                </span>
+              </div>
+            </div>
+            <!-- Task Starts here -->
+            <div class="<%= user.third_list.show? 'cardScreen': 'cardScreen disabled' %>">
+              <!-- Task goes in here -->
+            </div>
+            <!-- Task ends here -->
+            <div class="addCardButton">
+              <button <%= user.third_list.show !== true? 'disabled' : '' %> id="thirdCardButton" class="addCardButton">+ Add a card</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Modal Model Section Starts -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog mainModelStyle">
+            <div class="modal-content">
+              <div class="modal-header modelHeadStyle">
+                <!-- Head Title goes in here using javascript -->
+              </div>
+              <div class="modal-body modelBodyStyle">
+                <!-- Modal body goes in here using javascript -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Models Section End -->
+
+      </div>
+    </div>
+  </main>
+</body>
+<!-- ===============================================-->
+<!--                  JavaScripts                   -->
+<!-- ===============================================-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/popper.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/lib/@fortawesome/all.min.js"></script>
+<script src="assets/lib/stickyfilljs/stickyfill.min.js"></script>
+<script src="assets/lib/sticky-kit/sticky-kit.min.js"></script>
+<script src="assets/lib/is_js/is.min.js"></script>
+<script src="assets/lib/lodash/lodash.min.js"></script>
+<script src="assets/lib/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/html2canvas@1.3.2/dist/html2canvas.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+<script src="vendors/tinymce/tinymce.min.js"></script>
+<script src="assets/js/colorPick.js"></script>
+<script src="assets/lib/shopify-draggable/draggable.bundle.legacy.js"></script>
+<script src="assets/lib/lightbox2/js/lightbox.min.js"></script>
+<script src="assets/lib/fancybox/jquery.fancybox.min.js"></script>
+<script src="../js/blocks/text-block.js"></script>
+<script src="../js/blocks/video-block.js"></script>
+<script src="../js/blocks/music-block.js"></script>
+<script src="../js/blocks/text-block.js"></script>
+<!-- <script src="../js/blocks/poll-block.js"></script> -->
+<!-- <script src="assets/js/bio-block.js"></script> -->
+<script src="../js/canvas.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.1/lottie.min.js"></script>
+<script src="assets/js/theme.js"></script>
+<script src="../js/alertModule.js"></script>
+<!-- Javascript end here -->
+<script>
+  const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+  const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+
+</script>
+<script src="../js/canvas.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script>
+  // JavaScript code to set the onclick attribute
+  const firstCardButton = document.getElementById("firstCardButton");
+  const secondCardButton = document.getElementById("secondCardButton");
+  const thirdCardButton = document.getElementById("thirdCardButton");
+  // Check the condition and set the onclick attribute accordingly
+  if ('<%=user.first_list.show%>' === "true") {
+    firstCardButton.setAttribute("onclick", "createModal('Add your card', 'Block Types')");
+    firstCardButton.setAttribute("data-bs-toggle", "modal");
+    firstCardButton.setAttribute("data-bs-target", "#exampleModal");
+    firstCheckbox.disabled = false;
+  }
+  if ('<%=user.second_list.show%>' === "true") {
+    secondCardButton.setAttribute("onclick", "createModal('Add your card','Block Types')");
+    secondCardButton.setAttribute("data-bs-toggle", "modal");
+    secondCardButton.setAttribute("data-bs-target", "#exampleModal");
+  }
+  if ('<%=user.third_list.show%>' === "true") {
+    thirdCardButton.setAttribute("onclick", "createModal('Add your card','Block Types')");
+    thirdCardButton.setAttribute("data-bs-toggle", "modal");
+    thirdCardButton.setAttribute("data-bs-target", "#exampleModal");
+  }
+
+</script>
+<script>
+  function submitForm() {
+
+    document.getElementById("addOptionButton")
+      .addEventListener("click", function(event) {
+        // Prevent the default form submission behavior
+        event.preventDefault();
+
+        // Find the form by its ID
+        const form = document.getElementById("pollForm");
+
+        if (form) {
+          // Create a new FormData object from the form
+          const formData = new FormData(form);
+
+          // Convert the FormData object to a plain JavaScript object
+          const formDataJSON = {};
+          formData.forEach((value, key) => {
+            // Check if the key is "poll_list" and initialize it as an array if not already
+            if (key === "poll_list") {
+              if (!formDataJSON[key]) {
+                formDataJSON[key] = [value];
+              } else {
+                formDataJSON[key].push(value);
+              }
+            } else {
+              // For other keys, assign the value directly
+              formDataJSON[key] = value;
+            }
+          });
+          // Send the form data to the server using a fetch request
+          fetch('/canvas', {
+              method: 'POST'
+              , headers: {
+                "Content-Type": "application/json"
+              }
+              , body: JSON.stringify(formDataJSON)
+            })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("Form submitted successfully:", data);
+            })
+            .catch((error) => {
+              console.error("Error submitting form:", error);
+            });
+        }
+      });
+  }
+
+</script>
+
+
+
+</html>

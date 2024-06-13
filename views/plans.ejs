@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html class="navbar-vertical-collapsed" lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- ===============================================-->
+    <!--                    Document Title              -->
+    <!-- ===============================================-->
+    <title><%= appInfo.app_name %>  | Plans</title>
+
+    <!-- ===============================================-->
+    <!--                       Favicons                 -->
+    <!-- ===============================================-->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png" />
+    <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
+    <link rel="mask-icon" href="assets/img/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+    <link rel="shortcut icon" href="assets/img/favicons/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="msapplication-config" content="assets/img/favicons/browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
+    
+    <!-- ===============================================-->
+    <!--                    Stylesheets                 -->
+    <!-- ===============================================-->
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link href="../assets/lib/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="../assets/css/theme.css" rel="stylesheet" />
+    <link id="dark-mode-css" href="../assets/css/theme-dark.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:100,200,300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet"/>
+
+    <!-- ===============================================-->
+    <!--                    JavaScripts                 -->
+    <!-- ===============================================-->
+    <script src="../assets/js/config.navbar-vertical.js"></script>
+    <script>
+      var mode = localStorage.getItem("theme-mode");
+      if (mode === "dark") {
+        document.getElementById("dark-mode-css").removeAttribute("disabled");
+      } else {
+        document.getElementById("dark-mode-css").setAttribute("disabled", true);
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- ===============================================-->
+    <!--                  Main Content                  -->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+      <div class="container" data-layout="container">
+        <%- include('partials/sidebar.ejs') %>
+        <div class="content">
+          <%- include('partials/navbar.ejs') %>
+
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="row justify-content-center">
+                <div class="col-12 text-center mb-4">
+                  <div class="fs-1">
+                    <%= appInfo.app_name %> Pricing
+                  </div>
+                  <h3 class="fs-2 fs-md-3">
+                    Free plan with all the basic features.
+                    <br class="d-none d-md-block" />Pro plan for advanced users.
+                    <br class="d-none d-md-block" /><br class="d-none d-md-block" />Billed Annually
+                    <span class="badge badge-soft-success rounded-pill">Save 25%</span>
+                  </h3>
+                  <div class="d-flex flex-center fs--1">
+                    <label class="mr-2 mb-0" for="customSwitch1">Monthly</label>
+                    <div class="custom-control custom-switch">
+                      <input class="custom-control-input" id="customSwitch1" onchange="changePrice()" type="checkbox" unchecked />
+                      <label class="custom-control-label" for="customSwitch1">Annually</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-8">
+                  <div class="row">
+                    <div class="col-12 col-md">
+                      <div class="border rounded-soft overflow-hidden mb-3 mb-md-0">
+                        <div class="d-flex justify-content-between align-items-center p-4">
+                          <div>
+                            <h3 class="font-weight-light fs-5 mb-0 text-primary">
+                              Free
+                            </h3>
+                            <h2 class="font-weight-light mt-0 text-primary">
+                              <sup class="fs-1">&dollar;</sup><span class="fs-3">0</span><span class="fs--2 mt-1">/ m</span>
+                            </h2>
+                          </div>
+                          <div class="pr-3">
+                            <img src="../assets/img/illustrations/paper-plane.svg" width="70" alt="" />
+                          </div>
+                        </div>
+                        <div class="p-4 bg-light">
+                          <ul class="list-unstyled">
+                            <li class="border-bottom py-2">
+                              <span class="fas fa-check text-primary" data-fa-transform="shrink-2">
+                              </span>
+                              Free Domain
+                            </li>
+                            <li class="border-bottom py-2">
+                              <span class="fas fa-check text-primary" data-fa-transform="shrink-2"></span>
+                              1 Canvas List
+                            </li>
+                            <li class="py-2 border-bottom">
+                              <span class="fas fa-check text-primary" data-fa-transform="shrink-2"></span>
+                              Unlimited Canvas blocks
+                            </li>
+                            <li class="py-2 border-bottom">
+                              <span class="fas fa-check text-primary" data-fa-transform="shrink-2"></span>
+                              Free block types
+                            </li>
+                            <li class="py-2 border-bottom">
+                              <span class="fas fa-check text-primary" data-fa-transform="shrink-2"></span>
+                              Free Analytics
+                            </li>
+                            <li class="py-2 border-bottom">
+                              <span class="fas fa-check text-primary" data-fa-transform="shrink-2"></span>
+                              Workshop Access
+                            </li>
+                            <li class="py-2 border-bottom">
+                              <span class="fas fa-check text-primary" data-fa-transform="shrink-2"></span>
+                              Calendar Access
+                            </li>
+                            <li class="py-2">
+                              <span class="fas fa-check text-primary" data-fa-transform="shrink-2"></span>
+                              15% transaction fees on your sales
+                            </li>
+                            <!-- <li class="py-2 border-bottom text-300"><span class="fas fa-check" data-fa-transform="shrink-2"></span> Free Analytics </li>
+                                      <li class="py-2 border-bottom text-300"><span class="fas fa-check" data-fa-transform="shrink-2"></span> Workshop Access </li>
+                                      <li class="py-2 border-bottom text-300"><span class="fas fa-check" data-fa-transform="shrink-2"></span> Calendar Access </li>
+                                      <li class="py-2 text-300"><span class="fas fa-check" data-fa-transform="shrink-2"></span> 15% transaction fees on your sales </li> -->
+                          </ul>
+                          <button class="btn btn-outline-secondary btn-block active" type="button">
+                            Active
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md">
+                      <div class="border rounded-soft overflow-hidden">
+                        <div class="d-flex justify-content-between align-items-center p-4">
+                          <div>
+                            <h3 class="font-weight-light text-primary fs-5 mb-0">
+                              Pro
+                            </h3>
+                            <h2 class="font-weight-light text-primary mt-0">
+                              <sup class="fs-1">&dollar;</sup><span class="fs-3" id="priceplan">8 <span class="fs--2 mt-1">/
+                                  m</span></span>
+                            </h2>
+                          </div>
+                          <div class="pr-3">
+                            <img src="../assets/img/illustrations/startup.svg" width="70" alt="" />
+                          </div>
+                        </div>
+                        <div class="p-4 bg-light">
+                          <ul class="list-unstyled">
+                            <li class="border-bottom py-2">
+                              <span class="fas fa-check text-success" data-fa-transform="shrink-2">
+                              </span>
+                              Custom Domain
+                            </li>
+                            <li class="border-bottom py-2">
+                              <span class="fas fa-check text-success" data-fa-transform="shrink-2"></span>
+                              3 canvas columns
+                            </li>
+                            <li class="py-2 border-bottom">
+                              <span class="fas fa-check text-success" data-fa-transform="shrink-2"></span>
+                              Unlimited canvas blocks
+                            </li>
+                            <li class="py-2 border-bottom">
+                              <span class="fas fa-check text-success" data-fa-transform="shrink-2"></span>
+                              Exclusive Blocks types
+                            </li>
+                            <li class="py-2 border-bottom">
+                              <span class="fas fa-check text-success" data-fa-transform="shrink-2">
+                              </span>
+                              Advanced Analytics
+                            </li>
+                            <li class="py-2 border-bottom">
+                              <span class="fas fa-check text-success" data-fa-transform="shrink-2">
+                              </span>
+                              Animated Backgrounds
+                            </li>
+                            <li class="py-2 border-bottom">
+                              <span class="fas fa-check text-success" data-fa-transform="shrink-2">
+                              </span>
+                              Animated Themes
+                            </li>
+                            <li class="py-2 border-bottom">
+                              <span class="fas fa-check text-success" data-fa-transform="shrink-2">
+                              </span>
+                              Unlock all Workshops
+                            </li>
+                            <li class="py-2 border-bottom">
+                              <span class="fas fa-check text-success" data-fa-transform="shrink-2">
+                              </span>
+                              Featured on frontpage
+                            </li>
+                            <li class="py-2 border-bottom">
+                              <span class="fas fa-check text-success" data-fa-transform="shrink-2">
+                              </span>
+                              Verification badge
+                            </li>
+                            <li class="py-2">
+                              <span class="fas fa-check text-success" data-fa-transform="shrink-2">
+                              </span>
+                              0% transaction fees on your sales
+                            </li>
+                          </ul>
+                          <a class="text-decoration-none" href="billing">
+                            <button class="btn btn-success btn-block" type="button">
+                              Upgrade
+                            </button>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">Frequently asked questions</h5>
+            </div>
+            <div class="card-body bg-light">
+              <div class="row">
+                <div class="col-lg-6">
+                  <h5 class="fs-0">How does <%= appInfo.app_name %> 's pricing work?</h5>
+                  <p class="fs--1">
+                    <%= appInfo.app_name %> offers three pricing options for its services.
+                      Firstly, there is a free plan with a cost of $0, providing
+                      basic features. Secondly, the monthly plan costs $8 per
+                      month, granting access to additional functionalities on a
+                      month-to-month basis. Lastly, users can opt for the annually
+                      plan at a cost of $60, providing a cost-effective solution
+                      for those who commit to a year-long subscription. Customers
+                      can choose the plan that best suits their needs and budget,
+                      making <%= appInfo.app_name %> a flexible and affordable choice for
+                        various users.
+                  </p>
+                  <h5 class="fs-0">What forms of payment do you accept?</h5>
+                  <p class="fs--1">
+                    We accept PayPal, Apple Pay, Google pay and Debit Card. As
+                    we continuously grow, we may explore other leading payment
+                    methods in the future.
+                  </p>
+                  <h5 class="fs-0">
+                    Can i transfer my subscription to another account?
+                  </h5>
+                  <p class="fs--1">
+                    Yes, you may be able to transfer your subscription to
+                    another account. However, this option is available only in
+                    specific cases, and eligibility criteria may apply. Contact
+                    customer support for assistance.
+                  </p>
+                  <h5 class="fs-0">How secure is <%= appInfo.app_name %> ?</h5>
+                  <p class="fs--1 mb-lg-0">
+                    <%= appInfo.app_name %> 's security is robust and reliable. It employs
+                      advanced encryption protocols to safeguard data transmission
+                      and storage, protecting against unauthorized access. Regular
+                      security audits and updates ensure that vulnerabilities are
+                      promptly addressed. Multi-factor authentication enhances
+                      user access controls, bolstering overall security. The
+                      platform's proactive monitoring and dedicated security team
+                      further reinforce its defense against potential threats.
+                      With these measures in place, <%= appInfo.app_name %> offers a highly
+                        secure environment for users to share and collaborate with
+                        confidence.
+                  </p>
+                </div>
+                <div class="col-lg-6">
+                  <h5 class="fs-0">Will I be charged sales tax?</h5>
+                  <p class="fs--1">
+                    Sales tax depends on the country. Some countries apply sales
+                    tax to purchases, while others may not. Check your country's
+                    tax laws to determine if you'll be charged sales tax.
+                  </p>
+                  <h5 class="fs-0">Do you offer discounts?</h5>
+                  <p class="fs--1">
+                    Yes, we offer discounts periodically, including during
+                    special events and holidays.
+                  </p>
+                  <h5 class="fs-0">Do you offer academic pricing?</h5>
+                  <p class="fs--1">
+                    We're happy to work with student groups using <%= appInfo.app_name %> .
+                      Contact Us
+                  </p>
+                  <h5 class="fs-0">
+                    Is there an on-premise version of <%= appInfo.app_name %> ?
+                  </h5>
+                  <p class="fs--1">
+                    We are passionate about the web. We don't plan to offer an
+                    internally hosted version of <%= appInfo.app_name %> . We hope you trust
+                      us to provide a robust and secure service so you can do the
+                      work only your team can do.
+                  </p>
+                  <h5 class="fs-0">What is your refund policy?</h5>
+                  <p class="fs--1">
+                    We do not offer refunds apart from exceptions listed below.
+                    If you cancel your plan before the next renewal cycle, you
+                    will retain access to paid features until the end of your
+                    subscription period. When your subscription expires, you
+                    will lose access to paid features and all data associated
+                    with those features.
+                  </p>
+                  <h5 class="fs-0">
+                    What is the highest that anyone have earned on this
+                    platform?
+                  </h5>
+                  <p class="fs--1 mb-0">
+                    There is literaly no limit and you can earn as much as you
+                    like. We do not leak what the earning of our users.
+                  </p>
+                </div>
+              </div>
+            </div>
+          
+            <!-- Ask your question form -->
+            <div class="card-footer py-3">
+              <div class="text-center py-3">
+                <h6 class="fs-0 font-weight-normal">Have more questions?</h6>
+                <a class="btn btn-falcon-primary btn-sm" href="#" data-toggle="modal" data-target="#exampleModal">Ask us
+                  anything</a>
+              </div>
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header bg-light">
+                      <h5 class="modal-title" id="exampleModalLabel">
+                        Ask your question
+                      </h5>
+                      <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span class="font-weight-light" aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="name">Name</label>
+                          <input class="form-control" id="name" type="text" />
+                        </div>
+                        <div class="form-group">
+                          <label for="emailModal">Email</label>
+                          <input class="form-control" id="emailModal" type="email" />
+                        </div>
+                        <div class="form-group">
+                          <label for="question">Question</label>
+                          <textarea class="form-control" id="question" rows="4"></textarea>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer bg-light rounded">
+                      <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">
+                        Close
+                      </button>
+                      <button class="btn btn-primary btn-sm" type="submit">
+                        Send
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer><%- include('partials/footer.ejs') %></footer>
+        </div>
+      </div>
+    </main>
+    <!-- ===============================================-->
+    <!--                End of Main Content             -->
+    <!-- ===============================================-->
+
+    <!-- ===============================================-->
+    <!--                   JavaScripts                  -->
+    <!-- ===============================================-->
+    <script>
+      localStorage.setItem("price", 8);
+      function changePrice() {
+        let check = document.getElementById("customSwitch1");
+        if (!check.checked) {
+          document.getElementById("priceplan").innerHTML =
+            "8 <span class='fs--2 mt-1'>/ m</span>";
+          localStorage.setItem("price", 8);
+        } else {
+          document.getElementById("priceplan").innerHTML =
+            "60 <span class='fs--2 mt-1'>/ y</span>";
+          localStorage.setItem("price", 60);
+        }
+      }
+    </script>
+
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/popper.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/lib/@fortawesome/all.min.js"></script>
+    <script src="../assets/lib/stickyfilljs/stickyfill.min.js"></script>
+    <script src="../assets/lib/sticky-kit/sticky-kit.min.js"></script>
+    <script src="../assets/lib/is_js/is.min.js"></script>
+    <script src="../assets/lib/lodash/lodash.min.js"></script>
+    <script src="../assets/lib/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="../assets/js/theme.js"></script>
+  </body>
+</html>

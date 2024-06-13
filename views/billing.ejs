@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html class="navbar-vertical-collapsed" lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- ===============================================-->
+    <!--                  Document Title                -->
+    <!-- ===============================================-->
+    <title><%= appInfo.app_name %>  | Billing</title>
+
+    <!-- ===============================================-->
+    <!--                     Favicons                   -->
+    <!-- ===============================================-->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png" />
+    <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
+    <link rel="mask-icon" href="assets/img/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+    <link rel="shortcut icon" href="assets/img/favicons/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="msapplication-config" content="assets/img/favicons/browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- ===============================================-->
+    <!--                    Stylesheets                 -->
+    <!-- ===============================================-->
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link href="../assets/lib/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="../assets/css/theme.css" rel="stylesheet" />
+    <link id="dark-mode-css" href="../assets/css/theme-dark.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:100,200,300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet"/>
+
+    <!-- ===============================================-->
+    <!--                    JavaScripts                 -->
+    <!-- ===============================================-->
+    <script src="../assets/js/config.navbar-vertical.js"></script>
+    <script>
+      var mode = localStorage.getItem("theme-mode");
+      if (mode === "dark") {
+        document.getElementById("dark-mode-css").removeAttribute("disabled");
+      } else {
+        document.getElementById("dark-mode-css").setAttribute("disabled", true);
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- ===============================================-->
+    <!--                   Main Content                 -->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+      <div class="container" data-layout="container">
+        <%- include('partials/sidebar.ejs') %>
+        <div class="content">
+          <%- include('partials/navbar.ejs') %>
+
+          <div class="card mb-3">
+            <div
+              class="bg-holder d-none d-lg-block bg-card"
+              style="
+                background-image: url(../assets/img/illustrations/corner-4.png);
+              "
+            ></div>
+          </div>
+          <div class="row no-gutters">
+            <div class="col-lg-8 pr-lg-2 mb-3">
+              <div class="h-100 card">
+                <div class="card-header">
+                  <h5 class="mb-0">Billing Details</h5>
+                </div>
+                <div class="card-body bg-light">
+                  <form>
+                    <div class="custom-control custom-radio">
+                      <input
+                        class="custom-control-input"
+                        type="radio"
+                        name="billing"
+                        id="paypal"
+                        checked="checked"
+                      />
+                      <label class="custom-control-label" for="paypal">
+                        <img
+                          class="pull-right"
+                          src="../assets/img/icons/icon-paypal-full.png"
+                          height="30"
+                          width="120"
+                          alt=""
+                        />
+                      </label>
+                    </div>
+                    <p class="fs--1 mb-4">Pay with PayPal</p>
+
+                    <div class="custom-control custom-radio">
+                      <input
+                        class="custom-control-input"
+                        type="radio"
+                        name="billing"
+                        id="apple-pay"
+                      />
+                      <label class="custom-control-label" for="apple-pay">
+                        <img
+                          class="pull-right"
+                          src="../assets/img/icons/icon-apple-pay.png"
+                          height="30"
+                          width="120"
+                          alt=""
+                        />
+                      </label>
+                    </div>
+                    <p class="fs--1 mb-4">Pay with Apple Pay</p>
+
+                    <div class="custom-control custom-radio">
+                      <input
+                        class="custom-control-input"
+                        type="radio"
+                        name="billing"
+                        id="Google-pay"
+                      />
+                      <label class="custom-control-label" for="Google-pay">
+                        <img
+                          class="pull-right"
+                          src="../assets/img/icons/icon-Google-pay.png"
+                          height="30"
+                          width="120"
+                          alt=""
+                        />
+                      </label>
+                    </div>
+                    <p class="fs--1 mb-4">Pay with Google Pay</p>
+
+                    <div class="custom-control custom-radio">
+                      <input
+                        class="custom-control-input"
+                        type="radio"
+                        name="billing"
+                        id="credit-card"
+                      />
+                      <label class="custom-control-label" for="credit-card">
+                        <span class="d-flex align-items-center">
+                          <span class="fs-1 text-nowrap"
+                            >Debit | Credit Card</span
+                          >
+                          <img
+                            class="d-none d-sm-inline-block ml-2 mt-lg-0"
+                            src="../assets/img/icons/icon-payment-methods.png"
+                            height="20"
+                            alt=""
+                          />
+                        </span>
+                      </label>
+                    </div>
+                    <p class="fs--1 mb-4">
+                      Safe money transfer using your bank accounts. Visa,
+                      maestro, discover, american express.
+                    </p>
+
+                    <div class="form-row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label
+                            class="ls text-uppercase text-600 font-weight-semi-bold mb-0"
+                            for="cardNumber"
+                            >Card Number</label
+                          >
+                          <input
+                            class="form-control"
+                            id="cardNumber"
+                            placeholder="XXXX XXXX XXXX XXXX"
+                            type="text"
+                          />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label
+                            class="ls text-uppercase text-600 font-weight-semi-bold mb-0"
+                            for="cardName"
+                            >Name of Card</label
+                          >
+                          <input
+                            class="form-control"
+                            id="cardName"
+                            placeholder="John Doe"
+                            type="text"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-row">
+                      <div class="col-6 col-sm-3">
+                        <div class="form-group">
+                          <label
+                            class="ls text-uppercase text-600 font-weight-semi-bold mb-0"
+                            for="customSelectCountry"
+                            >Country</label
+                          >
+                          <select
+                            class="custom-select"
+                            id="customSelectCountry"
+                            name="customSelectCountry"
+                          >
+                            <option>Afghanistan</option>
+                            <option>Albania</option>
+                            <option>Algeria</option>
+                            <option>American Samoa</option>
+                            <option>Andorra</option>
+                            <option>Angola</option>
+                            <option>Anguilla</option>
+                            <option>Antarctica</option>
+                            <option>Antigua and Barbuda</option>
+                            <option>Argentina</option>
+                            <option>Armenia</option>
+                            <option>Aruba</option>
+                            <option>Australia</option>
+                            <option>Austria</option>
+                            <option>Azerbaijan</option>
+                            <option>Bahamas</option>
+                            <option>Bahrain</option>
+                            <option>Bangladesh</option>
+                            <option>Barbados</option>
+                            <option>Belarus</option>
+                            <option>Belgium</option>
+                            <option>Belize</option>
+                            <option>Benin</option>
+                            <option>Bermuda</option>
+                            <option>Bhutan</option>
+                            <option>Bolivia</option>
+                            <option>Bosnia and Herzegowina</option>
+                            <option>Botswana</option>
+                            <option>Bouvet Island</option>
+                            <option>Brazil</option>
+                            <option>British Indian Ocean Territory</option>
+                            <option>Brunei Darussalam</option>
+                            <option>Bulgaria</option>
+                            <option>Burkina Faso</option>
+                            <option>Burundi</option>
+                            <option>Cambodia</option>
+                            <option>Cameroon</option>
+                            <option>Canada</option>
+                            <option>Cape Verde</option>
+                            <option>Cayman Islands</option>
+                            <option>Central African Republic</option>
+                            <option>Chad</option>
+                            <option>Chile</option>
+                            <option>China</option>
+                            <option>Christmas Island</option>
+                            <option>Cocos (Keeling) Islands</option>
+                            <option>Colombia</option>
+                            <option>Comoros</option>
+                            <option>Congo</option>
+                            <option>
+                              Congo, the Democratic Republic of the
+                            </option>
+                            <option>Cook Islands</option>
+                            <option>Costa Rica</option>
+                            <option>Cote d'Ivoire</option>
+                            <option>Croatia (Hrvatska)</option>
+                            <option>Cuba</option>
+                            <option>Cyprus</option>
+                            <option>Czech Republic</option>
+                            <option>Denmark</option>
+                            <option>Djibouti</option>
+                            <option>Dominica</option>
+                            <option>Dominican Republic</option>
+                            <option>East Timor</option>
+                            <option>Ecuador</option>
+                            <option>Egypt</option>
+                            <option>El Salvador</option>
+                            <option>Equatorial Guinea</option>
+                            <option>Eritrea</option>
+                            <option>Estonia</option>
+                            <option>Ethiopia</option>
+                            <option>Falkland Islands (Malvinas)</option>
+                            <option>Faroe Islands</option>
+                            <option>Fiji</option>
+                            <option>Finland</option>
+                            <option>France</option>
+                            <option>France Metropolitan</option>
+                            <option>French Guiana</option>
+                            <option>French Polynesia</option>
+                            <option>French Southern Territories</option>
+                            <option>Gabon</option>
+                            <option>Gambia</option>
+                            <option>Georgia</option>
+                            <option>Germany</option>
+                            <option>Ghana</option>
+                            <option>Gibraltar</option>
+                            <option>Greece</option>
+                            <option>Greenland</option>
+                            <option>Grenada</option>
+                            <option>Guadeloupe</option>
+                            <option>Guam</option>
+                            <option>Guatemala</option>
+                            <option>Guinea</option>
+                            <option>Guinea-Bissau</option>
+                            <option>Guyana</option>
+                            <option>Haiti</option>
+                            <option>Heard and Mc Donald Islands</option>
+                            <option>Holy See (Vatican City State)</option>
+                            <option>Honduras</option>
+                            <option>Hong Kong</option>
+                            <option>Hungary</option>
+                            <option>Iceland</option>
+                            <option>India</option>
+                            <option>Indonesia</option>
+                            <option>Iran (Islamic Republic of)</option>
+                            <option>Iraq</option>
+                            <option>Ireland</option>
+                            <option>Israel</option>
+                            <option>Italy</option>
+                            <option>Jamaica</option>
+                            <option>Japan</option>
+                            <option>Jordan</option>
+                            <option>Kazakhstan</option>
+                            <option>Kenya</option>
+                            <option>Kiribati</option>
+                            <option>
+                              Korea, Democratic People's Republic of
+                            </option>
+                            <option>Korea, Republic of</option>
+                            <option>Kuwait</option>
+                            <option>Kyrgyzstan</option>
+                            <option>Lao, People's Democratic Republic</option>
+                            <option>Latvia</option>
+                            <option>Lebanon</option>
+                            <option>Lesotho</option>
+                            <option>Liberia</option>
+                            <option>Libyan Arab Jamahiriya</option>
+                            <option>Liechtenstein</option>
+                            <option>Lithuania</option>
+                            <option>Luxembourg</option>
+                            <option>Macau</option>
+                            <option>
+                              Macedonia, The Former Yugoslav Republic of
+                            </option>
+                            <option>Madagascar</option>
+                            <option>Malawi</option>
+                            <option>Malaysia</option>
+                            <option>Maldives</option>
+                            <option>Mali</option>
+                            <option>Malta</option>
+                            <option>Marshall Islands</option>
+                            <option>Martinique</option>
+                            <option>Mauritania</option>
+                            <option>Mauritius</option>
+                            <option>Mayotte</option>
+                            <option>Mexico</option>
+                            <option>Micronesia, Federated States of</option>
+                            <option>Moldova, Republic of</option>
+                            <option>Monaco</option>
+                            <option>Mongolia</option>
+                            <option>Montserrat</option>
+                            <option>Morocco</option>
+                            <option>Mozambique</option>
+                            <option>Myanmar</option>
+                            <option>Namibia</option>
+                            <option>Nauru</option>
+                            <option>Nepal</option>
+                            <option>Netherlands</option>
+                            <option>Netherlands Antilles</option>
+                            <option>New Caledonia</option>
+                            <option>New Zealand</option>
+                            <option>Nicaragua</option>
+                            <option>Niger</option>
+                            <option>Nigeria</option>
+                            <option>Niue</option>
+                            <option>Norfolk Island</option>
+                            <option>Northern Mariana Islands</option>
+                            <option>Norway</option>
+                            <option>Oman</option>
+                            <option>Pakistan</option>
+                            <option>Palau</option>
+                            <option>Panama</option>
+                            <option>Papua New Guinea</option>
+                            <option>Paraguay</option>
+                            <option>Peru</option>
+                            <option>Philippines</option>
+                            <option>Pitcairn</option>
+                            <option>Poland</option>
+                            <option>Portugal</option>
+                            <option>Puerto Rico</option>
+                            <option>Qatar</option>
+                            <option>Reunion</option>
+                            <option>Romania</option>
+                            <option>Russian Federation</option>
+                            <option>Rwanda</option>
+                            <option>Saint Kitts and Nevis</option>
+                            <option>Saint Lucia</option>
+                            <option>Saint Vincent and the Grenadines</option>
+                            <option>Samoa</option>
+                            <option>San Marino</option>
+                            <option>Sao Tome and Principe</option>
+                            <option>Saudi Arabia</option>
+                            <option>Senegal</option>
+                            <option>Seychelles</option>
+                            <option>Sierra Leone</option>
+                            <option>Singapore</option>
+                            <option>Slovakia (Slovak Republic)</option>
+                            <option>Slovenia</option>
+                            <option>Solomon Islands</option>
+                            <option>Somalia</option>
+                            <option>South Africa</option>
+                            <option>
+                              South Georgia and the South Sandwich Islands
+                            </option>
+                            <option>Spain</option>
+                            <option>Sri Lanka</option>
+                            <option>St. Helena</option>
+                            <option>St. Pierre and Miquelon</option>
+                            <option>Sudan</option>
+                            <option>Suriname</option>
+                            <option>Svalbard and Jan Mayen Islands</option>
+                            <option>Swaziland</option>
+                            <option>Sweden</option>
+                            <option>Switzerland</option>
+                            <option>Syrian Arab Republic</option>
+                            <option>Taiwan, Province of China</option>
+                            <option>Tajikistan</option>
+                            <option>Tanzania, United Republic of</option>
+                            <option>Thailand</option>
+                            <option>Togo</option>
+                            <option>Tokelau</option>
+                            <option>Tonga</option>
+                            <option>Trinidad and Tobago</option>
+                            <option>Tunisia</option>
+                            <option>Turkey</option>
+                            <option>Turkmenistan</option>
+                            <option>Turks and Caicos Islands</option>
+                            <option>Tuvalu</option>
+                            <option>Uganda</option>
+                            <option>Ukraine</option>
+                            <option>United Arab Emirates</option>
+                            <option>United Kingdom</option>
+                            <option selected>United States</option>
+                            <option>
+                              United States Minor Outlying Islands
+                            </option>
+                            <option>Uruguay</option>
+                            <option>Uzbekistan</option>
+                            <option>Vanuatu</option>
+                            <option>Venezuela</option>
+                            <option>Vietnam</option>
+                            <option>Virgin Islands (British)</option>
+                            <option>Virgin Islands (U.S.)</option>
+                            <option>Wallis and Futuna Islands</option>
+                            <option>Western Sahara</option>
+                            <option>Yemen</option>
+                            <option>Yugoslavia</option>
+                            <option>Zambia</option>
+                            <option>Zimbabwe</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-6 col-sm-3">
+                        <div class="form-group form-group">
+                          <label
+                            class="ls text-uppercase text-600 font-weight-semi-bold mb-0"
+                            for="zipCode"
+                            >Zip Code</label
+                          >
+                          <input
+                            class="form-control"
+                            id="zipCode"
+                            placeholder="1234"
+                            type="text"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-6 col-sm-3">
+                        <div class="form-group">
+                          <label
+                            class="ls text-uppercase text-600 font-weight-semi-bold mb-0"
+                            for="expDate"
+                            >Exp Date</label
+                          >
+                          <input
+                            class="form-control"
+                            id="expDate"
+                            placeholder="15/2024"
+                            type="text"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-6 col-sm-3">
+                        <div class="form-group">
+                          <label
+                            class="ls text-uppercase text-600 font-weight-semi-bold mb-0"
+                            for="cvv"
+                            >CVV<span
+                              class="fa fa-question-circle ml-2"
+                              data-toggle="tooltip"
+                              data-placement="top"
+                              title="Card verification value"
+                            ></span
+                          ></label>
+                          <input
+                            class="form-control"
+                            id="cvv"
+                            placeholder="123"
+                            maxlength="3"
+                            pattern="[0-9]{3}"
+                            type="text"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 pl-lg-2 mb-3">
+              <div class="card h-100">
+                <div class="card-header">
+                  <h5 class="mb-0">Billing</h5>
+                </div>
+                <div class="bg-light card-body">
+                  <select
+                    class="mb-3 custom-select"
+                    id="exampleCustomSelect"
+                    name="customSelect"
+                  >
+                    <option value="0">Annual Plan</option>
+                    <option value="1" selected="">Monthly Plan</option>
+                  </select>
+                  <div class="d-flex justify-content-between fs--1 mb-1">
+                    <p class="mb-0">Due in 30 days</p>
+                    <span>$8.00</span>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between fs--1 mb-1 text-success"
+                  >
+                    <p class="mb-0">Annual saving</p>
+                    <span>$0.00/yr</span>
+                  </div>
+                  <hr />
+                  <h5 class="d-flex justify-content-between">
+                    <span>Due today</span><span>$8.00</span>
+                  </h5>
+                  <p class="fs--1 text-600">
+                    Paying us annually comes with numerous benefits. Firstly, it
+                    ensures hassle-free service throughout the year, eliminating
+                    monthly transactions. Secondly, you enjoy substantial cost
+                    savings with exclusive discounts for annual subscribers.
+                    Additionally, annual payments simplify budgeting and reduce
+                    administrative tasks. Lastly, it guarantees uninterrupted
+                    access to premium features and priority customer support.
+                  </p>
+                  <button class="btn btn-primary btn-block" type="submit">
+                    <span class="fa fa-lock mr-2"></span>Proceed
+                  </button>
+                  <div class="text-center mt-2">
+                    <small class="d-inline-block"
+                      >By continuing, you are agreeing to our
+                      <a href="/pages/billing#!">terms</a></small
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">Frequently asked questions</h5>
+            </div>
+            <div class="card-body bg-light">
+              <div class="row">
+                <div class="col-lg-6">
+                  <h5 class="fs-0">How does <%= appInfo.app_name %> 's pricing work?</h5>
+                  <p class="fs--1">
+                    <%= appInfo.app_name %>  offers three pricing options for its services.
+                    Firstly, there is a free plan with a cost of $0, providing
+                    basic features. Secondly, the monthly plan costs $8 per
+                    month, granting access to additional functionalities on a
+                    month-to-month basis. Lastly, users can opt for the annually
+                    plan at a cost of $60, providing a cost-effective solution
+                    for those who commit to a year-long subscription. Customers
+                    can choose the plan that best suits their needs and budget,
+                    making <%= appInfo.app_name %>  a flexible and affordable choice for
+                    various users.
+                  </p>
+                  <h5 class="fs-0">What forms of payment do you accept?</h5>
+                  <p class="fs--1">
+                    We accept PayPal, Apple Pay, Google pay and Debit Card. As
+                    we continuously grow, we may explore other leading payment
+                    methods in the future.
+                  </p>
+                  <h5 class="fs-0">
+                    Can i transfer my subscription to another account?
+                  </h5>
+                  <p class="fs--1">
+                    Yes, you may be able to transfer your subscription to
+                    another account. However, this option is available only in
+                    specific cases, and eligibility criteria may apply. Contact
+                    customer support for assistance.
+                  </p>
+                  <h5 class="fs-0">How secure is <%= appInfo.app_name %> ?</h5>
+                  <p class="fs--1 mb-lg-0">
+                    <%= appInfo.app_name %> 's security is robust and reliable. It employs
+                    advanced encryption protocols to safeguard data transmission
+                    and storage, protecting against unauthorized access. Regular
+                    security audits and updates ensure that vulnerabilities are
+                    promptly addressed. Multi-factor authentication enhances
+                    user access controls, bolstering overall security. The
+                    platform's proactive monitoring and dedicated security team
+                    further reinforce its defense against potential threats.
+                    With these measures in place, <%= appInfo.app_name %>  offers a highly
+                    secure environment for users to share and collaborate with
+                    confidence.
+                  </p>
+                </div>
+                <div class="col-lg-6">
+                  <h5 class="fs-0">Will I be charged sales tax?</h5>
+                  <p class="fs--1">
+                    Sales tax depends on the country. Some countries apply sales
+                    tax to purchases, while others may not. Check your country's
+                    tax laws to determine if you'll be charged sales tax.
+                  </p>
+                  <h5 class="fs-0">Do you offer discounts?</h5>
+                  <p class="fs--1">
+                    Yes, we offer discounts periodically, including during
+                    special events and holidays.
+                  </p>
+                  <h5 class="fs-0">Do you offer academic pricing?</h5>
+                  <p class="fs--1">
+                    We're happy to work with student groups using <%= appInfo.app_name %> .
+                    Contact Us
+                  </p>
+                  <h5 class="fs-0">
+                    Is there an on-premise version of <%= appInfo.app_name %> ?
+                  </h5>
+                  <p class="fs--1">
+                    We are passionate about the web. We don't plan to offer an
+                    internally hosted version of <%= appInfo.app_name %> . We hope you trust
+                    us to provide a robust and secure service so you can do the
+                    work only your team can do.
+                  </p>
+                  <h5 class="fs-0">What is your refund policy?</h5>
+                  <p class="fs--1">
+                    We do not offer refunds apart from exceptions listed below.
+                    If you cancel your plan before the next renewal cycle, you
+                    will retain access to paid features until the end of your
+                    subscription period. When your subscription expires, you
+                    will lose access to paid features and all data associated
+                    with those features.
+                  </p>
+                  <h5 class="fs-0">
+                    What is the highest that anyone have earned on this
+                    platform?
+                  </h5>
+                  <p class="fs--1 mb-0">
+                    There is literaly no limit and you can earn as much as you
+                    like. We do not leak what the earning of our users.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer py-3">
+              <div class="text-center">
+                <h6 class="fs-0 font-weight-normal">Have more questions?</h6>
+                <a
+                  class="btn btn-falcon-primary btn-sm"
+                  href="#"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                  >Ask us anything</a
+                >
+              </div>
+              <div
+                class="modal fade"
+                id="exampleModal"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header bg-light">
+                      <h5 class="modal-title" id="exampleModalLabel">
+                        Ask your question
+                      </h5>
+                      <button
+                        class="close"
+                        type="button"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span class="font-weight-light" aria-hidden="true"
+                          >&times;</span
+                        >
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="name">Name</label>
+                          <input class="form-control" id="name" type="text" />
+                        </div>
+                        <div class="form-group">
+                          <label for="emailModal">Email</label>
+                          <input
+                            class="form-control"
+                            id="emailModal"
+                            type="email"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label for="question">Question</label>
+                          <textarea
+                            class="form-control"
+                            id="question"
+                            rows="4"
+                          ></textarea>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer bg-light rounded">
+                      <button
+                        class="btn btn-secondary btn-sm"
+                        type="button"
+                        data-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button class="btn btn-primary btn-sm" type="submit">
+                        Send
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer><%- include('partials/footer.ejs') %></footer>
+        </div>
+      </div>
+    </main>
+    <!-- ===============================================-->
+    <!--               End of Main Content              -->
+    <!-- ===============================================-->
+
+    <!-- ===============================================-->
+    <!--                  JavaScripts                   -->
+    <!-- ===============================================-->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/popper.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/lib/@fortawesome/all.min.js"></script>
+    <script src="../assets/lib/stickyfilljs/stickyfill.min.js"></script>
+    <script src="../assets/lib/sticky-kit/sticky-kit.min.js"></script>
+    <script src="../assets/lib/is_js/is.min.js"></script>
+    <script src="../assets/lib/lodash/lodash.min.js"></script>
+    <script src="../assets/lib/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="../assets/js/theme.js"></script>
+  </body>
+</html>

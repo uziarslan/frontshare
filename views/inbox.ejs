@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html class="navbar-vertical-collapsed" lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- ===============================================-->
+    <!--                  Document Title                -->
+    <!-- ===============================================-->
+    <title><%= appInfo.app_name %>  | Inbox</title>
+
+    <!-- ===============================================-->
+    <!--                     Favicons                   -->
+    <!-- ===============================================-->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png" />
+    <link rel="manifest" href="assets/img/favicons/site.webmanifest" />
+    <link rel="mask-icon" href="assets/img/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+    <link rel="shortcut icon" href="assets/img/favicons/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="msapplication-config" content="assets/img/favicons/browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
+    
+    <!-- ===============================================-->
+    <!--                    Stylesheets                 -->
+    <!-- ===============================================-->
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link href="../assets/lib/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="../assets/lib/fancybox/jquery.fancybox.min.css" rel="stylesheet" />
+    <link href="../assets/css/theme.css" rel="stylesheet" />
+    <link id="dark-mode-css" href="../assets/css/theme-dark.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:100,200,300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet"/>
+
+    <!-- ===============================================-->
+    <!--                    JavaScripts                 -->
+    <!-- ===============================================-->
+    <script src="../assets/js/config.navbar-vertical.js"></script>
+    <script>
+      var mode = localStorage.getItem("theme-mode");
+      if (mode === "dark") {
+        document.getElementById("dark-mode-css").removeAttribute("disabled");
+      } else {
+        document.getElementById("dark-mode-css").setAttribute("disabled", true);
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- ===============================================-->
+    <!--                    Main Content                -->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+      <div class="container" data-layout="container">
+        <%- include('partials/sidebar.ejs') %>
+        <div class="content">
+          <%- include('partials/navbar.ejs') %>
+
+          <div class="card mb-3">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col d-flex align-items-center">
+                  <div class="custom-control custom-checkbox d-none d-sm-block">
+                    <input class="custom-control-input checkbox-bulk-select" id="checkbox-bulk-emails-select" type="checkbox"
+                      data-checkbox-body="#emails" data-checkbox-actions="#emails-actions" />
+                    <label class="custom-control-label" for="checkbox-bulk-emails-select"></label>
+                  </div>
+                  <button class="btn btn-falcon-default btn-sm ml-sm-1" type="button" onclick="location.reload()">
+                    <span class="fas fa-redo"></span>
+                  </button>
+                  <div class="dropdown text-sans-serif">
+                    <button class="btn btn-falcon-default text-600 btn-sm dropdown-toggle dropdown-caret-none ml-2" type="button"
+                      id="email-filter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <span class="fas fa-sliders-h"></span>
+                    </button>
+                    <div class="dropdown-menu border py-0" aria-labelledby="email-filter">
+                      <div class="bg-white py-2">
+                        <a class="dropdown-item d-flex justify-content-between" href="#!">All<span class="fas fa-check"
+                            data-fa-transform="down-4 shrink-4"></span></a><a class="dropdown-item" href="#!">Unread</a><a
+                          class="dropdown-item" href="#!">To me</a><a class="dropdown-item" href="#!">Flagged</a><a
+                          class="dropdown-item" href="#!">Mentions</a><a class="dropdown-item" href="#!">Attachments</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="border-left ml-3 pl-3 d-none" id="emails-actions">
+                    <div class="btn-group btn-group-sm">
+                      <button class="btn btn-falcon-default" type="button" data-toggle="tooltip" data-placement="top"
+                        title="Archive">
+                        <span class="fas fa-archive"></span>
+                      </button>
+                      <button class="btn btn-falcon-default" type="button" data-toggle="tooltip" data-placement="top"
+                        title="Delete">
+                        <span class="fas fa-trash-alt"></span>
+                      </button>
+                      <button class="btn btn-falcon-default" type="button" data-toggle="tooltip" data-placement="top"
+                        title="Mark as unread">
+                        <span class="fas fa-envelope"></span>
+                      </button>
+                      <button class="btn btn-falcon-default" type="button" data-toggle="tooltip" data-placement="top"
+                        title="Snooze">
+                        <span class="fas fa-clock"></span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <a class="btn btn-falcon-primary btn-sm" href="compose"><span class="fas fa-plus mr-1"
+                      data-fa-transform="shrink-3"></span>Compose<span class="d-none d-md-inline ml-1">new</span></a>
+                </div>
+              </div>
+            </div>
+            <div class="card-body fs--1 border-top border-200 p-0" id="emails">
+              <h5 class="fs-0 px-3 pt-3 pb-2 mb-0 border-bottom border-200">
+                Unread
+              </h5>
+              <div class="row border-bottom border-200 hover-actions-trigger hover-shadow py-2 px-1 mx-0"
+                data-href="email-detail">
+                <div class="btn-group btn-group-sm hover-actions r-0 mr-3">
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Archive">
+                    <span class="fas fa-archive"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                    <span class="fas fa-trash-alt"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Mark as read">
+                    <span class="fas fa-envelope-open"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Snooze">
+                    <span class="fas fa-clock"></span>
+                  </button>
+                </div>
+                <div class="col-auto d-none d-sm-block">
+                  <div class="d-flex bg-white">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input checkbox-bulk-select-target" type="checkbox" id="checkbox-2" />
+                      <label class="custom-control-label" for="checkbox-2"></label>
+                    </div>
+                    <span class="fas text-warning fa-star ml-1" data-fa-transform="down-7"></span>
+                  </div>
+                </div>
+                <div class="col col-md-9 col-xxl-10">
+                  <div class="row">
+                    <div class="col-md-4 col-xl-3 col-xxl-2 pl-md-0 mb-1 mb-md-0">
+                      <div class="media position-relative">
+                        <div class="avatar avatar-s">
+                          <img class="rounded-soft" src="../assets/img/team/17.jpg" alt="" />
+                        </div>
+                        <div class="media-body ml-2">
+                          <a class="font-weight-bold stretched-link inbox-link" href="email-detail">Diana</a><span
+                            class="badge badge-soft-success badge-pill ml-2">NEW</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <a class="d-block inbox-link" href="email-detail"><span class="font-weight-bold">Your Daily Work
+                          Summary</span><span class="mx-1">&ndash;</span><span>And they'd probably do a lot of damage to
+                          an...</span></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto ml-auto d-flex flex-column justify-content-between">
+                  <span class="font-weight-bold">Mar 26</span><span class="fas text-warning fa-star ml-auto mb-2 d-sm-none"
+                    data-fa-transform="down-7"></span>
+                </div>
+              </div>
+              <div class="row border-bottom border-200 hover-actions-trigger hover-shadow py-2 px-1 mx-0"
+                data-href="email-detail">
+                <div class="btn-group btn-group-sm hover-actions r-0 mr-3">
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Archive">
+                    <span class="fas fa-archive"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                    <span class="fas fa-trash-alt"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Mark as read">
+                    <span class="fas fa-envelope-open"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Snooze">
+                    <span class="fas fa-clock"></span>
+                  </button>
+                </div>
+                <div class="col-auto d-none d-sm-block">
+                  <div class="d-flex bg-white">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input checkbox-bulk-select-target" type="checkbox" id="checkbox-7" />
+                      <label class="custom-control-label" for="checkbox-7"></label>
+                    </div>
+                    <span class="far text-300 fa-star ml-1" data-fa-transform="down-7"></span>
+                  </div>
+                </div>
+                <div class="col col-md-9 col-xxl-10">
+                  <div class="row">
+                    <div class="col-md-4 col-xl-3 col-xxl-2 pl-md-0 mb-1 mb-md-0">
+                      <div class="media position-relative">
+                        <div class="avatar avatar-s">
+                          <img class="rounded-soft" src="../assets/img/logos/unsplash.png" alt="" />
+                        </div>
+                        <div class="media-body ml-2">
+                          <a class="font-weight-bold stretched-link inbox-link" href="email-detail">Unsplash Team</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <a class="d-block inbox-link" href="email-detail"><span class="font-weight-bold">Get involved for
+                          International Women's Day - with
+                          link 👩</span><span class="mx-1">&ndash;</span><span>The link below is now clickable for Chrome
+                          users...</span></a><a
+                        class="media d-inline-flex align-items-center border rounded-pill px-3 py-1 mr-2 mt-2 inbox-link"
+                        href="../assets/img/generic/1.jpg" data-fancybox="gallery-7" data-caption="Winter"><span
+                          class="fas fa-image text-danger" data-fa-transform="grow-4"></span><span
+                          class="ml-2">Winter</span></a><a
+                        class="media d-inline-flex align-items-center border rounded-pill px-3 py-1 mr-2 mt-2 inbox-link"
+                        href="../assets/img/generic/8.jpg" data-fancybox="gallery-7" data-caption="Coffee"><span
+                          class="fas fa-image text-danger" data-fa-transform="grow-4"></span><span class="ml-2">Coffee</span></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto ml-auto d-flex flex-column justify-content-between">
+                  <span class="font-weight-bold">Dec 16</span><span class="far text-300 fa-star ml-auto mb-2 d-sm-none"
+                    data-fa-transform="down-7"></span>
+                </div>
+              </div>
+              <div class="row border-bottom border-200 hover-actions-trigger hover-shadow py-2 px-1 mx-0"
+                data-href="email-detail">
+                <div class="btn-group btn-group-sm hover-actions r-0 mr-3">
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Archive">
+                    <span class="fas fa-archive"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                    <span class="fas fa-trash-alt"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Mark as read">
+                    <span class="fas fa-envelope-open"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Snooze">
+                    <span class="fas fa-clock"></span>
+                  </button>
+                </div>
+                <div class="col-auto d-none d-sm-block">
+                  <div class="d-flex bg-white">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input checkbox-bulk-select-target" type="checkbox" id="checkbox-12" />
+                      <label class="custom-control-label" for="checkbox-12"></label>
+                    </div>
+                    <span class="far text-300 fa-star ml-1" data-fa-transform="down-7"></span>
+                  </div>
+                </div>
+                <div class="col col-md-9 col-xxl-10">
+                  <div class="row">
+                    <div class="col-md-4 col-xl-3 col-xxl-2 pl-md-0 mb-1 mb-md-0">
+                      <div class="media position-relative">
+                        <div class="avatar avatar-s">
+                          <img class="rounded-soft" src="../assets/img/logos/goodreads.png" alt="" />
+                        </div>
+                        <div class="media-body ml-2">
+                          <a class="font-weight-bold stretched-link inbox-link" href="email-detail">Goodreads</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <a class="d-block inbox-link" href="email-detail"><span class="font-weight-bold">Goodreads Newsletter: March
+                          5, 2019</span><span class="mx-1">&ndash;</span><span>The most anticipated books of spring, a rocking
+                          read,
+                          and more! Goodreads Spring...</span></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto ml-auto d-flex flex-column justify-content-between">
+                  <span class="font-weight-bold">March 5</span><span class="far text-300 fa-star ml-auto mb-2 d-sm-none"
+                    data-fa-transform="down-7"></span>
+                </div>
+              </div>
+              <h5 class="fs-0 px-3 pt-3 pb-2 mb-0 border-bottom border-200">
+                Everything else
+              </h5>
+              <div class="row border-bottom border-200 hover-actions-trigger hover-shadow py-2 px-1 mx-0 bg-light"
+                data-href="email-detail">
+                <div class="btn-group btn-group-sm hover-actions r-0 mr-3">
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Archive">
+                    <span class="fas fa-archive"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                    <span class="fas fa-trash-alt"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Mark as unread">
+                    <span class="fas fa-envelope"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Snooze">
+                    <span class="fas fa-clock"></span>
+                  </button>
+                </div>
+                <div class="col-auto d-none d-sm-block">
+                  <div class="d-flex bg-light">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input checkbox-bulk-select-target" type="checkbox" id="checkbox-1" />
+                      <label class="custom-control-label" for="checkbox-1"></label>
+                    </div>
+                    <span class="fas text-warning fa-star ml-1" data-fa-transform="down-7"></span>
+                  </div>
+                </div>
+                <div class="col col-md-9 col-xxl-10">
+                  <div class="row">
+                    <div class="col-md-4 col-xl-3 col-xxl-2 pl-md-0 mb-1 mb-md-0">
+                      <div class="media position-relative">
+                        <div class="avatar avatar-s">
+                          <img class="rounded-soft" src="../assets/img/logos/github.png" alt="" />
+                        </div>
+                        <div class="media-body ml-2">
+                          <a class="stretched-link inbox-link" href="email-detail">GitHub</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <a class="d-block inbox-link" href="email-detail"><span>[GitHub] Subscribed to technext/photogallery
+                          notifications</span><span class="mx-1">&ndash;</span><span>Hey there, we’re just writing to let you know
+                          that
+                          you’ve been...</span></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto ml-auto d-flex flex-column justify-content-between">
+                  <span>11:50AM</span><span class="fas text-warning fa-star ml-auto mb-2 d-sm-none"
+                    data-fa-transform="down-7"></span>
+                </div>
+              </div>
+              <div class="row border-bottom border-200 hover-actions-trigger hover-shadow py-2 px-1 mx-0 bg-light"
+                data-href="email-detail">
+                <div class="btn-group btn-group-sm hover-actions r-0 mr-3">
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Archive">
+                    <span class="fas fa-archive"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                    <span class="fas fa-trash-alt"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Mark as unread">
+                    <span class="fas fa-envelope"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Snooze">
+                    <span class="fas fa-clock"></span>
+                  </button>
+                </div>
+                <div class="col-auto d-none d-sm-block">
+                  <div class="d-flex bg-light">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input checkbox-bulk-select-target" type="checkbox" id="checkbox-3" />
+                      <label class="custom-control-label" for="checkbox-3"></label>
+                    </div>
+                    <span class="fas text-warning fa-star ml-1" data-fa-transform="down-7"></span>
+                  </div>
+                </div>
+                <div class="col col-md-9 col-xxl-10">
+                  <div class="row">
+                    <div class="col-md-4 col-xl-3 col-xxl-2 pl-md-0 mb-1 mb-md-0">
+                      <div class="media position-relative">
+                        <div class="avatar avatar-s">
+                          <img class="rounded-soft" src="../assets/img/logos/coursera.png" alt="" />
+                        </div>
+                        <div class="media-body ml-2">
+                          <a class="stretched-link inbox-link" href="email-detail">Coursera</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <a class="d-block inbox-link" href="email-detail"><span>Recommended: Server-side Development with NodeJS,
+                          Express and MongoDB</span><span class="mx-1">&ndash;</span><span>We combed our catalog and found
+                          courses...</span></a><a
+                        class="media d-inline-flex align-items-center border rounded-pill px-3 py-1 mr-2 mt-2 inbox-link"
+                        href="#!"><span class="fas fa-file-archive text-warning" data-fa-transform="grow-4"></span><span
+                          class="ml-2">syllabus</span></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto ml-auto d-flex flex-column justify-content-between">
+                  <span>Mar 3</span><span class="fas text-warning fa-star ml-auto mb-2 d-sm-none"
+                    data-fa-transform="down-7"></span>
+                </div>
+              </div>
+              <div class="row border-bottom border-200 hover-actions-trigger hover-shadow py-2 px-1 mx-0 bg-light"
+                data-href="email-detail">
+                <div class="btn-group btn-group-sm hover-actions r-0 mr-3">
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Archive">
+                    <span class="fas fa-archive"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                    <span class="fas fa-trash-alt"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Mark as unread">
+                    <span class="fas fa-envelope"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Snooze">
+                    <span class="fas fa-clock"></span>
+                  </button>
+                </div>
+                <div class="col-auto d-none d-sm-block">
+                  <div class="d-flex bg-light">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input checkbox-bulk-select-target" type="checkbox" id="checkbox-4" />
+                      <label class="custom-control-label" for="checkbox-4"></label>
+                    </div>
+                    <span class="far text-300 fa-star ml-1" data-fa-transform="down-7"></span>
+                  </div>
+                </div>
+                <div class="col col-md-9 col-xxl-10">
+                  <div class="row">
+                    <div class="col-md-4 col-xl-3 col-xxl-2 pl-md-0 mb-1 mb-md-0">
+                      <div class="media position-relative">
+                        <div class="avatar avatar-s">
+                          <img class="rounded-soft" src="../assets/img/logos/spectrum.jpg" alt="" />
+                        </div>
+                        <div class="media-body ml-2">
+                          <a class="stretched-link inbox-link" href="email-detail">Spectrum</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <a class="d-block inbox-link" href="email-detail"><span>Spectrum Weekly Digest: ZEIT watercooler, Escape
+                          Room!</span><span class="mx-1">&ndash;</span><span>You didn’t gain any reputation last week. Reputation
+                          is an...</span></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto ml-auto d-flex flex-column justify-content-between">
+                  <span>Feb 21</span><span class="far text-300 fa-star ml-auto mb-2 d-sm-none" data-fa-transform="down-7"></span>
+                </div>
+              </div>
+              <div class="row border-bottom border-200 hover-actions-trigger hover-shadow py-2 px-1 mx-0 bg-light"
+                data-href="email-detail">
+                <div class="btn-group btn-group-sm hover-actions r-0 mr-3">
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Archive">
+                    <span class="fas fa-archive"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                    <span class="fas fa-trash-alt"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Mark as unread">
+                    <span class="fas fa-envelope"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Snooze">
+                    <span class="fas fa-clock"></span>
+                  </button>
+                </div>
+                <div class="col-auto d-none d-sm-block">
+                  <div class="d-flex bg-light">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input checkbox-bulk-select-target" type="checkbox" id="checkbox-5" />
+                      <label class="custom-control-label" for="checkbox-5"></label>
+                    </div>
+                    <span class="far text-300 fa-star ml-1" data-fa-transform="down-7"></span>
+                  </div>
+                </div>
+                <div class="col col-md-9 col-xxl-10">
+                  <div class="row">
+                    <div class="col-md-4 col-xl-3 col-xxl-2 pl-md-0 mb-1 mb-md-0">
+                      <div class="media position-relative">
+                        <div class="avatar avatar-s">
+                          <img class="rounded-soft" src="../assets/img/logos/pinterest.png" alt="" />
+                        </div>
+                        <div class="media-body ml-2">
+                          <a class="stretched-link inbox-link" href="email-detail">Pinterest</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <a class="d-block inbox-link" href="email-detail"><span>Tony, 14 ideas in Pink saree</span><span
+                          class="mx-1">&ndash;</span><span>New ideas for you in Web Development...</span></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto ml-auto d-flex flex-column justify-content-between">
+                  <span>Jan 16</span><span class="far text-300 fa-star ml-auto mb-2 d-sm-none" data-fa-transform="down-7"></span>
+                </div>
+              </div>
+              <div class="row border-bottom border-200 hover-actions-trigger hover-shadow py-2 px-1 mx-0 bg-light"
+                data-href="email-detail">
+                <div class="btn-group btn-group-sm hover-actions r-0 mr-3">
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Archive">
+                    <span class="fas fa-archive"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                    <span class="fas fa-trash-alt"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Mark as unread">
+                    <span class="fas fa-envelope"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Snooze">
+                    <span class="fas fa-clock"></span>
+                  </button>
+                </div>
+                <div class="col-auto d-none d-sm-block">
+                  <div class="d-flex bg-light">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input checkbox-bulk-select-target" type="checkbox" id="checkbox-6" />
+                      <label class="custom-control-label" for="checkbox-6"></label>
+                    </div>
+                    <span class="fas text-warning fa-star ml-1" data-fa-transform="down-7"></span>
+                  </div>
+                </div>
+                <div class="col col-md-9 col-xxl-10">
+                  <div class="row">
+                    <div class="col-md-4 col-xl-3 col-xxl-2 pl-md-0 mb-1 mb-md-0">
+                      <div class="media position-relative">
+                        <div class="avatar avatar-s">
+                          <img class="rounded-soft" src="../assets/img/logos/medium.png" alt="" />
+                        </div>
+                        <div class="media-body ml-2">
+                          <a class="stretched-link inbox-link" href="email-detail">Medium</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <a class="d-block inbox-link" href="email-detail"><span>Technology Brief: Who’s keeping us safe?</span><span
+                          class="mx-1">&ndash;</span><span>policy at Google, Twitter, and Pinterest, says,
+                          &quot;The team starts to feel like the...</span></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto ml-auto d-flex flex-column justify-content-between">
+                  <span>Jan 11</span><span class="fas text-warning fa-star ml-auto mb-2 d-sm-none"
+                    data-fa-transform="down-7"></span>
+                </div>
+              </div>
+              <div class="row border-bottom border-200 hover-actions-trigger hover-shadow py-2 px-1 mx-0 bg-light"
+                data-href="email-detail">
+                <div class="btn-group btn-group-sm hover-actions r-0 mr-3">
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Archive">
+                    <span class="fas fa-archive"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                    <span class="fas fa-trash-alt"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Mark as unread">
+                    <span class="fas fa-envelope"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Snooze">
+                    <span class="fas fa-clock"></span>
+                  </button>
+                </div>
+                <div class="col-auto d-none d-sm-block">
+                  <div class="d-flex bg-light">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input checkbox-bulk-select-target" type="checkbox" id="checkbox-8" />
+                      <label class="custom-control-label" for="checkbox-8"></label>
+                    </div>
+                    <span class="fas text-warning fa-star ml-1" data-fa-transform="down-7"></span>
+                  </div>
+                </div>
+                <div class="col col-md-9 col-xxl-10">
+                  <div class="row">
+                    <div class="col-md-4 col-xl-3 col-xxl-2 pl-md-0 mb-1 mb-md-0">
+                      <div class="media position-relative">
+                        <div class="avatar avatar-s">
+                          <img class="rounded-soft" src="../assets/img/logos/stripe.png" alt="" />
+                        </div>
+                        <div class="media-body ml-2">
+                          <a class="stretched-link inbox-link" href="email-detail">Stripe</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <a class="d-block inbox-link" href="email-detail"><span>Confirm your Stripe email address!</span><span
+                          class="mx-1">&ndash;</span><span>Before you can start accepting live payments, you
+                          need to confirm your email address...</span></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto ml-auto d-flex flex-column justify-content-between">
+                  <span>Dec 11</span><span class="fas text-warning fa-star ml-auto mb-2 d-sm-none"
+                    data-fa-transform="down-7"></span>
+                </div>
+              </div>
+              <div class="row border-bottom border-200 hover-actions-trigger hover-shadow py-2 px-1 mx-0 bg-light"
+                data-href="email-detail">
+                <div class="btn-group btn-group-sm hover-actions r-0 mr-3">
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Archive">
+                    <span class="fas fa-archive"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                    <span class="fas fa-trash-alt"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Mark as unread">
+                    <span class="fas fa-envelope"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Snooze">
+                    <span class="fas fa-clock"></span>
+                  </button>
+                </div>
+                <div class="col-auto d-none d-sm-block">
+                  <div class="d-flex bg-light">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input checkbox-bulk-select-target" type="checkbox" id="checkbox-9" />
+                      <label class="custom-control-label" for="checkbox-9"></label>
+                    </div>
+                    <span class="far text-300 fa-star ml-1" data-fa-transform="down-7"></span>
+                  </div>
+                </div>
+                <div class="col col-md-9 col-xxl-10">
+                  <div class="row">
+                    <div class="col-md-4 col-xl-3 col-xxl-2 pl-md-0 mb-1 mb-md-0">
+                      <div class="media position-relative">
+                        <div class="avatar avatar-s">
+                          <img class="rounded-soft" src="../assets/img/team/4.jpg" alt="" />
+                        </div>
+                        <div class="media-body ml-2">
+                          <a class="stretched-link inbox-link" href="email-detail">Tony Stark</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <a class="d-block inbox-link" href="email-detail"><span>Bruce Banner - Invitation to edit</span><span
+                          class="mx-1">&ndash;</span><span>Tony Stark has invited you to edit the following
+                          document...</span></a><a
+                        class="media d-inline-flex align-items-center border rounded-pill px-3 py-1 mr-2 mt-2 inbox-link"
+                        href="#!"><span class="fas fa-file-alt text-primary" data-fa-transform="grow-4"></span><span
+                          class="ml-2">Endgame schedule</span></a><a
+                        class="media d-inline-flex align-items-center border rounded-pill px-3 py-1 mr-2 mt-2 inbox-link"
+                        href="#!"><span class="fas fa-file-pdf text-danger" data-fa-transform="grow-4"></span><span
+                          class="ml-2">Endgame schedule</span></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto ml-auto d-flex flex-column justify-content-between">
+                  <span>Mar 9</span><span class="far text-300 fa-star ml-auto mb-2 d-sm-none" data-fa-transform="down-7"></span>
+                </div>
+              </div>
+              <div class="row border-bottom border-200 hover-actions-trigger hover-shadow py-2 px-1 mx-0 bg-light"
+                data-href="email-detail">
+                <div class="btn-group btn-group-sm hover-actions r-0 mr-3">
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Archive">
+                    <span class="fas fa-archive"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                    <span class="fas fa-trash-alt"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Mark as unread">
+                    <span class="fas fa-envelope"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Snooze">
+                    <span class="fas fa-clock"></span>
+                  </button>
+                </div>
+                <div class="col-auto d-none d-sm-block">
+                  <div class="d-flex bg-light">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input checkbox-bulk-select-target" type="checkbox" id="checkbox-10" />
+                      <label class="custom-control-label" for="checkbox-10"></label>
+                    </div>
+                    <span class="far text-300 fa-star ml-1" data-fa-transform="down-7"></span>
+                  </div>
+                </div>
+                <div class="col col-md-9 col-xxl-10">
+                  <div class="row">
+                    <div class="col-md-4 col-xl-3 col-xxl-2 pl-md-0 mb-1 mb-md-0">
+                      <div class="media position-relative">
+                        <div class="avatar avatar-s">
+                          <img class="rounded-soft" src="../assets/img/logos/youtube.png" alt="" />
+                        </div>
+                        <div class="media-body ml-2">
+                          <a class="stretched-link inbox-link" href="email-detail">Youtube</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <a class="d-block inbox-link" href="email-detail"><span>Firebase just uploaded a video</span><span
+                          class="mx-1">&ndash;</span><span>Firebase has uploaded Understanding Cloud Functions:
+                          Configuration settings In the last...</span></a><a
+                        class="media d-inline-flex align-items-center border rounded-pill px-3 py-1 mr-2 mt-2 inbox-link"
+                        href="#!"><span class="fab fa-youtube text-youtube" data-fa-transform="grow-4"></span><span
+                          class="ml-2">Cloud Functions</span></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto ml-auto d-flex flex-column justify-content-between">
+                  <span>Nov 19</span><span class="far text-300 fa-star ml-auto mb-2 d-sm-none" data-fa-transform="down-7"></span>
+                </div>
+              </div>
+              <div class="row border-bottom border-200 hover-actions-trigger hover-shadow py-2 px-1 mx-0 bg-light"
+                data-href="email-detail">
+                <div class="btn-group btn-group-sm hover-actions r-0 mr-3">
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Archive">
+                    <span class="fas fa-archive"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                    <span class="fas fa-trash-alt"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Mark as unread">
+                    <span class="fas fa-envelope"></span>
+                  </button>
+                  <button class="btn btn-light" type="button" data-toggle="tooltip" data-placement="top" title="Snooze">
+                    <span class="fas fa-clock"></span>
+                  </button>
+                </div>
+                <div class="col-auto d-none d-sm-block">
+                  <div class="d-flex bg-light">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input checkbox-bulk-select-target" type="checkbox" id="checkbox-11" />
+                      <label class="custom-control-label" for="checkbox-11"></label>
+                    </div>
+                    <span class="far text-300 fa-star ml-1" data-fa-transform="down-7"></span>
+                  </div>
+                </div>
+                <div class="col col-md-9 col-xxl-10">
+                  <div class="row">
+                    <div class="col-md-4 col-xl-3 col-xxl-2 pl-md-0 mb-1 mb-md-0">
+                      <div class="media position-relative">
+                        <div class="avatar avatar-s">
+                          <img class="rounded-soft" src="../assets/img/team/5.jpg" alt="" />
+                        </div>
+                        <div class="media-body ml-2">
+                          <a class="stretched-link inbox-link" href="email-detail">Bruce Banner</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <a class="d-block inbox-link" href="email-detail"><span>Invitation for migration</span><span
+                          class="mx-1">&ndash;</span><span>Bruce Wayne, you have an invitation of
+                          migration...</span></a><a
+                        class="media d-inline-flex align-items-center border rounded-pill px-3 py-1 mr-2 mt-2 inbox-link"
+                        href="#!"><span class="fas fa-file-pdf text-danger" data-fa-transform="grow-4"></span><span
+                          class="ml-2">Invitation</span></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto ml-auto d-flex flex-column justify-content-between">
+                  <span>Oct 26</span><span class="far text-300 fa-star ml-auto mb-2 d-sm-none" data-fa-transform="down-7"></span>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer d-flex justify-content-between align-items-center">
+              <small>2.29 GB <span class="d-none d-sm-inline-block">(13%) </span> of
+                17 GB used</small>
+              <div>
+                <small>1-12 of 354</small>
+                <button class="btn btn-falcon-default btn-sm ml-1 ml-sm-2" type="button" disabled="disabled">
+                  <span class="fas fa-chevron-left"></span>
+                </button>
+                <button class="btn btn-falcon-default btn-sm ml-1 ml-sm-2" type="button">
+                  <span class="fas fa-chevron-right"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <footer><%- include('partials/footer.ejs') %></footer>
+        </div>
+      </div>
+    </main>
+    <!-- ===============================================-->
+    <!--               End of Main Content              -->
+    <!-- ===============================================-->
+
+    <!-- ===============================================-->
+    <!--                   JavaScripts                  -->
+    <!-- ===============================================-->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/popper.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/lib/@fortawesome/all.min.js"></script>
+    <script src="../assets/lib/stickyfilljs/stickyfill.min.js"></script>
+    <script src="../assets/lib/sticky-kit/sticky-kit.min.js"></script>
+    <script src="../assets/lib/is_js/is.min.js"></script>
+    <script src="../assets/lib/lodash/lodash.min.js"></script>
+    <script src="../assets/lib/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="../assets/lib/fancybox/jquery.fancybox.min.js"></script>
+    <script src="../assets/js/theme.js"></script>
+  </body>
+</html>
